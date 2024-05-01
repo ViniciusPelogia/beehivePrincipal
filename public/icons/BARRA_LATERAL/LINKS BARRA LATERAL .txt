@@ -1,0 +1,17 @@
+LINKS BARRA LATERAL 
+
+--search
+https://www.flaticon.com/br/icone-gratis/lupa_39014?term=lupa&page=1&position=10&origin=search&related_id=39014
+
+--home
+https://www.flaticon.com/free-icon/sweet_13210148?term=beehive&page=2&position=41&origin=search&related_id=13210148
+
+--private hive
+https://www.flaticon.com/br/icone-gratis/colmeia-de-abelhas_7065702?term=colmeia&page=1&position=20&origin=search&related_id=7065702
+
+--configuração 
+https://www.flaticon.com/br/icone-gratis/configuracao_4196766?term=configura%C3%A7%C3%A3o&page=2&position=71&origin=search&related_id=4196766
+
+--perfil
+https://www.flaticon.com/br/icone-gratis/do-utilizador_8265291?term=perfil&page=1&position=17&origin=search&related_id=8265291
+

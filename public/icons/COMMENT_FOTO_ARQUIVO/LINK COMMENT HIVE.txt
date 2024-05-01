@@ -1,0 +1,12 @@
+LINK COMMENT HIVE
+
+
+--like
+https://www.flaticon.com/free-icon/love_10502982?term=like&page=1&position=96&origin=search&related_id=10502982
+
+
+--return
+https://www.flaticon.com/br/icone-gratis/desfazer_3314310?term=voltar&page=1&position=23&origin=search&related_id=3314310
+
+--dowload
+https://www.flaticon.com/br/icone-gratis/dowload_9589809?term=dowload&page=1&position=2&origin=search&related_id=9589809

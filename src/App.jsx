@@ -1,8 +1,10 @@
+import Login from "./pages/Login"
+
 function App() {
 
   return (
     <>
-      bdsyuailbdhyf8uodsafbejuiwsbfhduos
+      <Login />
     </>
   )
 }
