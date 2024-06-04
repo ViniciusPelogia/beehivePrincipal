@@ -1,4 +1,4 @@
-import '../styles/Login.scss';
+import '../../styles/Login.scss';
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
 
 function Login() {
