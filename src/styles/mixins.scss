@@ -1,0 +1,15 @@
+@import './variables.scss';
+
+@mixin btn_one {
+    background-color: $color_one;
+    border: none;
+    margin-right: 1rem;
+    padding: .8rem 1.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: $transition_one;
+
+    &:hover {
+        background-color: $color_one--light;
+    }
+}
