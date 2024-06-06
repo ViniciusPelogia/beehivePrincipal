@@ -1,33 +1,38 @@
 import '../../styles/Sidebar.scss';
 import { MdHive } from 'react-icons/md';
-import { BiSolidSearchAlt2 } from 'react-icons/bi';
+import { IoIosSearch } from 'react-icons/io';
+import { IoSettingsOutline } from 'react-icons/io5';
 import { GiTreeBeehive } from 'react-icons/gi';
-import { IoSettingsSharp } from 'react-icons/io5';
-import { FaUser } from 'react-icons/fa';
+import { FiUser } from 'react-icons/fi';
 
 function Sidebar() {
   return (
     <nav id="sidebar">
+      <div>
+        <img className="logo" src="/icons/logo-yellow.png" alt="Beehive" />
+        <ul>
+          <li>
+            <IoIosSearch />
+            <p>Search</p>
+          </li>
+          <li>
+            <MdHive />
+            <p>Hives</p>
+          </li>
+          <li>
+            <GiTreeBeehive />
+            <p>Beehive</p>
+          </li>
+        </ul>
+      </div>
       <ul>
         <li>
-          <img className="logo" src="/icons/logo-black.png" alt="Beehive" />
+          <IoSettingsOutline />
+          <p>Settings</p>
         </li>
         <li>
-          <BiSolidSearchAlt2 />
-        </li>
-        <li>
-          <MdHive />
-        </li>
-        <li>
-          <GiTreeBeehive />
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <IoSettingsSharp />
-        </li>
-        <li>
-          <FaUser />
+          <FiUser />
+          <p>Account</p>
         </li>
       </ul>
     </nav>

@@ -2,11 +2,7 @@
 @import './mixins.scss';
 
 #home {
-  background-color: $bg_dark;
-  width: 100%;
-  min-height: 100vh;
-  padding: 2rem;
-  padding-left: 7rem;
+  @include page_layout;
 
   * {
     color: $light_text;
@@ -52,11 +48,11 @@
           object-fit: cover;
           object-position: center center;
           border-radius: 10px;
-          margin-bottom: .5rem;
+          margin-bottom: 0.5rem;
         }
 
         &:hover {
-            scale: 1.01;
+          scale: 1.01;
         }
       }
     }

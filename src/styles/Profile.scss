@@ -1,0 +1,109 @@
+@import './variables.scss';
+@import './mixins.scss';
+
+#profile {
+  @include page_layout;
+  display: flex;
+
+  .profile_left_section {
+    .profile_image_container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-bottom: 2rem;
+
+      .profile_image {
+        width: 15rem;
+        margin-bottom: 1rem;
+      }
+
+      .profile_username {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    .profile_social_container {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+
+      img {
+        width: 3rem;
+        aspect-ratio: 1 / 1;
+      }
+
+      img.facebook {
+        width: 2.7rem;
+        height: 2.7rem;
+      }
+    }
+  }
+
+  .profile_right_section {
+    padding: 0 4rem;
+    width: 100%;
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .profile_about_container {
+      margin-bottom: 4rem;
+
+      .profile_about_text {
+        max-width: 600px;
+      }
+    }
+
+    .profile_hives_container {
+      margin-bottom: 4rem;
+
+      .profile_hives_title {
+        margin-bottom: 1rem;
+      }
+
+      .profile_hives_list {
+        margin-bottom: 2rem;
+
+        li {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 1rem;
+
+          img {
+            width: 5rem;
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
+          }
+        }
+      }
+
+      .hives_buttons_container {
+        button {
+          @include btn_one;
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+
+  .profile_icons_container {
+    button {
+      background-color: $color_two;
+      margin-bottom: 0.8rem;
+      padding: 0.2rem;
+      border-radius: 5px;
+
+      svg {
+        font-size: 2rem;
+
+        * {
+          color: $dark_text;
+        }
+      }
+    }
+  }
+}
