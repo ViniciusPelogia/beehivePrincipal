@@ -9,7 +9,10 @@ function Sidebar() {
   return (
     <nav id="sidebar">
       <div>
-        <img className="logo" src="/icons/logo-yellow.png" alt="Beehive" />
+        <div className="logo_container">
+          <img className="logo" src="/icons/logo-yellow.png" alt="Beehive" />
+          <h1>Beehive</h1>
+        </div>
         <ul>
           <li>
             <IoIosSearch />
