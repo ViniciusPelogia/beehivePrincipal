@@ -1,10 +1,9 @@
-import Profile from "./pages/profile/Profile";
-
+import CreateHive from './pages/createHive/CreateHive';
 
 function App() {
   return (
     <>
-     <Profile />
+      <CreateHive />
     </>
   );
 }

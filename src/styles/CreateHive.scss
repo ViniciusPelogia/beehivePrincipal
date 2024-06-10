@@ -1,0 +1,55 @@
+@import './variables.scss';
+@import './mixins.scss';
+
+#create_hive {
+  @include page_layout;
+
+  .title {
+    margin-bottom: 4rem;
+  }
+
+  .hive_form {
+    .hive_image {
+      width: 10rem;
+      height: 10rem;
+      border-radius: 100%;
+      background-color: $bg_gray;
+      margin-bottom: 1rem;
+    }
+
+    .Hive_image_button_container {
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+
+      #hive_input_image {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      .hive_input_label {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: $color_two;
+        color: #fff;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: $transition_one;
+
+        &:hover {
+          background-color: $color_two;
+        }
+      }
+    }
+
+    .create_hive_buton {
+      @include btn_one;
+    }
+  }
+}
