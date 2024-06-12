@@ -1,9 +1,9 @@
-import CreateHive from './pages/createHive/CreateHive';
+import Home from './pages/home/Home';
 
 function App() {
   return (
     <>
-      <CreateHive />
+      <Home />
     </>
   );
 }

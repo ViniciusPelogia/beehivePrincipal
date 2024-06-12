@@ -19,10 +19,30 @@ a {
 
 button {
   border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: $element_border_radious;
+  cursor: pointer;
+  color: $light_text;
+  font-size: 1.1rem;
+  transition: $transition_one;
 }
 
 li {
   list-style: none;
+}
+
+input {
+  width: 100%;
+  background-color: $bg_gray;
+  border: $light_text;
+  color: $light_text;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  padding: 0.8rem 0.5rem;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .f_s {

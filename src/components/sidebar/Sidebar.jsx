@@ -1,4 +1,4 @@
-import '../../styles/Sidebar.scss';
+import './Sidebar.scss';
 import { MdHive } from 'react-icons/md';
 import { IoIosSearch } from 'react-icons/io';
 import { IoSettingsOutline } from 'react-icons/io5';

@@ -1,6 +1,7 @@
-@import './variables.scss';
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
 
-#signup {
+#login {
   width: 100%;
   min-height: 100vh;
   background-image: url('/icons/CADASTRO/imagem_fundo.png');
@@ -116,7 +117,7 @@
       }
     }
 
-    .article--signup {
+    .article--login {
       border-left: none;
       border-radius: 0px 30px 30px 0px;
       width: 66%;

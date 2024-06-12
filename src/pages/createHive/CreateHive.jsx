@@ -1,4 +1,4 @@
-import '../../styles/CreateHive.scss';
+import './CreateHive.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 
 function CreateHive() {

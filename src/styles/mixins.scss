@@ -9,16 +9,30 @@
 
 @mixin btn_one {
   background-color: $color_one;
-  border: none;
-  margin-right: 1rem;
-  padding: 0.8rem 1.6rem;
-  border-radius: 4px;
-  cursor: pointer;
-  color: $light_text;
-  font-size: 1.1rem;
-  transition: $transition_one;
 
   &:hover {
     background-color: $color_one--light;
   }
+}
+
+@mixin btn_two {
+  background-color: $color_two;
+  border: 2px solid $color_two;
+
+  &:hover {
+    background-color: transparent;
+    color: $color_two;
+  }
+}
+
+@mixin btn_two--secondary {
+  background-color: transparent;
+  border: 2px solid $color_two;
+  color: $color_two;
+
+  &:hover {
+    background-color: $color_two;
+    color: $light_text;
+  }
+
 }

@@ -1,16 +1,26 @@
-import '../../styles/Home.scss';
+import './Home.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
+import EnterHiveCode from './popups/EnterHiveCode';
+
+import { useState } from 'react';
 
 import hives_list from '../../data/hives';
 
 function Home() {
+  const [enterHiveCode, setEnterHiveCode] = useState(false);
+
   return (
     <main id="home">
       <Sidebar />
       <section className="header">
         <div className="header_btn_container">
           <button className="header_btn f_s">Create Hive</button>
-          <button className="header_btn f_s">Enter code</button>
+          <button
+            className="header_btn f_s"
+            onClick={() => setEnterHiveCode(true)}
+          >
+            Enter code
+          </button>
         </div>
         <div className="header_image_container">
           <img
@@ -42,6 +52,9 @@ function Home() {
           ))}
         </article>
       </section>
+      {enterHiveCode && (
+        <EnterHiveCode onCancel={() => setEnterHiveCode(false)} />
+      )}
     </main>
   );
 }

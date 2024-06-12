@@ -1,4 +1,4 @@
-import '../../styles/SignUp.scss';
+import './SignUp.scss';
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
 import { FaRegUser } from 'react-icons/fa';
 import { LiaBirthdayCakeSolid } from 'react-icons/lia';

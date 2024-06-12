@@ -1,4 +1,4 @@
-import '../../styles/Profile.scss';
+import './Profile.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import { MdEdit } from 'react-icons/md';
 import { RiLogoutBoxRFill } from 'react-icons/ri';
