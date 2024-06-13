@@ -62,6 +62,13 @@ input {
   }
 }
 
+.page_layout {
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem 4rem;
+  padding-left: 24rem;
+}
+
 .f_s {
   font-size: 1.1rem;
 }

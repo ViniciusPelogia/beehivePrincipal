@@ -7,7 +7,7 @@ function Profile() {
   return (
     <>
       <Sidebar />
-      <main id="profile">
+      <main id="profile" className="page_layout">
         <section className="profile_left_section">
           <article className="profile_image_container">
             <img src="/icons/user.png" alt="" className="profile_image" />

@@ -1,9 +1,9 @@
-import Home from './pages/home/Home';
+import Hive from './pages/hive/Hive';
 
 function App() {
   return (
     <>
-      <Home />
+      <Hive />
     </>
   );
 }

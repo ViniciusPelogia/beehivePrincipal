@@ -5,7 +5,7 @@ function CreateHive() {
   return (
     <>
       <Sidebar />
-      <main id="create_hive">
+      <main id="create_hive" className="page_layout">
         <section>
           <h2 className="title">Create Hive</h2>
           <form className="hive_form">

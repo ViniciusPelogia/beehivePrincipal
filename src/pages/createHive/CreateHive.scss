@@ -2,8 +2,6 @@
 @import '../../styles/mixins.scss';
 
 #create_hive {
-  @include page_layout;
-
   .title {
     margin-bottom: 4rem;
   }

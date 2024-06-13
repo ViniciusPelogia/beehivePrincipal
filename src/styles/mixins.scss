@@ -1,12 +1,5 @@
 @import './variables.scss';
 
-@mixin page_layout {
-  width: 100%;
-  min-height: 100vh;
-  padding: 2rem 4rem;
-  padding-left: 24rem;
-}
-
 @mixin btn_one {
   background-color: $color_one;
 
@@ -34,5 +27,4 @@
     background-color: $color_two;
     color: $light_text;
   }
-
 }

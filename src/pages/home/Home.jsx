@@ -10,7 +10,7 @@ function Home() {
   const [enterHiveCode, setEnterHiveCode] = useState(false);
 
   return (
-    <main id="home">
+    <main id="home" className="page_layout">
       <Sidebar />
       <section className="header">
         <div className="header_btn_container">

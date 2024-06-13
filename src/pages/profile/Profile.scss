@@ -2,7 +2,6 @@
 @import '../../styles/mixins.scss';
 
 #profile {
-  @include page_layout;
   display: flex;
 
   .profile_left_section {

@@ -2,8 +2,6 @@
 @import '../../styles/mixins.scss';
 
 #home {
-  @include page_layout;
-
   * {
     color: $light_text;
   }
