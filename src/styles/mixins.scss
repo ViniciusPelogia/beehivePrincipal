@@ -2,9 +2,22 @@
 
 @mixin btn_one {
   background-color: $color_one;
+  border: 2px solid $color_one;
 
   &:hover {
-    background-color: $color_one--light;
+    background-color: transparent;
+    color: $color_one;
+  }
+}
+
+@mixin btn_one--secondary {
+  background-color: transparent;
+  border: 2px solid $color_one;
+  color: $color_one;
+
+  &:hover {
+    background-color: $color_one;
+    color: $light_text;
   }
 }
 

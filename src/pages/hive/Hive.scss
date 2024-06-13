@@ -2,5 +2,71 @@
 @import '../../styles/mixins.scss';
 
 #hive {
+  .header_container {
+    .header_top {
+      margin-bottom: 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
 
+      .header_btn {
+        @include btn_one;
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+
+        svg {
+            font-size: 1.2rem;
+        }
+      }
+
+      .header_image_container {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+
+        .header_image {
+          width: 4rem;
+        }
+      }
+    }
+
+    .header_bottom {
+      margin-bottom: 2rem;
+
+      .hive_header_btn {
+        @include btn_two;
+        margin-right: 1rem;
+      }
+
+      .hive_header_btn--active {
+        @include btn_two--secondary;
+      }
+    }
+  }
+
+  .hive_data_container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    .hive_content_container {
+      width: calc(32.8% - .5rem);
+
+      &:hover .image {
+        scale: 1.01;
+      }
+
+      .image {
+        width: 100%;
+        aspect-ratio: 10 / 6;
+        object-fit: cover;
+        object-position: center center;
+        margin-bottom: .5rem;
+        border-radius: $element_border_radious;
+        transition: $transition_one;
+      }
+    }
+  }
 }
