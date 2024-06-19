@@ -1,6 +1,6 @@
 import './Home.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
-import EnterHiveCode from './popups/EnterHiveCode';
+import EnterHiveCode from './popups/enterHiveCode/EnterHiveCode';
 
 import { useState } from 'react';
 

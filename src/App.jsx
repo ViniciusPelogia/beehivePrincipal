@@ -1,9 +1,9 @@
-import EditProfile from './pages/editProfile/EditProfile';
+import Home from './pages/home/Home';
 
 function App() {
   return (
     <>
-      <EditProfile />
+      <Home />
     </>
   );
 }

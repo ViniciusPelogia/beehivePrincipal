@@ -4,8 +4,12 @@ import { IoIosSearch } from 'react-icons/io';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { GiTreeBeehive } from 'react-icons/gi';
 import { FiUser } from 'react-icons/fi';
+import { useState } from 'react';
+import EnterHiveName from './enterHiveName/EnterHiveName';
 
 function Sidebar() {
+  const [enterHiveName, setEnterHiveName] = useState(false);
+
   return (
     <nav id="sidebar">
       <div>
@@ -14,7 +18,7 @@ function Sidebar() {
           <h1>Beehive</h1>
         </div>
         <ul>
-          <li>
+          <li onClick={() => setEnterHiveName(true)}>
             <IoIosSearch />
             <p>Search</p>
           </li>
@@ -38,6 +42,9 @@ function Sidebar() {
           <p>Account</p>
         </li>
       </ul>
+      {enterHiveName && (
+        <EnterHiveName onCancel={() => setEnterHiveName(false)} />
+      )}
     </nav>
   );
 }
