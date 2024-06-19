@@ -1,9 +1,9 @@
-import Hive from './pages/hive/Hive';
+import EditProfile from './pages/editProfile/EditProfile';
 
 function App() {
   return (
     <>
-      <Hive />
+      <EditProfile />
     </>
   );
 }

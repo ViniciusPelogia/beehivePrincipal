@@ -48,7 +48,8 @@ li {
   list-style: none;
 }
 
-input {
+input,
+textarea {
   width: 100%;
   background-color: $bg_gray;
   border: $light_text;
