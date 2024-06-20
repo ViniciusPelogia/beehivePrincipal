@@ -32,6 +32,13 @@ body {
 a {
   color: $light_text;
   text-decoration: none;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: $element_border_radious;
+  cursor: pointer;
+  color: $light_text;
+  font-size: 1.1rem;
+  transition: $transition_one;
 }
 
 button {

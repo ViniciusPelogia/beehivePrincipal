@@ -1,5 +1,6 @@
 import './CreateHive.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
+import { Link } from 'react-router-dom';
 
 function CreateHive() {
   return (
@@ -43,7 +44,9 @@ function CreateHive() {
                 <label htmlFor="private_input">Private Hive</label>
               </div>
             </div>
-            <button className="create_hive_buton">Create</button>
+            <Link to="/home" className="create_hive_buton">
+              Create
+            </Link>
           </form>
         </section>
       </main>

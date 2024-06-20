@@ -1,6 +1,7 @@
 import './Home.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import EnterHiveCode from './popups/enterHiveCode/EnterHiveCode';
+import { Link } from 'react-router-dom';
 
 import { useState } from 'react';
 
@@ -14,7 +15,9 @@ function Home() {
       <Sidebar />
       <section className="header">
         <div className="header_btn_container">
-          <button className="header_btn f_s">Create Hive</button>
+          <Link to="/createhive" className="header_btn f_s">
+            Create Hive
+          </Link>
           <button
             className="header_btn f_s"
             onClick={() => setEnterHiveCode(true)}
@@ -34,10 +37,10 @@ function Home() {
         <h2 className="title">Your Hives</h2>
         <article className="hives_container">
           {hives_list.map((hive) => (
-            <div key={hive.name} className="hive">
+            <Link to="/hive" key={hive.name} className="hive">
               <img src={hive.image} alt={hive.name} className="hive_image" />
               <p>{hive.name}</p>
-            </div>
+            </Link>
           ))}
         </article>
       </section>

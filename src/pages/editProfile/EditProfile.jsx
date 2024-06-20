@@ -1,5 +1,6 @@
 import './EditProfile.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
+import { Link } from 'react-router-dom';
 
 function EditProfile() {
   return (
@@ -40,7 +41,9 @@ function EditProfile() {
                 className="hive_input"
               />
             </div>
-            <button className="create_hive_buton">Update</button>
+            <Link to="/profile" className="create_hive_buton">
+              Update
+            </Link>
           </form>
         </section>
       </main>

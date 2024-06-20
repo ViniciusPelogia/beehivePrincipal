@@ -6,6 +6,7 @@ import { GiTreeBeehive } from 'react-icons/gi';
 import { FiUser } from 'react-icons/fi';
 import { useState } from 'react';
 import EnterHiveName from './enterHiveName/EnterHiveName';
+import { Link } from 'react-router-dom';
 
 function Sidebar() {
   const [enterHiveName, setEnterHiveName] = useState(false);
@@ -22,10 +23,10 @@ function Sidebar() {
             <IoIosSearch />
             <p>Search</p>
           </li>
-          <li>
+          <Link to="/home" className="list_item">
             <MdHive />
             <p>Hives</p>
-          </li>
+          </Link>
           <li>
             <GiTreeBeehive />
             <p>Beehive</p>
@@ -33,14 +34,14 @@ function Sidebar() {
         </ul>
       </div>
       <ul>
-        <li>
+        <Link to="/configurations" className="list_item">
           <IoSettingsOutline />
           <p>Settings</p>
-        </li>
-        <li>
+        </Link>
+        <Link to="/profile" className="list_item">
           <FiUser />
           <p>Account</p>
-        </li>
+        </Link>
       </ul>
       {enterHiveName && (
         <EnterHiveName onCancel={() => setEnterHiveName(false)} />

@@ -2,6 +2,7 @@ import './SignUp.scss';
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
 import { FaRegUser } from 'react-icons/fa';
 import { LiaBirthdayCakeSolid } from 'react-icons/lia';
+import { Link } from 'react-router-dom';
 
 function SignUp() {
   return (
@@ -15,14 +16,14 @@ function SignUp() {
           />
           <h2 className="title">Welcome!</h2>
           <p className="text">Sign up</p>
-          <a className="button" href="#">
+          <Link className="button" to="/login">
             <span>
               <em>Make login</em>
             </span>
             <span>
               <em>Make login</em>
             </span>
-          </a>
+          </Link>
         </article>
         <article className="article article--signup">
           <h2 className="title">Register</h2>
@@ -70,14 +71,14 @@ function SignUp() {
                 Esqueceu a senha?
               </a>
             </div>
-            <button className="button">
+            <Link to="/home" className="button">
               <span>
                 <em>Create</em>
               </span>
               <span>
                 <em>Create</em>
               </span>
-            </button>
+            </Link>
           </form>
         </article>
       </section>

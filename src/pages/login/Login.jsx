@@ -1,5 +1,6 @@
 import './Login.scss';
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
 function Login() {
   return (
@@ -13,14 +14,14 @@ function Login() {
           />
           <h2 className="title">Welcome!</h2>
           <p className="text">New Login</p>
-          <a className="button" href="#">
+          <Link className="button" to="/signup">
             <span>
               <em>Create Account</em>
             </span>
             <span>
               <em>Create Account</em>
             </span>
-          </a>
+          </Link>
         </article>
         <article className="article article--login">
           <h2 className="title">Fazer Login</h2>
@@ -51,14 +52,14 @@ function Login() {
                 Esqueceu a senha?
               </a>
             </div>
-            <button className="button">
+            <Link to="/home" className="button">
               <span>
                 <em>Login</em>
               </span>
               <span>
                 <em>Login</em>
               </span>
-            </button>
+            </Link>
           </form>
         </article>
       </section>

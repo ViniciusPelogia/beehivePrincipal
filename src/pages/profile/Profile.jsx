@@ -2,6 +2,7 @@ import './Profile.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import { MdEdit } from 'react-icons/md';
 import { RiLogoutBoxRFill } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
 
 function Profile() {
   return (
@@ -38,33 +39,31 @@ function Profile() {
           <article className="profile_hives_container">
             <h2 className="profile_hives_title">Hives</h2>
             <ul className="profile_hives_list">
-              <li>
+              <Link to="/hive">
                 <img src="/icons/teste-hive.jpg" alt="" />
                 <p>Ovomaltine</p>
-              </li>
-              <li>
+              </Link>
+              <Link to="/hive">
                 <img src="/icons/teste-hive.jpg" alt="" />
                 <p>Jukebox</p>
-              </li>
+              </Link>
             </ul>
             <div className="hives_buttons_container">
-              <button>
+              <Link to="/createhive" className="button">
                 Create Hive
-              </button>
-              <button>
-                Enter code
-              </button>
+              </Link>
+              <button className="button">Enter code</button>
             </div>
           </article>
         </section>
 
         <div className="profile_icons_container">
-          <button className="profile_edit">
+          <Link to="/editprofile" className="profile_edit button">
             <MdEdit />
-          </button>
-          <button className="profile_leave">
+          </Link>
+          <Link to="/" className="profile_leave button">
             <RiLogoutBoxRFill />
-          </button>
+          </Link>
         </div>
       </main>
     </>

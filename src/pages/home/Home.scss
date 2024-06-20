@@ -39,6 +39,8 @@
         min-width: 14%;
         max-width: 45%;
         width: 18rem;
+        padding: 0;
+        cursor: pointer;
         transition: $transition_one;
 
         .hive_image {
