@@ -9,6 +9,7 @@ import Home from './pages/home/Home.jsx';
 import Login from './pages/login/Login.jsx';
 import Profile from './pages/profile/Profile.jsx';
 import SignUp from './pages/signup/SignUp.jsx';
+import Settings from './pages/userSettings/Settings.jsx';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: '/createhive',
     element: <CreateHive />
+  },
+  {
+    path: '/settings',
+    element: <Settings />
   }
 ]);
 

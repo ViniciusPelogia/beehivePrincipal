@@ -34,7 +34,7 @@ function Sidebar() {
         </ul>
       </div>
       <ul>
-        <Link to="/configurations" className="list_item">
+        <Link to="/settings" className="list_item">
           <IoSettingsOutline />
           <p>Settings</p>
         </Link>
