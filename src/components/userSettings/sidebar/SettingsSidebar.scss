@@ -1,0 +1,26 @@
+@import '../../../styles/variables.scss';
+
+#settings_sidebar {
+  .title {
+    margin-bottom: 2rem;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    li {
+      cursor: pointer;
+      font-weight: 600;
+      transition: $transition_one;
+
+      &:hover {
+        color: $color_two;
+      }
+    }
+    li.active {
+      color: $color_two;
+    }
+  }
+}

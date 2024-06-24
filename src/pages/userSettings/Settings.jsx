@@ -1,21 +1,13 @@
 import './Settings.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
+import SettingsSidebar from '../../components/userSettings/sidebar/SettingsSidebar';
 
 function Settings() {
   return (
     <>
       <Sidebar />
       <main className="container page_layout">
-        <div className="sidebar">
-          <h2>Configuration</h2>
-          <ul>
-            <li className="active">Notifications</li>
-            <li>Categories</li>
-            <li>Privacy and data</li>
-            <li>Permissions</li>
-            <li>About us</li>
-          </ul>
-        </div>
+        <SettingsSidebar />
         <div className="content">
           <div className="notifications">
             <h2>Notifications</h2>
