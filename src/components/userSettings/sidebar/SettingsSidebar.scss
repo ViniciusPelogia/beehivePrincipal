@@ -1,6 +1,9 @@
 @import '../../../styles/variables.scss';
 
 #settings_sidebar {
+  padding-right: 2rem;
+  min-width: 200px;
+
   .title {
     margin-bottom: 2rem;
   }

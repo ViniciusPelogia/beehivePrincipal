@@ -1,47 +1,36 @@
 import './Settings.scss';
+import { useState } from 'react';
 import Sidebar from '../../components/sidebar/Sidebar';
 import SettingsSidebar from '../../components/userSettings/sidebar/SettingsSidebar';
+import Categories from '../../components/userSettings/categories/Categories';
+import Notifications from '../../components/userSettings/notifications/Notifications';
+import Permissions from '../../components/userSettings/permissions/Permissions';
+import PrivacyAndData from '../../components/userSettings/privacyAndData/PrivacyAndData';
 
 function Settings() {
+  const [options, setOptions] = useState('notifications');
+
+  const renderComponent = () => {
+    switch (options) {
+      case 'notifications':
+        return <Notifications />;
+      case 'categories':
+        return <Categories />;
+      case 'permissions':
+        return <Permissions />;
+      case 'privacyAndData':
+        return <PrivacyAndData />;
+      default:
+        return <Notifications />;
+    }
+  };
+
   return (
     <>
       <Sidebar />
-      <main className="container page_layout">
-        <SettingsSidebar />
-        <div className="content">
-          <div className="notifications">
-            <h2>Notifications</h2>
-            <p>Notify me about</p>
-            <p>Choose when and how you want to be notified</p>
-            <div className="toggle">
-              <label htmlFor="email">
-                Email
-                <br />
-                <small>Notify me by email.</small>
-              </label>
-              <input type="checkbox" id="email" checked />
-            </div>
-            <div className="toggle">
-              <label htmlFor="posts">
-                Posts
-                <br />
-                <small>Notify me when someone makes a new post.</small>
-              </label>
-              <input type="checkbox" id="posts" checked />
-            </div>
-            <div className="toggle">
-              <label htmlFor="comments">
-                Comments
-                <br />
-                <small>
-                  Notify me when someone makes a new comment on post.
-                </small>
-              </label>
-              <input type="checkbox" id="comments" checked />
-            </div>
-            <button className="save-btn">Save</button>
-          </div>
-        </div>
+      <main id="settings" className="container page_layout">
+        <SettingsSidebar setOptions={setOptions} />
+        <section className="content_container">{renderComponent()}</section>
       </main>
     </>
   );
