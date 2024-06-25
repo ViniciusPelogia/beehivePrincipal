@@ -3,9 +3,30 @@ import Sidebar from '../../components/sidebar/Sidebar';
 
 import { IoMdShare } from 'react-icons/io';
 
-import hives_content_list from '../../data/hives_content';
+import { useState } from 'react';
+import Docs from '../../components/hive/docs/Docs';
+import Midia from '../../components/hive/midia/Midia';
+import Saves from '../../components/hive/saves/Saves';
+
 
 function Hive() {
+  const [options, setOptions] = useState('midia');
+
+  const renderComponent = () => {
+    switch (options) {
+      case 'midia':
+        return <Midia />;
+
+      case 'docs':
+        return <Docs />;
+
+      case 'saves':
+        return <Saves />;
+      default:
+        return <Midia />;
+    }
+  };
+
   return (
     <main id="hive" className="page_layout">
       <Sidebar />
@@ -27,20 +48,33 @@ function Hive() {
           </div>
         </article>
         <article className="header_bottom">
-          <button className="hive_header_btn hive_header_btn--active">
+          <button
+            className={`hive_header_btn ${
+              options === 'midia' ? 'hive_header_btn--active' : ''
+            }`}
+            onClick={() => setOptions('midia')}
+          >
             Midia
           </button>
-          <button className="hive_header_btn">Docs</button>
-          <button className="hive_header_btn">Saves</button>
+          <button
+            className={`hive_header_btn ${
+              options === 'docs' ? 'hive_header_btn--active' : ''
+            }`}
+            onClick={() => setOptions('docs')}
+          >
+            Docs
+          </button>
+          <button
+            className={`hive_header_btn ${
+              options === 'saves' ? 'hive_header_btn--active' : ''
+            }`}
+            onClick={() => setOptions('saves')}
+          >
+            Saves
+          </button>
         </article>
       </section>
-      <section className="hive_data_container">
-        {hives_content_list.map((hive) => (
-          <div key={hive.username} className="hive_content_container">
-            <img src={hive.image} alt={hive.username} className="image" />
-            <p>{hive.username}</p>
-          </div>
-        ))}
+      <section className="hive_data_container">{renderComponent()}
       </section>
     </main>
   );
