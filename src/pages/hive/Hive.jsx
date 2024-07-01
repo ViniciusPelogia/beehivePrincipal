@@ -7,10 +7,11 @@ import { useState } from 'react';
 import Docs from '../../components/hive/docs/Docs';
 import Midia from '../../components/hive/midia/Midia';
 import Saves from '../../components/hive/saves/Saves';
-
+import NewPost from './popup/newPost/NewPost';
 
 function Hive() {
   const [options, setOptions] = useState('midia');
+  const [newPostPopup, setNewPostPopup] = useState(false);
 
   const renderComponent = () => {
     switch (options) {
@@ -48,34 +49,39 @@ function Hive() {
           </div>
         </article>
         <article className="header_bottom">
-          <button
-            className={`hive_header_btn ${
-              options === 'midia' ? 'hive_header_btn--active' : ''
-            }`}
-            onClick={() => setOptions('midia')}
-          >
-            Midia
+          <div className="header_bottom__links">
+            <button
+              className={`hive_header_btn ${
+                options === 'midia' ? 'hive_header_btn--active' : ''
+              }`}
+              onClick={() => setOptions('midia')}
+            >
+              Midia
+            </button>
+            <button
+              className={`hive_header_btn ${
+                options === 'docs' ? 'hive_header_btn--active' : ''
+              }`}
+              onClick={() => setOptions('docs')}
+            >
+              Docs
+            </button>
+            <button
+              className={`hive_header_btn ${
+                options === 'saves' ? 'hive_header_btn--active' : ''
+              }`}
+              onClick={() => setOptions('saves')}
+            >
+              Saves
+            </button>
+          </div>
+          <button id="new_post_btn" onClick={() => setNewPostPopup(true)}>
+            New post
           </button>
-          <button
-            className={`hive_header_btn ${
-              options === 'docs' ? 'hive_header_btn--active' : ''
-            }`}
-            onClick={() => setOptions('docs')}
-          >
-            Docs
-          </button>
-          <button
-            className={`hive_header_btn ${
-              options === 'saves' ? 'hive_header_btn--active' : ''
-            }`}
-            onClick={() => setOptions('saves')}
-          >
-            Saves
-          </button>
+          {newPostPopup && <NewPost onCancel={() => setNewPostPopup(false)} />}
         </article>
       </section>
-      <section className="hive_data_container">{renderComponent()}
-      </section>
+      <section className="hive_data_container">{renderComponent()}</section>
     </main>
   );
 }
