@@ -62,6 +62,7 @@
 
     .hive_content_container {
       width: calc(32.8% - 0.5rem);
+      cursor: pointer;
 
       &:hover .image {
         scale: 1.01;

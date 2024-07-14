@@ -4,19 +4,21 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import { IoMdShare } from 'react-icons/io';
 
 import { useState } from 'react';
-import Docs from '../../components/hive/docs/Docs';
-import Midia from '../../components/hive/midia/Midia';
-import Saves from '../../components/hive/saves/Saves';
+import Docs from './components/docs/Docs';
+import Midia from './components/midia/Midia';
+import Saves from './components/saves/Saves';
 import NewPost from './popup/newPost/NewPost';
+import PostContent from './popup/postContent/PostContent';
 
 function Hive() {
   const [options, setOptions] = useState('midia');
   const [newPostPopup, setNewPostPopup] = useState(false);
+  const [postContentPopup, setPostContentPopup] = useState(false);
 
   const renderComponent = () => {
     switch (options) {
       case 'midia':
-        return <Midia />;
+        return <Midia setPostContentPopup={setPostContentPopup} />;
 
       case 'docs':
         return <Docs />;
@@ -79,6 +81,9 @@ function Hive() {
             New post
           </button>
           {newPostPopup && <NewPost onCancel={() => setNewPostPopup(false)} />}
+          {postContentPopup && (
+            <PostContent onCancel={() => setPostContentPopup(false)} />
+          )}
         </article>
       </section>
       <section className="hive_data_container">{renderComponent()}</section>
