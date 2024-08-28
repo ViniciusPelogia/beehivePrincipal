@@ -39,6 +39,12 @@ function CreateHive() {
                 <option value="party">Party</option>
                 <option value="vacations">Vacations</option>
               </select>
+              <input
+                type="text"
+                placeholder="Hive password..."
+                className="hive_input"
+                disabled
+              />
               <div className="hive_private_input">
                 <input id="private_input" type="checkbox" />
                 <label htmlFor="private_input">Private Hive</label>

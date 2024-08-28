@@ -26,6 +26,12 @@ module.exports = {
       descricao: {
         type: Sequelize.STRING
       },
+      privada: {
+        type: Sequelize.BOOLEAN
+      },
+      imagem:{
+        type:Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

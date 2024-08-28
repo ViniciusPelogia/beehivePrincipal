@@ -19,7 +19,9 @@ export default (sequelize, DataTypes) => {
     codigo_acesso: DataTypes.STRING,
     qtd_membros: DataTypes.INTEGER,
     tipo: DataTypes.STRING,
-    descricao: DataTypes.STRING
+    descricao: DataTypes.STRING,
+    privado: DataTypes.BOOLEAN,
+    imagem:DataTypes.STRING
   }, {
     sequelize,
     modelName: 'hives',
