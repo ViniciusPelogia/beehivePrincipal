@@ -1,36 +1,30 @@
+'use strict';
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('hives', {
+    await queryInterface.createTable('arquivos', {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUID
-      },
-      nome: {
-        type: Sequelize.STRING
-      },
-      codigo_acesso: {
-        type: Sequelize.STRING
-      },
-      qtd_membros: {
         type: Sequelize.INTEGER
       },
-      tipo: {
+      nome: {
         type: Sequelize.STRING
       },
       descricao: {
         type: Sequelize.STRING
       },
-      privada: {
-        type: Sequelize.BOOLEAN
+      tipo: {
+        type: Sequelize.STRING
       },
-      imagem:{
-        type:Sequelize.STRING
+      tamanho: {
+        type: Sequelize.STRING
+      },
+      caminho: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +37,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('hives');
+    await queryInterface.dropTable('arquivos');
   }
 };
