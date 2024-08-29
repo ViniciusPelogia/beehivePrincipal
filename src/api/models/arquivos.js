@@ -1,8 +1,9 @@
 'use strict';
-const {
+/* eslint-disable no-unused-vars */
+import {
   Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+} from 'sequelize';
+export default (sequelize, DataTypes) => {
   class arquivos extends Model {
     /**
      * Helper method for defining associations.
@@ -10,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      arquivos.hasOne(models.interacoes, { foreignKey: 'arquivo_id' });
+      arquivos.hasOne(models.arquivosXhives, { foreignKey: 'arquivo_id' });
+      arquivos.belongsTo(models.usuarios, {foreignKey: 'usuario_id'});
     }
   }
   arquivos.init({

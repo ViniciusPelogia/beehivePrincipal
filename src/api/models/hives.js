@@ -11,7 +11,9 @@ export default (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      hives.hasMany(models.arquivosXhives, { foreignKey: 'hive_id'})
+      hives.hasMany(models.imagensXhives, { foreignKey: 'hive_id'})
+      hives.hasMany(models.usuariosXhives, { foreignKey: 'hive_id'})
     }
   }
   hives.init({

@@ -1,8 +1,9 @@
 'use strict';
-const {
+/* eslint-disable no-unused-vars */
+import {
   Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+} from 'sequelize';
+export default (sequelize, DataTypes) => {
   class interacoes extends Model {
     /**
      * Helper method for defining associations.
@@ -10,12 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      interacoes.belongsTo(models.usuarios, {foreignKey: 'usuario_id'});
+      interacoes.belongsTo(models.arquivos, {foreignKey: 'arquivo_id'});
+      interacoes.belongsTo(models.imagens, {foreignKey: 'imagem_id'});
+      interacoes.belongsTo(models.comentarios, {foreignKey: 'comentario_id'});
     }
   }
   interacoes.init({
     tipo: DataTypes.STRING,
-    hora: DataTypes.STRING
+    hora: DataTypes.DATETIME
   }, {
     sequelize,
     modelName: 'interacoes',

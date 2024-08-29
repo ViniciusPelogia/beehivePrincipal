@@ -7,9 +7,9 @@ module.exports = {
     await queryInterface.createTable('imagens', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUID
       },
       nome: {
         type: Sequelize.STRING
@@ -25,6 +25,11 @@ module.exports = {
       },
       caminho: {
         type: Sequelize.STRING
+      },
+      usuario_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: { model: 'usuarios', key: 'id' }
       },
       createdAt: {
         allowNull: false,

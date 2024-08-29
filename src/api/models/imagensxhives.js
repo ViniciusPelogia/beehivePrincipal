@@ -4,21 +4,23 @@ import {
   Model
 } from 'sequelize';
 export default (sequelize, DataTypes) => {
-  class comentarios extends Model {
+  class imagensXhives extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      comentarios.hasOne(models.interacoes, {foreignKey: 'comentario_id'})
+      imagensXhives.belongsTo(models.imagens, {foreignKey: 'imagem_id'});
+      imagensXhives.belongsTo(models.hives, {foreignKey: 'hive_id'});
     }
   }
-  comentarios.init({
-    comentario: DataTypes.STRING
+  imagensXhives.init({
+    id_imagem: DataTypes.STRING,
+    id_hive: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'comentarios',
+    modelName: 'imagensXhives',
   });
-  return comentarios;
+  return imagensXhives;
 };
