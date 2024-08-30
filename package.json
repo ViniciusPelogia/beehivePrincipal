@@ -25,12 +25,12 @@
     "react-router-dom": "^6.23.1",
     "sequelize": "^6.37.3",
     "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "sqlite3": "^5.1.7",
     "umzug": "^3.8.1",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "sequelize-cli": "^6.6.2",
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
     "@babel/register": "^7.24.6",
@@ -42,6 +42,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "sass": "^1.76.0",
+    "sequelize-cli": "^6.6.2",
     "vite": "^5.2.0"
   }
 }

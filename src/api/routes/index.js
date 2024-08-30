@@ -8,7 +8,6 @@ export default app => {
     app.use(
       bodyParser.json(),
       auth,
-      usuario,
-      hive
+      usuario
     )
 }

@@ -4,7 +4,7 @@ import hiveController from '../controllers/hiveController.js'
 const router = Router();
 
 router
-    .post('/hive', hiveController.criarHive)
+    .post('/hive', hiveController.cadastrar)
     .get('/hive')
     .get('/hive/')
     .get('/hive:nome')

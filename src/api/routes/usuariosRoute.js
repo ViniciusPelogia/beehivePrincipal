@@ -6,6 +6,7 @@ import autenticado from '../middleware/autenticado.js';
 const router = Router()
 
 router
+    .get('/', UsuarioController.buscarTodosUsuarios)
     .post('/usuarios', UsuarioController.cadastrar)
     .use(autenticado)
     .get('/usuarios', UsuarioController.buscarTodosUsuarios)

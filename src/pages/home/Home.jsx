@@ -2,29 +2,15 @@ import './Home.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import EnterHiveCode from './popups/enterHiveCode/EnterHiveCode';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { io } from 'socket.io';
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import io from 'socket.io-client';
 
+const SocketContext = createContext(null);
+const socket = io('http://localhost:5137');
 import hives_list from '../../data/hives';
 
 function Home() {
   const [enterHiveCode, setEnterHiveCode] = useState(false);
-  const [messages, setMessages] = useState([]);
-
-  useEffect(() => {
-    socket.on('connect', () => {
-      console.log('Conectado ao servidor');
-    });
-
-    socket.on('message', (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    });
-
-    return () => {
-      socket.off('connect');
-      socket.off('message');
-    };
-  }, []);
 
   return (
     <main id="home" className="page_layout">
