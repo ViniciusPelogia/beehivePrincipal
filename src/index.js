@@ -1,10 +1,28 @@
 
 import express from 'express'
-// import { createRequire } from 'module';
-// const require = createRequire(import.meta.url);
+import app from 'express'
+import server from 'express'
+import io from 'socket.io'
+import { Server } from 'socket.io';
+
 import routes  from './api/routes/index.js'
 import database  from '../src/api/models/index.js';
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:5137'
+  }
+});
+io.on('connection', (socket) => {
+  console.log('Novo cliente conectado');
 
+  socket.on('disconnect', () => {
+    console.log('Cliente desconectado');
+  });
+
+  socket.on('message', (message) => {
+    io.emit('message', message);
+  });
+});
 const app = express();
 const port = 3000;
 
