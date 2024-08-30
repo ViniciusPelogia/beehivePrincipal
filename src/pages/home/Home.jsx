@@ -5,12 +5,26 @@ import { Link } from 'react-router-dom';
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import io from 'socket.io-client';
 
-const SocketContext = createContext(null);
-const socket = io('http://localhost:5137');
 import hives_list from '../../data/hives';
 
 function Home() {
-  const [enterHiveCode, setEnterHiveCode] = useState(false);
+  const [enterHiveCode, setEnterHiveCode, messages, setMessages] = useState(false);
+
+  useEffect(() => {
+    const socket = io('http://localhost:5137');
+
+    socket.on('connect', () => {
+      console.log('Conectado ao servidor');
+    });
+
+    socket.on('message', (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   return (
     <main id="home" className="page_layout">
