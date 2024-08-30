@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       hora: {
-        type: Sequelize.DATETIME,
+        type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.NOW
       },

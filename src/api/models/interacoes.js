@@ -12,14 +12,14 @@ export default (sequelize, DataTypes) => {
      */
     static associate(models) {
       interacoes.belongsTo(models.usuarios, {foreignKey: 'usuario_id'});
-      interacoes.belongsTo(models.arquivos, {foreignKey: 'arquivo_id'});
       interacoes.belongsTo(models.imagens, {foreignKey: 'imagem_id'});
+      interacoes.belongsTo(models.arquivos, {foreignKey: 'arquivo_id'});
       interacoes.belongsTo(models.comentarios, {foreignKey: 'comentario_id'});
     }
   }
   interacoes.init({
     tipo: DataTypes.STRING,
-    hora: DataTypes.DATETIME
+    hora: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'interacoes',
