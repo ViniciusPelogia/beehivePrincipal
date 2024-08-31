@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import './Home.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import EnterHiveCode from './popups/enterHiveCode/EnterHiveCode';
@@ -8,19 +9,31 @@ import io from 'socket.io-client';
 import hives_list from '../../data/hives';
 
 function Home() {
-  const [enterHiveCode, setEnterHiveCode, messages, setMessages] = useState(false);
-
+  const [enterHiveCode, setEnterHiveCode] = useState(false);
+  //messages, setMessages
   useEffect(() => {
-    const socket = io('http://localhost:5137');
-
+    const socket = io.connect('http://localhost:3000');
+  
     socket.on('connect', () => {
-      console.log('Conectado ao servidor');
+      console.log('Conectado ao servidor, id: ' + socket.id);
+    });
+  
+    // socket.on('message', (message) => {
+    //   setMessages((prevMessages) => [...prevMessages, message]);
+    // });
+  
+    socket.on('disconnect', () => {
+      console.error('Conexão com o servidor perdida. Tentando reconectar...');
+      // Implementar lógica de reconexão aqui
+    });
+  
+    socket.on('error', (error) => {
+      console.error('Erro na conexão WebSocket:', error);
     });
 
-    socket.on('message', (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    });
 
+    //===================================
+  
     return () => {
       socket.disconnect();
     };

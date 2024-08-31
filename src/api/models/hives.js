@@ -19,11 +19,11 @@ export default (sequelize, DataTypes) => {
   hives.init({
     nome: DataTypes.STRING,
     codigo_acesso: DataTypes.STRING,
-    qtd_membros: DataTypes.INTEGER,
     tipo: DataTypes.STRING,
     descricao: DataTypes.STRING,
     privado: DataTypes.BOOLEAN,
-    imagem:DataTypes.STRING
+    imagem:DataTypes.STRING,
+    qtd_membros: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'hives',

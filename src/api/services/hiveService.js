@@ -14,8 +14,8 @@ class HiveService {
       const novaHive = await database.Hives.create({
         id: uuidv4(),
         nome: dto.nome,
-        tipo: dto.tipo,
         codigo_acesso: senhaHash,
+        tipo: dto.tipo,
         descricao: dto.descricao, 
         privada: dto.privada, 
         imagem:dto.imagem
@@ -25,6 +25,21 @@ class HiveService {
       throw new Error(error);
     }
   }
+
+  async buscarHivesIn(id){
+    const usuariosPresente = await database.usuariosXhives.findAll({
+      where:{
+        usuario_id: id
+      }
+    })
+
+    if(!usuariosPresente){
+      throw new Error("Usuario não está em nenhuma hive");
+    }
+    
+    return usuariosPresente;
+  }
+
   async buscarTodasHives() {
     const Hives = await database.Hives.findAll();
     return Hives;

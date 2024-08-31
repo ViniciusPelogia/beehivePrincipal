@@ -9,12 +9,23 @@ class HiveController {
 
     try {
       const hive = await hiveService.cadastrar({
-        nome, tipo, privada, codigo_acesso, descricao, imagem
+        nome, codigo_acesso, tipo, descricao, privada, imagem
       });
 
       res.status(201).send(hive);
     } catch (error) {
       res.status(400).send({ message: error.message });
+      console.log(error)
+    }
+  }
+  static async buscarHivesIn(req,res){
+    try {
+      const {idUsuario} = req.params;
+      const hives = await hiveService.buscarHivesIn(idUsuario);
+  
+      res.status(200).json(hives)
+    } catch (error) {
+      res.status(400).json({message: error.message})
     }
   }
 

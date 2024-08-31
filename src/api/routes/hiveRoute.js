@@ -5,8 +5,8 @@ const router = Router();
 
 router
     .post('/hive', hiveController.cadastrar)
-    .get('/hive')
-    .get('/hive/')
+    .get('/hive', hiveController.buscarTodasHives)
+    .get('/hive/usuario/:id', hiveController.buscarHivesIn)
     .get('/hive:nome')
     .get('/hive/')
     .put('/hive:id')

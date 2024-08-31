@@ -17,9 +17,6 @@ module.exports = {
       codigo_acesso: {
         type: Sequelize.STRING
       },
-      qtd_membros: {
-        type: Sequelize.INTEGER
-      },
       tipo: {
         type: Sequelize.STRING
       },
@@ -31,6 +28,9 @@ module.exports = {
       },
       imagem:{
         type:Sequelize.STRING
+      },
+      qtd_membros: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
