@@ -5,20 +5,16 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('imagensXhives', {
-      id: {
-        allowNull: false,
-        primaryKey: true,
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUID
-      },
       imagem_id: {
         allowNull: false,
         type: Sequelize.UUID,
+        primaryKey: true,
         references: { model: 'imagens', key: 'id' }
       },
       hive_id: {
         allowNull: false,
         type: Sequelize.UUID,
+        primaryKey: true,
         references: { model: 'hives', key: 'id' }
       },
       createdAt: {

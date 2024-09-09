@@ -16,8 +16,14 @@ export default (sequelize, DataTypes) => {
     }
   }
   imagensXhives.init({
-    id_imagem: DataTypes.STRING,
-    id_hive: DataTypes.STRING
+    hive_id: {
+      type: DataTypes.UUID,
+      primaryKey: true
+    },
+    imagem_id: {
+      type: DataTypes.UUID,
+      primaryKey: true
+    }
   }, {
     sequelize,
     modelName: 'imagensXhives',

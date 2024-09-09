@@ -1,7 +1,7 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
-// eslint-disable-next-line no-undef
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('usuarios', {

@@ -11,13 +11,19 @@ export default (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      usuariosXhives.belongsTo(models.usuarios, { foreignKey: 'usuario_id' });
       usuariosXhives.belongsTo(models.hives, {foreignKey: 'hive_id'});
+      usuariosXhives.belongsTo(models.usuarios, { foreignKey: 'usuario_id' });
     }
   }
   usuariosXhives.init({
-    id_hive: DataTypes.STRING,
-    id_usuario: DataTypes.STRING
+    hive_id: {
+      type: DataTypes.UUID,
+      primaryKey: true
+    },
+    usuario_id: {
+      type: DataTypes.UUID,
+      primaryKey: true
+    }
   }, {
     sequelize,
     modelName: 'usuariosXhives',

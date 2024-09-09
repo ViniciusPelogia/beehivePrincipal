@@ -15,8 +15,8 @@ export default (sequelize, DataTypes) => {
     }
   }
   administrador.init({
-    adm_id: DataTypes.STRING,
-    usuario_id: DataTypes.STRING
+    adm_id: DataTypes.UUID,
+    usuario_id: DataTypes.UUID
   }, {
     sequelize,
     modelName: 'administrador',

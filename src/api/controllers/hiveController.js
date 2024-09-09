@@ -5,11 +5,12 @@ const hiveService = new HiveService();
 
 class HiveController {
   static async cadastrar(req, res) {
+    const {id} = req.params;
     const { nome, tipo, codigo_acesso, descricao, privada, imagem } = req.body;
 
     try {
       const hive = await hiveService.cadastrar({
-        nome, codigo_acesso, tipo, descricao, privada, imagem
+        nome, codigo_acesso, tipo, descricao, privada, imagem, id
       });
 
       res.status(201).send(hive);
@@ -21,6 +22,7 @@ class HiveController {
   static async buscarHivesIn(req,res){
     try {
       const {idUsuario} = req.params;
+      console.log("Passou", idUsuario)
       const hives = await hiveService.buscarHivesIn(idUsuario);
   
       res.status(200).json(hives)

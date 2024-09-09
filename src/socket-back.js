@@ -11,7 +11,9 @@ io.on("connection", (socket) => {
     io.emit("message", message);
   });
 
-  socket.on("texto_editor", (texto) => {
-    io.emit("texto_editor_clientes", texto);
+  //==========================================
+
+  socket.on("teste", (texto) => {
+    console.log(texto)
   });
 });

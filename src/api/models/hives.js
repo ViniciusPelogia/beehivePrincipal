@@ -21,7 +21,7 @@ export default (sequelize, DataTypes) => {
     codigo_acesso: DataTypes.STRING,
     tipo: DataTypes.STRING,
     descricao: DataTypes.STRING,
-    privado: DataTypes.BOOLEAN,
+    privada: DataTypes.BOOLEAN,
     imagem:DataTypes.STRING,
     qtd_membros: DataTypes.INTEGER
   }, {

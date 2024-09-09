@@ -2,9 +2,40 @@ import './SignUp.scss';
 import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
 import { FaRegUser } from 'react-icons/fa';
 import { LiaBirthdayCakeSolid } from 'react-icons/lia';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
 
 function SignUp() {
+  const [formData, setFormData] = useState({
+    email: '',
+    username: '',
+    age: '',
+    password: '',
+  });
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('/', formData);
+      if (response.status === 201) {
+        navigate('/home');
+      }
+    } catch (error) {
+      console.error('Error creating user:', error);
+    }
+  };
+
   return (
     <main id="signup">
       <section className="container">
@@ -27,29 +58,45 @@ function SignUp() {
         </article>
         <article className="article article--signup">
           <h2 className="title">Register</h2>
-          <form className="form">
+          <form className="form" onSubmit={handleSubmit}>
             <div className="input_container">
               <label htmlFor="email">
                 <AiOutlineMail />
               </label>
-              <input type="email" name="email" id="email" placeholder="Email" />
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+              />
             </div>
             <div className="input_container">
               <label htmlFor="username">
                 <FaRegUser />
               </label>
               <input
-                type="username"
+                type="text"
                 name="username"
                 id="username"
                 placeholder="Username"
+                value={formData.username}
+                onChange={handleChange}
               />
             </div>
             <div className="input_container">
               <label htmlFor="age">
                 <LiaBirthdayCakeSolid />
               </label>
-              <input type="age" name="age" id="age" placeholder="Age" />
+              <input
+                type="number"
+                name="age"
+                id="age"
+                placeholder="Age"
+                value={formData.age}
+                onChange={handleChange}
+              />
             </div>
             <div className="input_container">
               <label htmlFor="password">
@@ -60,25 +107,27 @@ function SignUp() {
                 name="password"
                 id="password"
                 placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
               />
             </div>
             <div className="assets_texts">
               <div className="remember_container">
-                <input id="remember" type="checkbox" name="remember"></input>
+                <input id="remember" type="checkbox" name="remember" />
                 <label htmlFor="remember">Lembrar-me</label>
               </div>
               <a href="#" className="forgot">
                 Esqueceu a senha?
               </a>
             </div>
-            <Link to="/home" className="button">
+            <button type="submit" className="button">
               <span>
                 <em>Create</em>
               </span>
               <span>
                 <em>Create</em>
               </span>
-            </Link>
+            </button>
           </form>
         </article>
       </section>

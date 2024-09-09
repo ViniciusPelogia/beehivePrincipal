@@ -16,8 +16,14 @@ export default (sequelize, DataTypes) => {
     }
   }
   arquivosXhives.init({
-    id_arquivo: DataTypes.STRING,
-    id_hive: DataTypes.STRING
+    hive_id: {
+      type: DataTypes.UUID,
+      primaryKey: true
+    },
+    arquivos_id: {
+      type: DataTypes.UUID,
+      primaryKey: true
+    }
   }, {
     sequelize,
     modelName: 'arquivosXhives',
