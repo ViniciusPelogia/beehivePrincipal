@@ -1,24 +1,25 @@
-import './SignUp.scss';
-import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
-import { FaRegUser } from 'react-icons/fa';
-import { LiaBirthdayCakeSolid } from 'react-icons/lia';
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import axios from 'axios';
+import "./SignUp.scss";
+import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
+import { FaRegUser } from "react-icons/fa";
+import { LiaBirthdayCakeSolid } from "react-icons/lia";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 function SignUp() {
   const [formData, setFormData] = useState({
-    email: '',
-    username: '',
-    age: '',
-    password: '',
+    email: "",
+    username: "",
+    idade: "",
+    nome: "",
+    senha: "",
   });
 
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
-    setFormData({
+    await setFormData({
       ...formData,
       [name]: value,
     });
@@ -27,12 +28,15 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/', formData);
+      const response = await axios.post(
+        "http://localhost:3000/usuarios",
+        formData
+      );
       if (response.status === 201) {
-        navigate('/home');
+        navigate("/home");
       }
     } catch (error) {
-      console.error('Error creating user:', error);
+      console.error("Error creating user:", error);
     }
   };
 
@@ -47,7 +51,7 @@ function SignUp() {
           />
           <h2 className="title">Welcome!</h2>
           <p className="text">Sign up</p>
-          <Link className="button" to="/login">
+          <Link className="button" to="/">
             <span>
               <em>Make login</em>
             </span>
@@ -68,7 +72,6 @@ function SignUp() {
                 name="email"
                 id="email"
                 placeholder="Email"
-                value={formData.email}
                 onChange={handleChange}
               />
             </div>
@@ -81,51 +84,51 @@ function SignUp() {
                 name="username"
                 id="username"
                 placeholder="Username"
-                value={formData.username}
                 onChange={handleChange}
               />
             </div>
             <div className="input_container">
-              <label htmlFor="age">
+              <label htmlFor="idade">
                 <LiaBirthdayCakeSolid />
               </label>
               <input
-                type="number"
-                name="age"
-                id="age"
-                placeholder="Age"
-                value={formData.age}
+                type="text"
+                name="idade"
+                id="idade"
+                placeholder="Idade"
                 onChange={handleChange}
               />
             </div>
             <div className="input_container">
-              <label htmlFor="password">
+              <label htmlFor="nome">
+                <FaRegUser />
+              </label>
+              <input
+                type="text"
+                name="nome"
+                id="nome"
+                placeholder="Nome"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input_container">
+              <label htmlFor="senha">
                 <AiOutlineLock />
               </label>
               <input
                 type="password"
-                name="password"
-                id="password"
-                placeholder="Password"
-                value={formData.password}
+                name="senha"
+                id="senha"
+                placeholder="Senha"
                 onChange={handleChange}
               />
             </div>
-            <div className="assets_texts">
-              <div className="remember_container">
-                <input id="remember" type="checkbox" name="remember" />
-                <label htmlFor="remember">Lembrar-me</label>
-              </div>
-              <a href="#" className="forgot">
-                Esqueceu a senha?
-              </a>
-            </div>
             <button type="submit" className="button">
               <span>
-                <em>Create</em>
+                <em>Register</em>
               </span>
               <span>
-                <em>Create</em>
+                <em>Register</em>
               </span>
             </button>
           </form>

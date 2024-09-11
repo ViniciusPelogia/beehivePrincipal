@@ -3,7 +3,7 @@ import { Server } from "socket.io";
 import http from "http";
 import routes from "./api/routes/index.js";
 import database from "../src/api/models/index.js";
-import cors from 'cors'
+import cors from 'cors';
 
 const app = express();
 const port = 3000;
@@ -14,15 +14,22 @@ const io = new Server(server, {
   },
 });
 
+// Adicione o middleware CORS antes das rotas
+app.use(cors({
+  origin: 'http://localhost:5173', // Permita requisições apenas desta origem
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+  allowedHeaders: ['Content-Type', 'Authorization'] // Cabeçalhos permitidos
+}));
+
+app.use(express.json()); // Para analisar JSON no corpo das requisições
+
 routes(app);
 
 server.listen(port, () =>
   console.log(`servidor está rodando na porta ${port}`)
 );
 
-app.use(cors())
-
-//RESPOSTA DO BANCO:
+// RESPOSTA DO BANCO:
 database.sequelize
   .authenticate()
   .then(() => {
@@ -32,4 +39,4 @@ database.sequelize
     console.error("Não foi possível conectar ao banco de dados:", err);
   });
 
-export {app, io};
+export { app, io };
