@@ -2,9 +2,16 @@ import './Profile.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import { MdEdit } from 'react-icons/md';
 import { RiLogoutBoxRFill } from 'react-icons/ri';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Profile() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    navigate('/');
+  };
+
   return (
     <>
       <Sidebar />
@@ -61,9 +68,9 @@ function Profile() {
           <Link to="/editprofile" className="profile_edit button">
             <MdEdit />
           </Link>
-          <Link to="/" className="profile_leave button">
+          <button onClick={handleLogout} className="profile_leave button">
             <RiLogoutBoxRFill />
-          </Link>
+          </button>
         </div>
       </main>
     </>
