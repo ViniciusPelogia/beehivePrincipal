@@ -27,6 +27,20 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    for (const key in formData) {
+      if (formData[key].trim() === "") {
+        alert("Todos os campos devem ser preenchidos corretamente.");
+        return;
+      }
+      if (formData.senha.length < 6) {
+        alert("A senha deve ter pelo menos 6 caracteres.");
+        return;
+      }
+      if (parseInt(formData.idade) <= 18) {
+        alert("A idade deve ser maior que 18 anos!");
+        return;
+      }
+    }
     try {
       const response = await axios.post(
         "http://localhost:3000/usuarios",

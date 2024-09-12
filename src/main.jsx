@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
 import CreateHive from './pages/createHive/CreateHive.jsx';
 import EditProfile from './pages/editProfile/EditProfile.jsx';
 import Hive from './pages/hive/Hive.jsx';
@@ -17,32 +18,38 @@ const router = createBrowserRouter([
     element: <Login />
   },
   {
-    path: '/home',
-    element: <Home />
-  },
-  {
     path: '/signup',
     element: <SignUp />
   },
   {
-    path: '/profile',
-    element: <Profile />
-  },
-  {
-    path: '/hive',
-    element: <Hive />
-  },
-  {
-    path: '/editprofile',
-    element: <EditProfile />
-  },
-  {
-    path: '/createhive',
-    element: <CreateHive />
-  },
-  {
-    path: '/settings',
-    element: <Settings />
+    path: '/',
+    element: <PrivateRoute />,
+    children: [
+      {
+        path: '/home',
+        element: <Home />
+      },
+      {
+        path: '/profile',
+        element: <Profile />
+      },
+      {
+        path: '/hive',
+        element: <Hive />
+      },
+      {
+        path: '/editprofile',
+        element: <EditProfile />
+      },
+      {
+        path: '/createhive',
+        element: <CreateHive />
+      },
+      {
+        path: '/settings',
+        element: <Settings />
+      }
+    ]
   }
 ]);
 
