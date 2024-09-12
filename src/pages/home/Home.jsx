@@ -39,7 +39,7 @@ function Home() {
     const fetchHives = async () => {
       try {
         const token = localStorage.getItem('accessToken'); // Obtenha o token do localStorage
-        const response = await axios.get('/hive', {
+        const response = await axios.get('http://localhost:3000/hive/', {
           headers: {
             Authorization: `Bearer ${token}` // Adicione o cabeçalho de autorização
           }
@@ -102,9 +102,9 @@ function Home() {
         <h2 className="title">Todas as Hives</h2>
         <article className="hives_container">
           {Array.isArray(hives) && hives.map((hive) => (
-            <div key={hive.name} className="hive">
-              <img src={hive.image} alt={hive.name} className="hive_image" />
-              <p>{hive.name}</p>
+            <div key={hive.id} className="hive">
+              <img src={hive.image} alt={hive.nome} className="hive_image" />
+              <p>{hive.nome}</p>
             </div>
           ))}
         </article>
