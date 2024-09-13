@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import "./Home.scss";
+import "./AllHivesPage.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import EnterHiveCode from "./popups/enterHiveCode/EnterHiveCode";
 import { Link } from "react-router-dom";
@@ -38,20 +38,21 @@ function Home() {
 
     const fetchHives = async () => {
       try {
-        const token = localStorage.getItem('accessToken'); // Obtenha o token do localStorage
-        const response = await axios.get('http://localhost:3000/hive/', {
+        const token = localStorage.getItem("accessToken"); // Obtenha o token do localStorage
+        const response = await axios.get("http://localhost:3000/hive/", {
           headers: {
-            Authorization: `Bearer ${token}` // Adicione o cabeçalho de autorização
-          }
+            Authorization: `Bearer ${token}`, // Adicione o cabeçalho de autorização
+          },
         });
+        console.log(token);
         console.log(response.data); // Log da resposta para verificar o formato
         if (Array.isArray(response.data)) {
           setHives(response.data);
         } else {
-          console.error('A resposta da API não é um array:', response.data);
+          console.error("A resposta da API não é um array:", response.data);
         }
       } catch (error) {
-        console.error('Failed to fetch hives', error);
+        console.error("Failed to fetch hives", error);
       }
     };
 
@@ -85,19 +86,18 @@ function Home() {
           />
         </div>
       </section>
-      {/* AQUI COMEÇA AS SUAS HIVES */}
       <section className="your_hives">
-        <h2 className="title">Your Hives</h2>
+        <h2 className="title">Todas as Hives</h2>
         <article className="hives_container">
-          {hives_list.map((hive) => (
-            <Link to="/hive" key={hive.name} className="hive">
-              <img src={hive.image} alt={hive.name} className="hive_image" />
-              <p>{hive.name}</p>
-            </Link>
-          ))}
+          {Array.isArray(hives) &&
+            hives.map((hive) => (
+              <Link to={`/hive/${hive.id}`} key={hive.id} className="hive">
+                <img src={hive.imagem} alt={hive.nome} className="hive_image" />
+                <p>{hive.nome}</p>
+              </Link>
+            ))}
         </article>
       </section>
-      {/* AQUI ACABA SUAS HIVES */}
       {enterHiveCode && (
         <EnterHiveCode onCancel={() => setEnterHiveCode(false)} />
       )}

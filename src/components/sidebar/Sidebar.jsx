@@ -27,10 +27,10 @@ function Sidebar() {
             <MdHive />
             <p>Hives</p>
           </Link>
-          <li>
+          <Link to="/hives" className="list_item">
             <GiTreeBeehive />
             <p>Beehive</p>
-          </li>
+          </Link>
         </ul>
       </div>
       <ul>

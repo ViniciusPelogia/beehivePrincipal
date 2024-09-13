@@ -1,0 +1,61 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+#home {
+  * {
+    color: $light_text;
+  }
+
+  .header {
+    margin-bottom: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .header_btn {
+      @include btn_one;
+      margin-right: 1rem;
+    }
+
+    .header_image_container {
+      .header_image {
+        width: 4rem;
+      }
+    }
+  }
+
+  h2 {
+    margin-bottom: 2rem;
+  }
+
+  .your_hives {
+    margin-bottom: 4rem;
+
+    .hives_container {
+      display: flex;
+      gap: 1rem;
+
+      .hive {
+        min-width: 14%;
+        max-width: 45%;
+        width: 18rem;
+        padding: 0;
+        cursor: pointer;
+        transition: $transition_one;
+
+        .hive_image {
+          width: 100%;
+          aspect-ratio: 1 / 1;
+          object-fit: cover;
+          object-position: center center;
+          border-radius: 10px;
+          margin-bottom: 0.5rem;
+        }
+
+        &:hover {
+          scale: 1.01;
+        }
+      }
+    }
+  }
+}

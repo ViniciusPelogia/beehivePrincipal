@@ -8,7 +8,7 @@ router
     .get('/hive', hiveController.buscarTodasHives)
     .get('/hive/usuario/:id', hiveController.buscarHivesIn)
     .get('/hive:nome')
-    .get('/hive/')
+    .get('/hive/id/:id',hiveController.buscarHivePorId)
     .put('/hive:id')
     .delete('/hive:id')
 

@@ -1,0 +1,48 @@
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/mixins.scss';
+
+#enter_code_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(3px);
+
+  .enter_code_popup {
+    width: 100%;
+    max-width: 600px;
+    background-color: $bg_dark;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 2px solid $color_two;
+
+    .code_input {
+      margin-bottom: 2rem;
+    }
+
+    .buttons_container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+
+      .enter_button {
+        @include btn_two;
+        min-width: 8rem;
+      }
+
+      .cancel_button {
+        @include btn_two--secondary;
+        min-width: 8rem;
+      }
+
+      .cancel_button {
+        border-radius: $element_border_radious;
+      }
+    }
+  }
+}
