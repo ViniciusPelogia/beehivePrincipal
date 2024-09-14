@@ -7,7 +7,7 @@ import React, { useState, useEffect, createContext, useContext } from "react";
 import io from "socket.io-client";
 import axios from "axios";
 
-import hives_list from "../../data/hives";
+// import hives_list from "../../data/hives";
 
 function Home() {
   const [enterHiveCode, setEnterHiveCode] = useState(false);
@@ -90,14 +90,21 @@ function Home() {
         <h2 className="title">Todas as Hives</h2>
         <article className="hives_container">
           {Array.isArray(hives) &&
-            hives.map((hive) => (
-              <Link to={`/hive/${hive.id}`} key={hive.id} className="hive">
-                <img src={hive.imagem} alt={hive.nome} className="hive_image" />
-                <p>{hive.nome}</p>
-              </Link>
-            ))}
+            hives
+              .filter((hive) => !hive.privada) // Filtra as hives que não são privadas
+              .map((hive) => (
+                <Link to={`/hive/${hive.id}`} key={hive.id} className="hive">
+                  <img
+                    src={hive.imagem}
+                    alt={hive.nome}
+                    className="hive_image"
+                  />
+                  <p>{hive.nome}</p>
+                </Link>
+              ))}
         </article>
       </section>
+
       {enterHiveCode && (
         <EnterHiveCode onCancel={() => setEnterHiveCode(false)} />
       )}

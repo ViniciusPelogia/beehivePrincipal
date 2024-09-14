@@ -10,24 +10,22 @@ import Midia from "./components/midia/Midia";
 import Saves from "./components/saves/Saves";
 import NewPost from "./popup/newPost/NewPost";
 import PostContent from "./popup/postContent/PostContent";
-import { AuthContext } from "../../AuthContext.jsx";
 
 function Hive() {
   const { id } = useParams();
   const [hive, setHive] = useState(null);
-  const { token } = useContext(AuthContext);
   const [options, setOptions] = useState("midia");
   const [newPostPopup, setNewPostPopup] = useState(false);
   const [postContentPopup, setPostContentPopup] = useState(false);
 
   useEffect(() => {
+    const token = localStorage.getItem('accessToken'); // Obtenha o token do localStorage
     console.log("Token no Hive:", token); // Verifique se o token está presente
     if (!token) {
       console.error("Access token não informado");
       return;
     }
     const fetchHive = async () => {
-
       try {
         const response = await axios.get(
           `http://localhost:3000/hive/id/${id}`,
@@ -44,7 +42,7 @@ function Hive() {
     };
 
     fetchHive();
-  }, [id, token]);
+  }, [id]);
 
   const renderComponent = () => {
     switch (options) {
@@ -59,7 +57,7 @@ function Hive() {
     }
   };
 
-  if (!hive) {
+   if (!hive) {
     return <div>Loading...</div>;
   }
 

@@ -1,23 +1,30 @@
-import './Login.scss';
-import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai';
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import axios from 'axios';
+/* eslint-disable no-undef */
+import "./Login.scss";
+import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
-function Login() {
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [error, setError] = useState('');
+function Login({ setUserId }) {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/auth/login', { email, senha });
-      localStorage.setItem('accessToken', response.data.accessToken);
-      navigate('/home');
+      const response = await axios.post("http://localhost:3000/auth/login", {
+        email,
+        senha,
+      });
+      const { id, accessToken } = response.data;
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("userId", id);
+      setUserId(id); // Define o userId para gerenciar a navegação
+      navigate("/home"); // Redireciona para a página Home após o login
     } catch (error) {
-      setError('Erro ao fazer login. Verifique suas credenciais.');
+      setError("Erro ao fazer login. Verifique suas credenciais.");
     }
   };
 

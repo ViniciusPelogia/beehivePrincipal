@@ -21,9 +21,8 @@ class HiveController {
   }
   static async buscarHivesIn(req,res){
     try {
-      const {idUsuario} = req.params;
-      console.log("Passou", idUsuario)
-      const hives = await hiveService.buscarHivesIn(idUsuario);
+      const {id} = req.params;
+      const hives = await hiveService.buscarHivesIn(id);
   
       res.status(200).json(hives)
     } catch (error) {

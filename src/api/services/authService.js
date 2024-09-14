@@ -32,7 +32,7 @@ class AuthService{
             expiresIn: 86400
         })
 
-        return { accessToken }
+        return { accessToken, id: usuario.id}
     }
 
 }

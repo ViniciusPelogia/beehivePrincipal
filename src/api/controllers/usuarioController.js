@@ -35,6 +35,18 @@ class UsuarioController {
       res.status(400).send({ message: error.message });
     }
   }
+
+  static async entrarEmHive(req, res){
+    try{
+      const { usuario_id, hive_id} = req.body;
+      const entrar = await usuarioService.entrarEmHive(usuario_id, hive_id);
+    res.status(200).json(entrar)
+    } catch(error){
+      res.status(400).send({ message: error.message })
+    }
+    
+  }
+
   static async editarUsuario(req, res) {
     const { id } = req.params;
     const { nome, email } = req.body;

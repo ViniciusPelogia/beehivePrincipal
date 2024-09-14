@@ -1,23 +1,19 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './Login';
-import Home from './Home';
-import Dashboard from './Dashboard';
-import PrivateRoute from './PrivateRoute';
-
+import { useState } from 'react';
+import Login from './pages/login/Login.jsx'; 
+import Home from './pages/home/Home.jsx';    
 
 function App() {
+  const [userId, setUserId] = useState(null);  // Estado para armazenar o ID do usuário
+  console.log('setUserId:', setUserId);
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<PrivateRoute />}>
-          <Route index element={<Home />} />
-        </Route>
-        <Route path="/dashboard" element={<PrivateRoute />}>
-          <Route index element={<Dashboard />} />
-        </Route>
-      </Routes>
-    </Router>
+    <div>
+      {!userId ? (
+        <Login setUserId={setUserId} />  // Passando setUserId para Login como prop
+      ) : (
+        <Home userId={userId} />         // Passando userId para Home
+      )}
+    </div>
   );
 }
 

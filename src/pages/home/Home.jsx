@@ -1,18 +1,15 @@
-/* eslint-disable no-unused-vars */
 import "./Home.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import EnterHiveCode from "./popups/enterHiveCode/EnterHiveCode";
 import { Link } from "react-router-dom";
-import React, { useState, useEffect, createContext, useContext } from "react";
+import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import axios from "axios";
 
-import hives_list from "../../data/hives";
-
-function Home() {
+function Home({ userId }) {  // Recebe userId como prop do Main
   const [enterHiveCode, setEnterHiveCode] = useState(false);
   const [hives, setHives] = useState([]);
-  //messages, setMessages
+
   useEffect(() => {
     const socket = io.connect("http://localhost:3000");
 
@@ -20,47 +17,45 @@ function Home() {
       console.log("Conectado ao servidor, id: " + socket.id);
     });
 
-    // socket.on('message', (message) => {
-    //   setMessages((prevMessages) => [...prevMessages, message]);
-    // });
-
     socket.on("disconnect", () => {
-      console.error("Conexão com o servidor perdida. Tentando reconectar...");
-      // Implementar lógica de reconexão aqui
+      console.error("Conexão com o servidor perdida.");
     });
 
     socket.on("error", (error) => {
       console.error("Erro na conexão WebSocket:", error);
     });
 
-    //===================================
     socket.emit("teste", "isso é um teste");
 
     const fetchHives = async () => {
       try {
-        const token = localStorage.getItem('accessToken'); // Obtenha o token do localStorage
-        const response = await axios.get('http://localhost:3000/hive/', {
-          headers: {
-            Authorization: `Bearer ${token}` // Adicione o cabeçalho de autorização
+        const token = localStorage.getItem("accessToken");  // Obtém o token do localStorage
+        const response = await axios.get(
+          `http://localhost:3000/hive/usuario/${userId}`,  // Usa o userId da prop
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,  // Adiciona o token de autorização
+            },
           }
-        });
-        console.log(response.data); // Log da resposta para verificar o formato
+        );
         if (Array.isArray(response.data)) {
-          setHives(response.data);
+          setHives(response.data);  // Armazena as hives no estado
         } else {
-          console.error('A resposta da API não é um array:', response.data);
+          console.error("A resposta da API não é um array:", response.data);
         }
       } catch (error) {
-        console.error('Failed to fetch hives', error);
+        console.error("Failed to fetch hives", error);
       }
     };
 
-    fetchHives();
+    if (userId) {  // Apenas busca as hives se o userId estiver disponível
+      fetchHives();
+    }
 
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [userId]);  // Atualiza a lista de hives sempre que o userId mudar
 
   return (
     <main id="home" className="page_layout">
@@ -85,19 +80,17 @@ function Home() {
           />
         </div>
       </section>
-      {/* AQUI COMEÇA AS SUAS HIVES */}
       <section className="your_hives">
         <h2 className="title">Your Hives</h2>
         <article className="hives_container">
-          {hives_list.map((hive) => (
-            <Link to="/hive" key={hive.name} className="hive">
-              <img src={hive.image} alt={hive.name} className="hive_image" />
-              <p>{hive.name}</p>
+          {hives.map((hive) => (
+            <Link to={`/hive/${hive.id}`} key={hive.id} className="hive">  {/* Corrigido para usar hive.id */}
+              <img src={hive.imagem} alt={hive.nome} className="hive_image" />
+              <p>{hive.nome}</p>
             </Link>
           ))}
         </article>
       </section>
-      {/* AQUI ACABA SUAS HIVES */}
       {enterHiveCode && (
         <EnterHiveCode onCancel={() => setEnterHiveCode(false)} />
       )}

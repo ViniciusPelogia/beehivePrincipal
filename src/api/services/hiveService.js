@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 import database from "../models/index.js";
 import pkg from "bcryptjs";
+import { where } from "sequelize";
 const { hash } = pkg;
 import { v4 as uuidv4 } from "uuid";
 
@@ -41,7 +42,8 @@ class HiveService {
   }
 
   async buscarHivesIn(id) {
-    const usuariosPresente = await database.usuariosXhives.findAll({
+    try {
+      const usuariosPresente = await database.usuariosXhives.findAll({
       where: {
         usuario_id: id,
       },
@@ -51,7 +53,21 @@ class HiveService {
       throw new Error("Usuario não está em nenhuma hive");
     }
 
-    return usuariosPresente;
+    const hiveIds = usuariosPresente.map((usuario) => usuario.hive_id);
+
+    const hivesPresentes = await database.hives.findAll({
+      where: {
+        id: hiveIds,
+      },
+    });
+
+    return hivesPresentes;
+    } catch (error) {
+      throw new Error(error.message)
+      // "Erro ao procurar hives onde o usuário pode estar presente", 
+    }
+    
+
   }
 
   async buscarTodasHives() {
