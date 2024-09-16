@@ -16,6 +16,11 @@ module.exports = {
         type: Sequelize.UUID,
         references: { model: 'usuarios', key: 'id' }
       },
+      hive_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: { model: 'hives', key: 'id' }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

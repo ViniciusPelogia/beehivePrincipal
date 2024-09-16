@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 import database from "../models/index.js";
 import pkg from "bcryptjs";
+import { CgLogIn, CgSlack } from "react-icons/cg";
 import { where } from "sequelize";
 const { hash } = pkg;
 import { v4 as uuidv4 } from "uuid";
@@ -10,36 +11,75 @@ class HiveService {
   async cadastrar(dto) {
     try {
       const senhaHash = await hash(dto.codigo_acesso, 8);
-
+  
       const novaHive = await database.hives.create({
         id: uuidv4(),
         nome: dto.nome,
         codigo_acesso: senhaHash,
-        tipo: dto.tipo,
+        tipo_id: dto.tipo,
         descricao: dto.descricao,
         privada: dto.privada,
         imagem: dto.imagem,
       });
-
+      console.log("Hive foi criada ================");
+  
       const existingRecord = await database.usuariosXhives.findOne({
         where: {
           hive_id: novaHive.id,
           usuario_id: dto.id
         }
       });
-      
+  
       if (!existingRecord) {
         await database.usuariosXhives.create({
           hive_id: novaHive.id,
           usuario_id: dto.id,
         });
       }
-
+      const existAdm = await database.administrador.findOne({
+        where: {
+          hive_id: novaHive.id,
+          usuario_id: dto.id,
+        }
+      });
+      console.log("Passou");
+  
+      if (!existAdm) {
+        console.log("Não existe ================");
+        await database.administrador.create({
+          id: uuidv4(),
+          usuario_id: dto.id,
+          hive_id: novaHive.id,
+        });
+      }
+  
       return novaHive;
     } catch (error) {
       throw new Error(error);
     }
   }
+  
+  
+  async criaTipo(tipo){
+    try {
+      const existeTipo = await database.tipoHives.findOne({
+        where:{
+          tipo: tipo
+        }
+      })
+
+      if(!existeTipo){
+        const novoTipo = await database.tipoHives.create({
+          tipo: tipo
+        })
+        return novoTipo;
+      }
+
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+
 
   async buscarHivesIn(id) {
     try {
@@ -73,6 +113,14 @@ class HiveService {
   async buscarTodasHives() {
     const Hives = await database.hives.findAll();
     return Hives;
+  }
+  async todosTipos(){
+    try {
+      const todosOsTipos = await database.tipoHives.findAll();
+      return todosOsTipos;
+    } catch (error) {
+      throw new Error(error)
+    }
   }
   async buscarHivePorNome(nome) {
     const regex = new RegExp(nome, "i");

@@ -19,6 +19,18 @@ class HiveController {
       console.log(error)
     }
   }
+
+  static async criaTipo(req,res){
+    const { tipo } = req.body;
+
+    try {
+      const novoTipo = await hiveService.criaTipo(tipo);
+      res.status(201).send(novoTipo)
+    } catch (error) {
+      res.status(401).send({message: error.message})
+    }
+  }
+
   static async buscarHivesIn(req,res){
     try {
       const {id} = req.params;
@@ -51,6 +63,15 @@ class HiveController {
       res.status(200).json(hive);
     } catch (error) {
       res.status(400).send({ message: error.message });
+    }
+  }
+  static async todosTipos(req,res){
+    try {
+      const todosOsTipos = await hiveService.todosTipos()
+
+      res.status(200).json(todosOsTipos)
+    } catch (error) {
+      res.status(400).json(error.message)
     }
   }
   static async editarHive(req, res) {

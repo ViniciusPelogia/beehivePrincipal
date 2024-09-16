@@ -17,9 +17,6 @@ module.exports = {
       codigo_acesso: {
         type: Sequelize.STRING
       },
-      tipo: {
-        type: Sequelize.STRING
-      },
       descricao: {
         type: Sequelize.STRING
       },
@@ -31,6 +28,11 @@ module.exports = {
       },
       qtd_membros: {
         type: Sequelize.INTEGER
+      },
+      tipo_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: 'tipoHives', key: 'id' }
       },
       createdAt: {
         allowNull: false,

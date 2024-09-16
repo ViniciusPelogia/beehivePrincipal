@@ -4,23 +4,21 @@ import {
   Model
 } from 'sequelize';
 export default (sequelize, DataTypes) => {
-  class administrador extends Model {
+  class tipoHives extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      administrador.belongsTo(models.usuarios, { foreignKey: 'usuario_id'})
-      administrador.belongsTo(models.hives, { foreignKey: 'hive_id'})
+      tipoHives.hasMany(models.hives, { foreignKey: 'tipo_id'})
     }
   }
-  administrador.init({
-    hive_id: DataTypes.UUID,
-    usuario_id: DataTypes.UUID,
+  tipoHives.init({
+    tipo: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'administrador',
+    modelName: 'tipoHives',
   });
-  return administrador;
+  return tipoHives;
 };
