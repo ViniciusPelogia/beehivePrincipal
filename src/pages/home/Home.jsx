@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "./Home.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import EnterHiveCode from "./popups/enterHiveCode/EnterHiveCode";

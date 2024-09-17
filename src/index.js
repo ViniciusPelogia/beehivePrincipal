@@ -3,8 +3,11 @@ import { Server } from "socket.io";
 import http from "http";
 import routes from "./api/routes/index.js";
 import database from "../src/api/models/index.js";
+import bodyParser from "body-parser";
+import multer from 'multer'
 import cors from 'cors';
 
+const upload = multer()
 const app = express();
 const port = 3000;
 const server = http.createServer(app);
@@ -22,6 +25,8 @@ app.use(cors({
 }));
 
 app.use(express.json()); // Para analisar JSON no corpo das requisições
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(upload.single('imagem'));
 
 routes(app);
 

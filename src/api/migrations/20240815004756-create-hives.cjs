@@ -29,7 +29,7 @@ module.exports = {
       qtd_membros: {
         type: Sequelize.INTEGER
       },
-      tipo_id: {
+      tipo: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: 'tipoHives', key: 'id' }

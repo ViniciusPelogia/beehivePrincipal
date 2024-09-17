@@ -1,6 +1,6 @@
 import "./CreateHive.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -9,32 +9,30 @@ function CreateHive() {
   const [hiveName, setHiveName] = useState("");
   const [hiveDescription, setHiveDescription] = useState("");
   const [hivePassword, setHivePassword] = useState("");
-  const [hiveImage, setHiveImage] = useState(null); // Inicialmente null para imagem não carregada
-  const [hiveType, setHiveType] = useState(); // HiveType agora é uma string vazia
-  const [types, setTypes] = useState([]); // Garantir que types seja inicializado como array
+  const [hiveImage, setHiveImage] = useState(null);
+  const [hiveType, setHiveType] = useState("");
+  const [types, setTypes] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Buscar todos os tipos da entidade TiposHives
     const accessToken = localStorage.getItem("accessToken");
-    console.log(accessToken)
     axios
       .get("http://localhost:3000/tipo/", {
         headers: {
-          Authorization: `Bearer ${accessToken}`,  // Adiciona o token de autorização
+          Authorization: `Bearer ${accessToken}`,
         },
-      },
-      )
+      })
       .then((response) => {
         if (Array.isArray(response.data)) {
-          setTypes(response.data); // Armazenar os tipos recebidos
+          setTypes(response.data);
         } else {
           console.error("A resposta da API não é um array:", response.data);
-          setTypes([]); // Definir como array vazio se a resposta for inválida
+          setTypes([]);
         }
       })
       .catch((error) => {
         console.error("Erro ao buscar os tipos!", error);
-        setTypes([]); // Garantir que "types" seja um array mesmo em caso de erro
+        setTypes([]);
       });
   }, []);
 
@@ -45,37 +43,43 @@ function CreateHive() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Verificar valores
-    console.log("Nome:", hiveName);
-    console.log("Descrição:", hiveDescription);
-    console.log("Tipo:", hiveType);
-    console.log("Imagem:", hiveImage);
-    console.log("Privada:", isPrivate);
-
-    if (!hiveType) {
-      console.error("Tipo da Hive não selecionado!");
+    if (!hiveName.trim()) {
+      alert("O nome da Hive é obrigatório");
+      return;
+    }
+    if (!hiveDescription.trim()) {
+      alert("A descrição da Hive é obrigatória");
+      return;
+    }
+    if (!hiveType.trim()) {
+      alert("O tipo da Hive é obrigatório");
+      return;
+    }
+    if (!hiveImage) {
+      alert("A imagem da Hive é obrigatória");
       return;
     }
 
     const formData = new FormData();
     formData.append("nome", hiveName);
-    formData.append("imagem", hiveImage || "./"); // Se nenhuma imagem for selecionada, enviar string vazia
+    formData.append("imagem", hiveImage || "");
     formData.append("descricao", hiveDescription);
     formData.append("privada", isPrivate);
     formData.append("codigo_acesso", hivePassword);
     formData.append("tipo_id", hiveType);
 
     const accessToken = localStorage.getItem("accessToken");
-    const id = localStorage.getItem("id");
+    const id = localStorage.getItem("userId");
 
-    axios
-      .post(`http://localhost:3000/hive/${id}`, formData, {
+    axios.post(`http://localhost:3000/hive/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
         console.log("Hive criada com sucesso:", response.data);
+        navigate("/home");
       })
       .catch(error => {
         console.error('Erro ao criar a Hive!', error);
@@ -85,9 +89,6 @@ function CreateHive() {
           console.log('Erro desconhecido', error.message);
         }
       });
-      for (let pair of formData.entries()) {
-        console.log(`${pair[0]}: ${pair[1]}`);
-      }
   };
 
   return (
@@ -104,7 +105,7 @@ function CreateHive() {
                   type="file"
                   id="hive_input_image"
                   accept="image/*"
-                  onChange={(e) => setHiveImage(e.target.files[0] || null)} // Definir como null se nenhuma imagem for carregada
+                  onChange={(e) => setHiveImage(e.target.files[0] || null)}
                 />
                 <label htmlFor="hive_input_image" className="hive_input_label">
                   Add Image

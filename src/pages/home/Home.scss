@@ -34,6 +34,10 @@
     .hives_container {
       display: flex;
       gap: 1rem;
+      flex-wrap: wrap;
+      flex-direction: column;
+      max-height: calc(5 * 100px); // Ajuste a altura máxima conforme necessário
+      overflow-y: auto; // Adiciona rolagem vertical se necessário
 
       .hive {
         min-width: 14%;

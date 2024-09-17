@@ -5,18 +5,19 @@ const hiveService = new HiveService();
 
 class HiveController {
   static async cadastrar(req, res) {
-    const {id} = req.params;
-    const { nome, tipo, codigo_acesso, descricao, privada, imagem } = req.body;
-
+    const { id } = req.params;
+    const { nome, tipo_id, codigo_acesso, descricao, privada } = req.body;
+    const imagem = req.file ? req.file.filename : null; // Verificar se a imagem foi enviada
+    console.log(req.body);
     try {
       const hive = await hiveService.cadastrar({
-        nome, codigo_acesso, tipo, descricao, privada, imagem, id
+        nome, tipo_id, codigo_acesso, descricao, privada, imagem, id
       });
-
+  
       res.status(201).send(hive);
     } catch (error) {
       res.status(400).send({ message: error.message });
-      console.log(error)
+      console.log(error);
     }
   }
 

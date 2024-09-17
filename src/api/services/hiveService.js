@@ -11,12 +11,12 @@ class HiveService {
   async cadastrar(dto) {
     try {
       const senhaHash = await hash(dto.codigo_acesso, 8);
-  
+      console.log(dto.nome)
       const novaHive = await database.hives.create({
         id: uuidv4(),
         nome: dto.nome,
         codigo_acesso: senhaHash,
-        tipo_id: dto.tipo,
+        tipo_id: dto.tipo_id,
         descricao: dto.descricao,
         privada: dto.privada,
         imagem: dto.imagem,

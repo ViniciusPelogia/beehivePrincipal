@@ -5,7 +5,12 @@
   .title {
     margin-bottom: 4rem;
   }
-
+  .error_message {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 0.25em;
+  }
+  
   .hive_form {
     display: flex;
     flex-direction: column;
