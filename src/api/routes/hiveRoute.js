@@ -5,7 +5,7 @@ import upload from '../config/multer.js';
 const router = Router();
 
 router
-    .post('/hive/imagem/', upload.single("file"), hiveController.postarImagem)
+    .post('/hive/imagem/', upload.single('file'), hiveController.postarImagem)
     .post('/hive/:id', hiveController.cadastrar)
     .post('/tipo', hiveController.criaTipo)
     .get('/hive', hiveController.buscarTodasHives)

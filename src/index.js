@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import express from "express";
 import { Server } from "socket.io";
 import http from "http";
@@ -7,7 +8,6 @@ import bodyParser from "body-parser";
 import multer from 'multer'
 import cors from 'cors';
 
-const upload = multer()
 const app = express();
 const port = 3000;
 const server = http.createServer(app);
@@ -26,7 +26,6 @@ app.use(cors({
 
 app.use(express.json()); // Para analisar JSON no corpo das requisições
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(upload.single('imagem'));
 
 routes(app);
 

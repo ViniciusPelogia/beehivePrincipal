@@ -27,6 +27,6 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     // await queryInterface.sequelize.query('PRAGMA foreign_keys = OFF;'); // Desabilita as restrições de chave estrangeira
     await queryInterface.dropTable('tipoHives');
-    // await queryInterface.sequelize.query('PRAGMA foreign_keys = ON;'); // Habilita novamente as restrições de chave estrangeira
+    await queryInterface.sequelize.query('PRAGMA foreign_keys = ON;'); // Habilita novamente as restrições de chave estrangeira
   }
 };

@@ -10,7 +10,6 @@ import { v4 as uuidv4 } from "uuid";
 class HiveService {
   async cadastrar(dto) {
     try {
-
       const adm = await database.administradors.create({
         id: uuidv4(),
         usuario_id: dto.id,
@@ -25,107 +24,107 @@ class HiveService {
         descricao: dto.descricao,
         privada: dto.privada,
         imagem: dto.imagem,
-        adm_id: adm.id
+        adm_id: adm.id,
       });
       console.log("Hive foi criada ================");
-  
+
       const existingRecord = await database.usuariosXhives.findOne({
         where: {
           hive_id: novaHive.id,
-          usuario_id: dto.id
-        }
+          usuario_id: dto.id,
+        },
       });
-  
+
       if (!existingRecord) {
         await database.usuariosXhives.create({
           hive_id: novaHive.id,
           usuario_id: dto.id,
         });
       }
-  
+
       return novaHive;
     } catch (error) {
       throw new Error(error);
     }
   }
-  
-  
-  async criaTipo(tipo){
+
+  async criaTipo(tipo) {
     try {
       const existeTipo = await database.tipoHives.findOne({
-        where:{
-          tipo: tipo
-        }
-      })
+        where: {
+          tipo: tipo,
+        },
+      });
 
-      if(!existeTipo){
+      if (!existeTipo) {
         const novoTipo = await database.tipoHives.create({
-          tipo: tipo
-        })
+          tipo: tipo,
+        });
         return novoTipo;
       }
-
     } catch (error) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
   }
 
-  async postarImagem(dto){
+  async postarImagem(dto) {
     try {
+      const usuario = await database.usuarios.findByPk(dto.usuario_id);
+      if (!usuario) {
+        throw new Error("Usuário não encontrado");
+      }
 
       const post = await database.imagens.create({
         id: uuidv4(),
         nome: dto.nome,
         descricao: dto.descricao,
-        caminho: dto.file,
-        usuario_id: dto.usuario_id
-      })
+        caminho: dto.caminho,
+        usuario_id: dto.usuario_id,
+      });
 
-      return post
+      return post;
     } catch (error) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
   }
 
   async buscarHivesIn(id) {
     try {
       const usuariosPresente = await database.usuariosXhives.findAll({
-      where: {
-        usuario_id: id,
-      },
-    });
+        where: {
+          usuario_id: id,
+        },
+      });
 
-    if (!usuariosPresente) {
-      throw new Error("Usuario não está em nenhuma hive");
-    }
+      if (!usuariosPresente) {
+        throw new Error("Usuario não está em nenhuma hive");
+      }
 
-    const hiveIds = usuariosPresente.map((usuario) => usuario.hive_id);
+      const hiveIds = usuariosPresente.map((usuario) => usuario.hive_id);
 
-    const hivesPresentes = await database.hives.findAll({
-      where: {
-        id: hiveIds,
-      },
-    });
+      const hivesPresentes = await database.hives.findAll({
+        where: {
+          id: hiveIds,
+        },
+      });
 
-    return hivesPresentes;
+      return hivesPresentes;
     } catch (error) {
-      throw new Error(error.message)
-      // "Erro ao procurar hives onde o usuário pode estar presente", 
+      throw new Error(error.message);
+      // "Erro ao procurar hives onde o usuário pode estar presente",
     }
-    
-
   }
 
   async buscarTodasHives() {
     const Hives = await database.hives.findAll();
     return Hives;
   }
-  async todosTipos(){
+  async todosTipos() {
     try {
       const todosOsTipos = await database.tipoHives.findAll();
       return todosOsTipos;
     } catch (error) {
-      throw new Error(error)
+      throw new Error(error);
     }
   }
   async buscarHivePorNome(nome) {
@@ -180,21 +179,21 @@ class HiveService {
     }
   }
   async expulsarUsuario(dto) {
-    try{
+    try {
       const verificarAdm = await database.hives.findOne({
-        where:{
+        where: {
           id: dto.idHive,
-          adm_id: dto.idUsuario
-        }
-      })
+          adm_id: dto.idUsuario,
+        },
+      });
 
-      if(verificarAdm){
+      if (verificarAdm) {
         await database.usuariosXhives.destroy({
-          where:{
+          where: {
             hive_id: dto.idHive,
-            usuario_id: dto.id
-          }
-        })
+            usuario_id: dto.id,
+          },
+        });
       }
     } catch (error) {
       throw new Error("Erro ao tentar deletar o usuario!");

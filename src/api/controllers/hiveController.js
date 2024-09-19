@@ -12,9 +12,15 @@ class HiveController {
     console.log(req.body);
     try {
       const hive = await hiveService.cadastrar({
-        nome, tipo_id, codigo_acesso, descricao, privada, imagem, id
+        nome,
+        tipo_id,
+        codigo_acesso,
+        descricao,
+        privada,
+        imagem,
+        id,
       });
-  
+
       res.status(201).send(hive);
     } catch (error) {
       res.status(400).send({ message: error.message });
@@ -22,39 +28,48 @@ class HiveController {
     }
   }
 
-  static async criaTipo(req,res){
+  static async criaTipo(req, res) {
     const { tipo } = req.body;
 
     try {
       const novoTipo = await hiveService.criaTipo(tipo);
-      res.status(201).send(novoTipo)
+      res.status(201).send(novoTipo);
     } catch (error) {
-      res.status(401).send({message: error.message})
+      res.status(401).send({ message: error.message });
     }
   }
 
-  static async postarImagem(req,res){
+  static async postarImagem(req, res) {
     // const {id} = req.params;
-    const file = req.file
-    const { nome, descricao, caminho, usuario_id} = req.body;
+    
+    const file = req.file;
+    const { nome, descricao, usuario_id } = req.body;
     try {
-      const post = await hiveService.postarImagem({nome, descricao, caminho, usuario_id, file})
-      res.status(201).json(post)
+      if (!file) {
+        throw new Error("Arquivo não enviado");
+      }
+      const post = await hiveService.postarImagem({
+        nome,
+        descricao,
+        caminho: file.path,
+        usuario_id,
+      });
+      res.status(201).json(post);
     } catch (error) {
-      res.status(400).json(error.message)
+      res.status(400).json(error.message);
     }
   }
 
   //ROTAS GET ============================================
 
-  static async buscarHivesIn(req,res){
+  static async buscarHivesIn(req, res) {
     try {
-      const {id} = req.params;
+      const { id } = req.params;
       const hives = await hiveService.buscarHivesIn(id);
-  
-      res.status(200).json(hives)
+
+      res.status(200).json(hives);
     } catch (error) {
-      res.status(400).json({message: error.message})
+      res.status(400).json({ message: error.message });
     }
   }
 
@@ -81,20 +96,27 @@ class HiveController {
       res.status(400).send({ message: error.message });
     }
   }
-  static async todosTipos(req,res){
+  static async todosTipos(req, res) {
     try {
-      const todosOsTipos = await hiveService.todosTipos()
+      const todosOsTipos = await hiveService.todosTipos();
 
-      res.status(200).json(todosOsTipos)
+      res.status(200).json(todosOsTipos);
     } catch (error) {
-      res.status(400).json(error.message)
+      res.status(400).json(error.message);
     }
   }
   static async editarHive(req, res) {
     const { id } = req.params;
     const { nome, codigo_acesso, tipo, descricao, imagem } = req.body;
     try {
-      const hive = await hiveService.editarHive({ id, nome, codigo_acesso, tipo, descricao, imagem });
+      const hive = await hiveService.editarHive({
+        id,
+        nome,
+        codigo_acesso,
+        tipo,
+        descricao,
+        imagem,
+      });
       res.status(200).json(hive);
     } catch (error) {
       res.status(400).send({ message: error.message });
@@ -113,7 +135,7 @@ class HiveController {
     const { id } = req.params;
     const { idUsuario, idHive } = req.body;
     try {
-      await hiveService.expulsarUsuario({id, idUsuario, idHive});
+      await hiveService.expulsarUsuario({ id, idUsuario, idHive });
       res.status(200).send({ message: "Usuario expulso com sucesso!" });
     } catch (error) {
       res.status(400).send({ message: error.message });
