@@ -14,7 +14,7 @@ export default (sequelize, DataTypes) => {
       hives.hasMany(models.arquivosXhives, { foreignKey: 'hive_id'})
       hives.hasMany(models.imagensXhives, { foreignKey: 'hive_id'})
       hives.hasMany(models.usuariosXhives, { foreignKey: 'hive_id'})
-      hives.hasOne(models.administrador, { foreignKey: 'hive_id' });
+      hives.belongsTo(models.administradors, { foreignKey: 'adm_id' });
       hives.belongsTo(models.tipoHives, {foreignKey: 'tipo_id'});
     }
   }
@@ -25,7 +25,8 @@ export default (sequelize, DataTypes) => {
     privada: DataTypes.BOOLEAN,
     imagem:DataTypes.STRING,
     qtd_membros: DataTypes.INTEGER,
-    tipo_id:DataTypes.INTEGER
+    tipo_id:DataTypes.INTEGER,
+    adm_id:DataTypes.UUID
   }, {
     sequelize,
     modelName: 'hives',

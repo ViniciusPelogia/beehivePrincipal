@@ -4,6 +4,7 @@ import HiveService from "../services/hiveService.js";
 const hiveService = new HiveService();
 
 class HiveController {
+  //ROTAS POST ========================================
   static async cadastrar(req, res) {
     const { id } = req.params;
     const { nome, tipo_id, codigo_acesso, descricao, privada } = req.body;
@@ -31,6 +32,20 @@ class HiveController {
       res.status(401).send({message: error.message})
     }
   }
+
+  static async postarImagem(req,res){
+    // const {id} = req.params;
+    const file = req.file
+    const { nome, descricao, caminho, usuario_id} = req.body;
+    try {
+      const post = await hiveService.postarImagem({nome, descricao, caminho, usuario_id, file})
+      res.status(201).json(post)
+    } catch (error) {
+      res.status(400).json(error.message)
+    }
+  }
+
+  //ROTAS GET ============================================
 
   static async buscarHivesIn(req,res){
     try {
@@ -90,6 +105,16 @@ class HiveController {
     try {
       await hiveService.deletarHive(id);
       res.status(200).send({ message: "Hive deletada com sucesso!" });
+    } catch (error) {
+      res.status(400).send({ message: error.message });
+    }
+  }
+  static async expulsarUsuario(req, res) {
+    const { id } = req.params;
+    const { idUsuario, idHive } = req.body;
+    try {
+      await hiveService.expulsarUsuario({id, idUsuario, idHive});
+      res.status(200).send({ message: "Usuario expulso com sucesso!" });
     } catch (error) {
       res.status(400).send({ message: error.message });
     }

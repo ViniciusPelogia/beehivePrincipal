@@ -19,9 +19,8 @@ export default (sequelize, DataTypes) => {
   imagens.init({
     nome: DataTypes.STRING,
     descricao: DataTypes.STRING,
-    tipo: DataTypes.STRING,
-    tamanho: DataTypes.STRING,
-    caminho: DataTypes.STRING
+    caminho: DataTypes.STRING,
+    usuario_id: DataTypes.UUID
   }, {
     sequelize,
     modelName: 'imagens',

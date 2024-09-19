@@ -10,8 +10,13 @@ import { v4 as uuidv4 } from "uuid";
 class HiveService {
   async cadastrar(dto) {
     try {
-      const senhaHash = await hash(dto.codigo_acesso, 8);
-      console.log(dto.nome)
+
+      const adm = await database.administradors.create({
+        id: uuidv4(),
+        usuario_id: dto.id,
+      });
+
+      const senhaHash = await hash(dto.codigo_acesso, 5);
       const novaHive = await database.hives.create({
         id: uuidv4(),
         nome: dto.nome,
@@ -20,6 +25,7 @@ class HiveService {
         descricao: dto.descricao,
         privada: dto.privada,
         imagem: dto.imagem,
+        adm_id: adm.id
       });
       console.log("Hive foi criada ================");
   
@@ -34,22 +40,6 @@ class HiveService {
         await database.usuariosXhives.create({
           hive_id: novaHive.id,
           usuario_id: dto.id,
-        });
-      }
-      const existAdm = await database.administrador.findOne({
-        where: {
-          hive_id: novaHive.id,
-          usuario_id: dto.id,
-        }
-      });
-      console.log("Passou");
-  
-      if (!existAdm) {
-        console.log("Não existe ================");
-        await database.administrador.create({
-          id: uuidv4(),
-          usuario_id: dto.id,
-          hive_id: novaHive.id,
         });
       }
   
@@ -80,6 +70,22 @@ class HiveService {
     }
   }
 
+  async postarImagem(dto){
+    try {
+
+      const post = await database.imagens.create({
+        id: uuidv4(),
+        nome: dto.nome,
+        descricao: dto.descricao,
+        caminho: dto.file,
+        usuario_id: dto.usuario_id
+      })
+
+      return post
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
 
   async buscarHivesIn(id) {
     try {
@@ -169,6 +175,27 @@ class HiveService {
           id: id,
         },
       });
+    } catch (error) {
+      throw new Error("Erro ao tentar deletar o usuario!");
+    }
+  }
+  async expulsarUsuario(dto) {
+    try{
+      const verificarAdm = await database.hives.findOne({
+        where:{
+          id: dto.idHive,
+          adm_id: dto.idUsuario
+        }
+      })
+
+      if(verificarAdm){
+        await database.usuariosXhives.destroy({
+          where:{
+            hive_id: dto.idHive,
+            usuario_id: dto.id
+          }
+        })
+      }
     } catch (error) {
       throw new Error("Erro ao tentar deletar o usuario!");
     }

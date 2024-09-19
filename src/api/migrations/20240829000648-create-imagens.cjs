@@ -17,12 +17,6 @@ module.exports = {
       descricao: {
         type: Sequelize.STRING
       },
-      tipo: {
-        type: Sequelize.STRING
-      },
-      tamanho: {
-        type: Sequelize.STRING
-      },
       caminho: {
         type: Sequelize.STRING
       },

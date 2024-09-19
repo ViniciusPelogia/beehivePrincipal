@@ -16,7 +16,7 @@ export default (sequelize, DataTypes) => {
       usuarios.hasMany(models.arquivos, { foreignKey: 'usuario_id' });
       usuarios.hasMany(models.interacoes, { foreignKey: 'usuario_id' });
       usuarios.hasMany(models.usuariosXhives, { foreignKey: 'usuario_id' });
-      usuarios.hasMany(models.administrador, { foreignKey: 'usuario_id' });
+      usuarios.hasMany(models.administradors, { foreignKey: 'usuario_id' });
       usuarios.hasMany(models.imagens, { foreignKey: 'usuario_id' });
 
     }
