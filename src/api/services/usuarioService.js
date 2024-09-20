@@ -49,24 +49,29 @@ class UsuarioService {
     return usuario;
   }
 
-  async entrarEmHive(dto){
-    const presente = await database.usuariosXhives.findOne({
-      hive_id: dto.hive_id,
-      usuario_id: dto.usuario_id
-    })
-    if(presente){
-      throw new Error("Usuario já esta cadastrado nessa Hive")
-    }
+  async entrarEmHive(dto) {
     try {
+      console.log("chegou aqui");
+      console.log(dto.hive_id, dto.usuario_id)
+      const presente = await database.usuariosXhives.findOne({
+        where: {
+          hive_id: dto.hive_id,
+          usuario_id: dto.usuario_id,
+        },
+      });
+      console.log(presente);
+      if (presente) {
+        throw new Error("Usuario já esta cadastrado nessa Hive");
+      }
       const entrada = await database.usuariosXhives.create({
         hive_id: dto.hive_id,
-        usuario_id: dto.usuario_id
-    })
-    } catch (error) {
-      throw new Error(error.message)
-    }
-    return entrada;
+        usuario_id: dto.usuario_id,
+      });
 
+      return entrada;
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
   async editarUsuario(dto) {

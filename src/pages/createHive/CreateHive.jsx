@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import "./CreateHive.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,6 +11,7 @@ function CreateHive() {
   const [hiveDescription, setHiveDescription] = useState("");
   const [hivePassword, setHivePassword] = useState("");
   const [hiveImage, setHiveImage] = useState(null);
+  const [hiveImageUrl, setHiveImageUrl] = useState("");
   const [hiveType, setHiveType] = useState("");
   const [types, setTypes] = useState([]);
   const navigate = useNavigate();
@@ -71,7 +73,8 @@ function CreateHive() {
     const accessToken = localStorage.getItem("accessToken");
     const id = localStorage.getItem("userId");
 
-    axios.post(`http://localhost:3000/hive/${id}`, formData, {
+    axios
+      .post(`http://localhost:3000/hive/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "multipart/form-data",
@@ -81,14 +84,24 @@ function CreateHive() {
         console.log("Hive criada com sucesso:", response.data);
         navigate("/home");
       })
-      .catch(error => {
-        console.error('Erro ao criar a Hive!', error);
+      .catch((error) => {
+        console.error("Erro ao criar a Hive!", error);
         if (error.response) {
-          console.log('Erro no servidor:', error.response.data);
+          console.log("Erro no servidor:", error.response.data);
         } else {
-          console.log('Erro desconhecido', error.message);
+          console.log("Erro desconhecido", error.message);
         }
       });
+  };
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setHiveImage(file);
+      setHiveImageUrl(URL.createObjectURL(file));
+    } else {
+      setHiveImage(null);
+      setHiveImageUrl("");
+    }
   };
 
   return (
@@ -99,13 +112,15 @@ function CreateHive() {
           <h2 className="title">Create Hive</h2>
           <form className="hive_form" onSubmit={handleSubmit}>
             <div className="hive_image_container">
-              <div className="hive_image"></div>
+              <div className="hive_image">
+                {hiveImageUrl && <img src={hiveImageUrl} alt="Hive" />}
+              </div>
               <div className="Hive_image_button_container">
                 <input
                   type="file"
                   id="hive_input_image"
                   accept="image/*"
-                  onChange={(e) => setHiveImage(e.target.files[0] || null)}
+                  onChange={handleImageChange}
                 />
                 <label htmlFor="hive_input_image" className="hive_input_label">
                   Add Image

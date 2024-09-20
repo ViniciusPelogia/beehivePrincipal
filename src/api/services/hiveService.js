@@ -6,6 +6,7 @@ import { CgLogIn, CgSlack } from "react-icons/cg";
 import { where } from "sequelize";
 const { hash } = pkg;
 import { v4 as uuidv4 } from "uuid";
+import crypto from "crypto";
 
 class HiveService {
   async cadastrar(dto) {
@@ -15,7 +16,9 @@ class HiveService {
         usuario_id: dto.id,
       });
 
-      const senhaHash = await hash(dto.codigo_acesso, 5);
+      const hashFull = crypto.createHash('sha256').update(dto.codigo_acesso).digest('hex');
+      const senhaHash = hashFull.slice(0, 5); // Limitar a 5 caracteres
+      
       const novaHive = await database.hives.create({
         id: uuidv4(),
         nome: dto.nome,
@@ -82,11 +85,18 @@ class HiveService {
         usuario_id: dto.usuario_id,
       });
 
+      await database.imagensXhives.create({
+        hive_id: dto.id,
+        imagem_id: post.id
+      })
+
       return post;
     } catch (error) {
       throw new Error(error.message);
     }
   }
+
+  // ROTAS GET ===========================================
 
   async buscarHivesIn(id) {
     try {
@@ -152,6 +162,32 @@ class HiveService {
     }
     return hive;
   }
+
+  async buscaImagensDaHive(dto){
+    try {
+      const relacao = await database.imagensXhives.findAll({
+        where:{
+          hive_id:dto.id
+        }
+      })
+
+      const imagensId = relacao.map((e) => e.imagem_id);
+
+      const imagensDaHive = await database.imagens.findAll({
+        where: {
+          id: imagensId,
+        },
+      });
+
+
+      return imagensDaHive
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  //ROTAS PUT ========================================================= 
+
   async editarHive(dto) {
     const hive = await this.buscarHivePorId(dto.id);
     try {
@@ -166,12 +202,25 @@ class HiveService {
       throw new Error("Erro ao editar hive!");
     }
   }
-  async deletarHive(id) {
-    await this.buscarHivePorId(id);
+  async deletarHive(dto) {
     try {
+      const hive = await database.hives.findByPk(dto.id);
+
+      await database.administradors.destroy({
+        where: {
+          id: hive.adm_id,
+        },
+      });
+
+      await database.usuariosXhives.destroy({
+        where: {
+          hive_id: dto,
+        },
+      });
+
       await database.hives.destroy({
         where: {
-          id: id,
+          id: dto,
         },
       });
     } catch (error) {

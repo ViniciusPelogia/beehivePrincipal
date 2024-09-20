@@ -1,7 +1,7 @@
 @import '../../styles/variables.scss';
 @import '../../styles/mixins.scss';
 
-#home {
+#AllHivesPage {
   * {
     color: $light_text;
   }
@@ -30,19 +30,24 @@
 
   .your_hives {
     margin-bottom: 4rem;
+    max-height: none; // Remove o limite de altura
 
     .hives_container {
       display: flex;
       gap: 1rem;
+      flex-wrap: wrap;
+      flex-direction: row; // Altera a direção do flex para linha
+      overflow-y: auto; // Adiciona rolagem vertical se necessário
 
       .hive {
-        min-width: 14%;
-        max-width: 45%;
-        width: 18rem;
-        padding: 0;
+        min-width: 28%; // Ajuste a largura mínima
+        max-width: 80%; // Ajuste a largura máxima
+        width: 8rem; // Ajuste a largura
+        padding: 1rem; // Adiciona padding para o fundo cinza escuro
+        background-color: #161616; // Cor de fundo cinza escuro
         cursor: pointer;
         transition: $transition_one;
-
+        
         .hive_image {
           width: 100%;
           aspect-ratio: 1 / 1;

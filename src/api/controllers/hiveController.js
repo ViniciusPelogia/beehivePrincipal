@@ -8,7 +8,7 @@ class HiveController {
   static async cadastrar(req, res) {
     const { id } = req.params;
     const { nome, tipo_id, codigo_acesso, descricao, privada } = req.body;
-    const imagem = req.file ? req.file.filename : null; // Verificar se a imagem foi enviada
+    const imagem = req.file ? req.file.path : null; // Verificar se a imagem foi enviada
     console.log(req.body);
     try {
       const hive = await hiveService.cadastrar({
@@ -40,8 +40,7 @@ class HiveController {
   }
 
   static async postarImagem(req, res) {
-    // const {id} = req.params;
-    
+    const {id} = req.params;
     const file = req.file;
     const { nome, descricao, usuario_id } = req.body;
     try {
@@ -49,6 +48,7 @@ class HiveController {
         throw new Error("Arquivo não enviado");
       }
       const post = await hiveService.postarImagem({
+        id,
         nome,
         descricao,
         caminho: file.path,
@@ -56,7 +56,7 @@ class HiveController {
       });
       res.status(201).json(post);
     } catch (error) {
-      res.status(400).json(error.message);
+      res.status(400).json(error);
     }
   }
 
@@ -105,6 +105,19 @@ class HiveController {
       res.status(400).json(error.message);
     }
   }
+
+  static async buscaImagensDaHive(req,res){
+    const {id} = req.params;
+    try {
+      const imagens = await hiveService.buscaImagensDaHive({id})
+
+      res.status(200).json(imagens)
+    } catch (error) {
+      res.status(400).json(error)
+    }
+  }
+// ROTAS PUT =======================================
+
   static async editarHive(req, res) {
     const { id } = req.params;
     const { nome, codigo_acesso, tipo, descricao, imagem } = req.body;
@@ -124,8 +137,8 @@ class HiveController {
   }
   static async deletarHive(req, res) {
     const { id } = req.params;
-    try {
-      await hiveService.deletarHive(id);
+     try {
+      await hiveService.deletarHive({id});
       res.status(200).send({ message: "Hive deletada com sucesso!" });
     } catch (error) {
       res.status(400).send({ message: error.message });

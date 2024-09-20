@@ -39,7 +39,7 @@ class UsuarioController {
   static async entrarEmHive(req, res){
     try{
       const { usuario_id, hive_id} = req.body;
-      const entrar = await usuarioService.entrarEmHive(usuario_id, hive_id);
+      const entrar = await usuarioService.entrarEmHive({usuario_id, hive_id});
     res.status(200).json(entrar)
     } catch(error){
       res.status(400).send({ message: error.message })

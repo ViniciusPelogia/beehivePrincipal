@@ -1,5 +1,5 @@
-@import '../../styles/variables.scss';
-@import '../../styles/mixins.scss';
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
 
 #create_hive {
   .title {
@@ -10,7 +10,7 @@
     font-size: 0.875em;
     margin-top: 0.25em;
   }
-  
+
   .hive_form {
     display: flex;
     flex-direction: column;
@@ -26,10 +26,20 @@
       .hive_image {
         width: 10rem;
         height: 10rem;
-        border-radius: 100%;
+        border-radius: 10%;
         background-color: $bg_gray;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
       }
 
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
       .Hive_image_button_container {
         position: relative;
         display: inline-block;
@@ -83,7 +93,7 @@
       }
 
       .hive_private_input input + label:before {
-        content: '';
+        content: "";
         width: 16px;
         height: 16px;
         border-radius: 4px;

@@ -1,0 +1,60 @@
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/mixins.scss';
+
+#enter_hive_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(3px);
+
+  .enter_hive_popup {
+    width: 100%;
+    max-width: 600px;
+    background-color: $bg_dark;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 2px solid $color_two;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o conteúdo horizontalmente */
+
+    .hive_image {
+      width: 50%; /* Ajuste o tamanho conforme necessário */
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .hive_name {
+      font-size: 25px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center; /* Centraliza o texto */
+    }
+
+    .buttons_container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+
+      .enter_button {
+        @include btn_two;
+        min-width: 8rem;
+      }
+
+      .cancel_button {
+        @include btn_two--secondary;
+        min-width: 8rem;
+      }
+
+      .cancel_button {
+        border-radius: $element_border_radious;
+      }
+    }
+  }
+}

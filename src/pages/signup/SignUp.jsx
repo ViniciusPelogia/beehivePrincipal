@@ -36,7 +36,7 @@ function SignUp() {
         alert("A senha deve ter pelo menos 6 caracteres.");
         return;
       }
-      if (parseInt(formData.idade) <= 18) {
+      if (parseInt(formData.idade) < 18) {
         alert("A idade deve ser maior que 18 anos!");
         return;
       }
