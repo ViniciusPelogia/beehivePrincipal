@@ -14,9 +14,11 @@ import PostContent from "./popup/postContent/PostContent";
 function Hive() {
   const { id } = useParams();
   const [hive, setHive] = useState(null);
+  const [images, setImages] = useState([]);
   const [options, setOptions] = useState("midia");
   const [newPostPopup, setNewPostPopup] = useState(false);
   const [postContentPopup, setPostContentPopup] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken'); // Obtenha o token do localStorage
@@ -41,13 +43,30 @@ function Hive() {
       }
     };
 
+    const fetchImages = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/hive/imagens/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setImages(response.data);
+      } catch (error) {
+        console.error("Failed to fetch images", error);
+      }
+    };
+
     fetchHive();
+    fetchImages();
   }, [id]);
 
   const renderComponent = () => {
     switch (options) {
       case "midia":
-        return <Midia setPostContentPopup={setPostContentPopup} />;
+        return <Midia setPostContentPopup={setPostContentPopup} images={images} setSelectedImage={setSelectedImage} />;
       case "docs":
         return <Docs />;
       case "saves":
@@ -57,7 +76,7 @@ function Hive() {
     }
   };
 
-   if (!hive) {
+  if (!hive) {
     return <div>Loading...</div>;
   }
 
@@ -107,9 +126,9 @@ function Hive() {
           <button id="new_post_btn" onClick={() => setNewPostPopup(true)}>
             New post
           </button>
-          {newPostPopup && <NewPost onCancel={() => setNewPostPopup(false)} />}
+          {newPostPopup && <NewPost onCancel={() => setNewPostPopup(false)} id={id} />}
           {postContentPopup && (
-            <PostContent onCancel={() => setPostContentPopup(false)} />
+            <PostContent onCancel={() => setPostContentPopup(false)} selectedImage={selectedImage} />
           )}
         </article>
       </section>

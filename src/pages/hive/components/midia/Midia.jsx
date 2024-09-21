@@ -1,19 +1,20 @@
 import './Midia.scss';
 import PropTypes from 'prop-types';
 
-import hives_content_list from '../../../../data/hives_content';
-
-function Midia({ setPostContentPopup }) {
+function Midia({ setPostContentPopup, images, setSelectedImage }) {
   return (
     <>
-      {hives_content_list.map((hive) => (
+      {images.map((image) => (
         <div
-          key={hive.username}
+          key={image.id}
           className="hive_content_container"
-          onClick={setPostContentPopup}
+          onClick={() => {
+            setSelectedImage(image);
+            setPostContentPopup(true);
+          }}
         >
-          <img src={hive.image} alt={hive.username} className="image" />
-          <p>{hive.username}</p>
+          <img src={'../'+image.caminho} className="image" />
+          <p>{image.nome}</p>
         </div>
       ))}
     </>
@@ -21,7 +22,15 @@ function Midia({ setPostContentPopup }) {
 }
 
 Midia.propTypes = {
-  setPostContentPopup: PropTypes.func.isRequired
+  setPostContentPopup: PropTypes.func.isRequired,
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  setSelectedImage: PropTypes.func.isRequired,
 };
 
 export default Midia;
