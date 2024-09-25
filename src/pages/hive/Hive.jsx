@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./Hive.scss";
@@ -21,8 +20,7 @@ function Hive() {
   const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken'); // Obtenha o token do localStorage
-    console.log("Token no Hive:", token); // Verifique se o token está presente
+    const token = localStorage.getItem('accessToken');
     if (!token) {
       console.error("Access token não informado");
       return;
@@ -63,6 +61,22 @@ function Hive() {
     fetchImages();
   }, [id]);
 
+  const handleShareClick = async () => {
+    if (hive && hive.codigo_acesso) {
+      try {
+        await navigator.clipboard.writeText(hive.codigo_acesso);
+        alert("Código copiado para a área de transferência!");
+      } catch (error) {
+        console.error("Erro ao copiar o código: ", error);
+        alert("Falha ao copiar. Tente novamente.");
+      }
+    } else {
+      alert("Código de acesso não encontrado.");
+    }
+  };
+  
+  
+
   const renderComponent = () => {
     switch (options) {
       case "midia":
@@ -86,14 +100,14 @@ function Hive() {
       <section className="header_container">
         <article className="header_top">
           <div className="header_btn_container">
-            <button className="header_btn">
+            <button className="header_btn" onClick={handleShareClick}>
               Share
               <IoMdShare />
             </button>
           </div>
           <div className="header_image_container">
             <h1>{hive.nome}</h1>
-            <img src={hive.imagem} alt={hive.nome} className="header_image" />
+            <img src={'../'+hive.imagem} className="header_image" />
           </div>
         </article>
         <article className="header_bottom">

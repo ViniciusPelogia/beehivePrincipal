@@ -3,14 +3,49 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import { MdEdit } from 'react-icons/md';
 import { RiLogoutBoxRFill } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function Profile() {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
+  const [hives, setHives] = useState([]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userId = localStorage.getItem('userId');
+      const accessToken = localStorage.getItem('accessToken');
+
+      try {
+        const userResponse = await axios.get(`http://localhost:3000/usuarios/id/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        setUserData(userResponse.data);
+
+        const hivesResponse = await axios.get(`http://localhost:3000/hive/usuario/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        setHives(hivesResponse.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
     navigate('/');
   };
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -18,48 +53,39 @@ function Profile() {
       <main id="profile" className="page_layout">
         <section className="profile_left_section">
           <article className="profile_image_container">
-            <img src="/icons/user.png" alt="" className="profile_image" />
-            <h2 className="profile_username">Paulão</h2>
-            <p>107 anos</p>
+            <img src={userData.imagem} alt="" className="profile_image" />
+            <h2 className="profile_username">{userData.username}</h2>
+            <p>{userData.idade} anos</p>
           </article>
           <div className="profile_social_container">
-            <img src="/icons/instagram-logo.png" alt="Instagram" />
-            <img
-              src="/icons/facebook-logo.png"
-              alt="Facebook"
-              className="facebook"
-            />
+            <a href={`https://instagram.com/${userData.rede_social}`} target="_blank" rel="noopener noreferrer">
+              <img src="/icons/instagram-logo.png" alt="Instagram" />
+            </a>
           </div>
-          <p>Join date: 10 november 1984</p>
+          <p>Join date: {new Date(userData.createdAt).toLocaleDateString()}</p>
         </section>
 
         <section className="profile_right_section">
           <article className="profile_about_container">
             <h2>About</h2>
             <p className="fs_m profile_about_text">
-              Hi, everyone! My name is Peeter, Im a lawyer, but in my spare time
-              Im a photographer and car enthusiast. Im passionate about cars and
-              Im here to share some photos of the most beautiful cars in the
-              world.
+              {userData.biografia}
             </p>
           </article>
           <article className="profile_hives_container">
             <h2 className="profile_hives_title">Hives</h2>
             <ul className="profile_hives_list">
-              <Link to="/hive">
-                <img src="/icons/teste-hive.jpg" alt="" />
-                <p>Ovomaltine</p>
-              </Link>
-              <Link to="/hive">
-                <img src="/icons/teste-hive.jpg" alt="" />
-                <p>Jukebox</p>
-              </Link>
+              {hives.map(hive => (
+                <Link to={`/hive/${hive.id}`} key={hive.id}>
+                  <img src={hive.imagem} alt={hive.nome} />
+                  <p>{hive.nome}</p>
+                </Link>
+              ))}
             </ul>
             <div className="hives_buttons_container">
               <Link to="/createhive" className="button">
                 Create Hive
               </Link>
-              <button className="button">Enter code</button>
             </div>
           </article>
         </section>

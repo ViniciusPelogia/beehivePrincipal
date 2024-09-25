@@ -23,6 +23,10 @@
         height: 10rem;
         border-radius: 100%;
         background-color: $bg_gray;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
       }
 
       .Hive_image_button_container {

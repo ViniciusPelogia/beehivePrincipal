@@ -20,6 +20,19 @@ class UsuarioController {
       res.status(400).send({ message: error.message });
     }
   }
+  
+  static async entrarEmHive(req, res){
+    try{
+      const { usuario_id, hive_id} = req.body;
+      const entrar = await usuarioService.entrarEmHive({usuario_id, hive_id});
+    res.status(200).json(entrar)
+    } catch(error){
+      res.status(400).send({ message: error.message })
+    }
+    
+  }
+  //ROTAS GET ============================================
+
 
   static async buscarTodosUsuarios(req, res) {
     const usuarios = await usuarioService.buscarTodosUsuarios();
@@ -36,22 +49,23 @@ class UsuarioController {
     }
   }
 
-  static async entrarEmHive(req, res){
-    try{
-      const { usuario_id, hive_id} = req.body;
-      const entrar = await usuarioService.entrarEmHive({usuario_id, hive_id});
-    res.status(200).json(entrar)
-    } catch(error){
-      res.status(400).send({ message: error.message })
+  static async pegaImagem(req,res){
+    const {id} = req.params;
+    try {
+      const imagem = await usuarioService.pegaImagem({id})
+      
+      res.status(200).json(imagem)
+    } catch (error) {
+      res.status(400).json(error.message)
     }
-    
   }
 
   static async editarUsuario(req, res) {
     const { id } = req.params;
-    const { nome, email } = req.body;
+    const imagem = req.file;
+    const { username, biografia, rede_social} = req.body;
     try {
-      const usuario = await usuarioService.editarUsuario({ id, nome, email });
+      const usuario = await usuarioService.editarUsuario({ id, username, biografia, rede_social, imagem });
       res.status(200).json(usuario);
     } catch (error) {
       res.status(400).send({ message: error.message });

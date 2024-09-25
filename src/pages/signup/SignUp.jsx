@@ -47,7 +47,7 @@ function SignUp() {
         formData
       );
       if (response.status === 201) {
-        navigate("/home");
+        navigate("/");
       }
     } catch (error) {
       console.error("Error creating user:", error);

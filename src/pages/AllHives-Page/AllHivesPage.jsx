@@ -14,6 +14,7 @@ function Home() {
   const [enterHive, setEnterHive] = useState(false);
   const [selectedHive, setSelectedHive] = useState(null);
   const [hives, setHives] = useState([]);
+  const [userImage, setUserImage] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -79,8 +80,26 @@ const fetchHives = async () => {
     console.error("Failed to fetch hives", error);
   }
 };
+const fetchUserImage = async () => {
+  try {
+    const token = localStorage.getItem("accessToken"); // Obtém o token do localStorage
+    const userId = localStorage.getItem("userId")
+    const userResponse = await axios.get(
+      `http://localhost:3000/usuarios/id/${userId}`, // Usa o userId da prop
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Adiciona o token de autorização
+        },
+      }
+    );
+    setUserImage(userResponse.data.imagem); // Armazena a URL da imagem no estado
+  } catch (error) {
+    console.error("Failed to fetch user image", error);
+  }
+};
 
     fetchHives();
+    fetchUserImage();
 
     return () => {
       socket.disconnect();
@@ -128,9 +147,9 @@ const fetchHives = async () => {
         </div>
         <div className="header_image_container">
           <img
-            src="/icons/user.png"
-            alt="Beehive user"
-            className="header_image"
+           src={userImage} // Usa a imagem do usuário ou uma imagem padrão
+           alt="Beehive user"
+           className="header_image"
           />
         </div>
       </section>

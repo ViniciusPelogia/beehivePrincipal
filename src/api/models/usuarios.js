@@ -28,7 +28,8 @@ export default (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     idade: DataTypes.INTEGER,
     biografia: DataTypes.STRING,
-    rede_social: DataTypes.STRING
+    rede_social: DataTypes.STRING,
+    imagem: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'usuarios',

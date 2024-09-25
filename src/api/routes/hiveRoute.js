@@ -10,11 +10,11 @@ router
     .post('/tipo', hiveController.criaTipo)
     .get('/hive', hiveController.buscarTodasHives)
     .get('/hive/usuario/:id', hiveController.buscarHivesIn)
-    .get('/hive/:nome', hiveController.buscarHivePorNome)
+    .get('/hive/nome/:nome', hiveController.buscarHivePorNome)
     .get('/hive/id/:id',hiveController.buscarHivePorId)
     .get('/tipo', hiveController.todosTipos)
     .get('/hive/imagens/:id', hiveController.buscaImagensDaHive)
-    .put('/hive/:id')
+    .put('/hive/:id',)
     .delete('/hive/:id')
     .delete('/hive/usuario/:id', hiveController.expulsarUsuario)
 

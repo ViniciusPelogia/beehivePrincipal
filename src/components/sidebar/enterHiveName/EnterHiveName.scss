@@ -1,5 +1,5 @@
-@import '../../../styles/variables.scss';
-@import '../../../styles/mixins.scss';
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins.scss";
 
 #enter_name_container {
   position: fixed;
@@ -12,6 +12,33 @@
   align-items: center;
   backdrop-filter: blur(3px);
 
+  .search_results {
+    margin-bottom: 2rem;
+    max-width: 550px;
+    max-height: 350px; // Defina a altura máxima desejada
+    overflow-y: auto; // Adiciona uma barra de rolagem vertical se necessário
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      background-color: rgb(22, 22, 22);
+      border-radius: 10px;
+
+      img {
+        width: 5rem;
+        aspect-ratio: 1 / 1;
+        border-radius: 10px;
+      }
+    }
+    p {
+      margin: 0;
+    }
+  }
   .enter_name_popup {
     width: 100%;
     max-width: 600px;

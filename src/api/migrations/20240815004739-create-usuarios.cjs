@@ -32,6 +32,9 @@ module.exports = {
       rede_social: {
         type: Sequelize.STRING
       },
+      imagem:{
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -33,26 +33,10 @@ class UsuarioService {
       throw new Error(error);
     }
   }
-  async buscarTodosUsuarios() {
-    const usuarios = await database.usuarios.findAll();
-    return usuarios;
-  }
-  async buscarUsuarioPorId(id) {
-    const usuario = await database.usuarios.findOne({
-      where: {
-        id: id,
-      },
-    });
-    if (!usuario) {
-      throw new Error("Usuario informado não cadastrado!");
-    }
-    return usuario;
-  }
-
   async entrarEmHive(dto) {
     try {
       console.log("chegou aqui");
-      console.log(dto.hive_id, dto.usuario_id)
+      console.log(dto.hive_id, dto.usuario_id);
       const presente = await database.usuariosXhives.findOne({
         where: {
           hive_id: dto.hive_id,
@@ -74,13 +58,43 @@ class UsuarioService {
     }
   }
 
-  async editarUsuario(dto) {
-    const usuario = await this.buscarUsuarioPorId(dto.id);
+  //ROTAS GET ==================================
+
+  async buscarTodosUsuarios() {
+    const usuarios = await database.usuarios.findAll();
+    return usuarios;
+  }
+  async buscarUsuarioPorId(id) {
+    const usuario = await database.usuarios.findOne({
+      where: {
+        id: id,
+      },
+    });
+    if (!usuario) {
+      throw new Error("Usuario informado não cadastrado!");
+    }
+    return usuario;
+  }
+
+  async pegaImagem() {
     try {
-      usuario.username = dto.username;
-      usuario.email = dto.email;
-      await usuario.save();
-      return usuario;
+      const imagem = await database.imagens.findOne;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  async editarUsuario(dto) {
+    const usuario = await database.usuarios.findByPk(dto.id);
+    try {
+      if (usuario) {
+        usuario.username = dto.username;
+        usuario.biografia = dto.biografia;
+        usuario.rede_social = dto.rede_social;
+        usuario.imagem = dto.imagem.path
+        await usuario.save();
+      }
+      return usuario; 
     } catch (error) {
       throw new Error("Erro ao editar usuario!");
     }

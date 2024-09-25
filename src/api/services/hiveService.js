@@ -5,6 +5,7 @@ import pkg from "bcryptjs";
 import { CgLogIn, CgSlack } from "react-icons/cg";
 import { where } from "sequelize";
 const { hash } = pkg;
+import {Op} from 'sequelize'
 import { v4 as uuidv4 } from "uuid";
 import crypto from "crypto";
 
@@ -139,7 +140,7 @@ class HiveService {
   }
   async buscarHivePorNome(nome) {
     const regex = new RegExp(nome, "i");
-    const hive = await database.hives.findOne({
+    const hive = await database.hives.findAll({
       where: {
         nome: {
           [Op.like]: `%${regex.source}%`,
