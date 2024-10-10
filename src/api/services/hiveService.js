@@ -17,8 +17,10 @@ class HiveService {
         usuario_id: dto.id,
       });
 
-      const hashFull = crypto.createHash('sha256').update(dto.codigo_acesso).digest('hex');
-      const senhaHash = hashFull.slice(0, 5); // Limitar a 5 caracteres
+      const salt = crypto.randomBytes(4).toString('hex'); // Salt de 8 bytes para manter o tamanho pequeno
+      const hashFull = crypto.createHash('sha256').update(dto.codigo_acesso + salt).digest('hex');
+      const senhaHash = salt + hashFull.slice(0, 3); // Combinar o salt com os primeiros 5 caracteres do hash
+
       
       const novaHive = await database.hives.create({
         id: uuidv4(),
@@ -96,6 +98,48 @@ class HiveService {
       throw new Error(error.message);
     }
   }
+  async curtirPost(dto) {
+    console.log("Service CurtirPost - DTO:", dto);
+    try {
+      const jaCurtiu = await database.interacoes.findOne({
+        where: {
+          tipo: "curtida",
+          usuario_id: dto.usuario_id,
+          imagem_id: dto.id
+        }
+      });
+  
+      if (jaCurtiu) {
+        console.log("Service CurtirPost - Already Liked, Removing Like");
+        await database.interacoes.destroy({
+          where: {
+            tipo: "curtida",
+            usuario_id: dto.usuario_id,
+            imagem_id: dto.id
+          }
+        });
+        return { message: 'Descurtiu', likes: await this.pegaCurtidas(dto) };
+      } else {
+        console.log("Service CurtirPost - New Like");
+        const curtida = await database.interacoes.create({
+          id: uuidv4(),
+          tipo: "curtida",
+          usuario_id: dto.usuario_id,
+          imagem_id: dto.id,
+          hora: new Date()
+        });
+        return { curtida, likes: await this.pegaCurtidas(dto) };
+      }
+    } catch (error) {
+      console.error("Service CurtirPost - Error:", error.message);
+      throw new Error(error.message);
+    }
+  }
+  
+  
+  
+  
+  
 
   // ROTAS GET ===========================================
 
@@ -184,6 +228,37 @@ class HiveService {
       return imagensDaHive
     } catch (error) {
       throw new Error(error.message);
+    }
+  }
+
+  async buscaCodigoAcesso(dto){
+    try {
+      const codigo = await database.hives.scope("defaultScope").findByPk(dto.id,{
+        attributes: ["codigo_acesso"]
+      });
+
+      if(!codigo){
+        throw new Error
+      }
+      return codigo.codigo_acesso
+    } catch (error) {
+      throw new Error(error.message)      
+    }
+  }
+
+  async pegaCurtidas(dto){
+    try {
+      const curtidas = await database.interacoes.findAll({
+        where:{
+          tipo: "curtida",
+          imagem_id: dto.id
+        }
+      })
+
+      const contagem = curtidas.length
+      return contagem;
+    } catch (error) {
+      throw new Error(error.message)
     }
   }
 

@@ -1,5 +1,5 @@
-@import '../../../../styles/variables.scss';
-@import '../../../../styles/mixins.scss';
+@import "../../../../styles/variables.scss";
+@import "../../../../styles/mixins.scss";
 
 #post_content {
   position: fixed;
@@ -52,12 +52,22 @@
       .left_section__buttons_container {
         width: 100%;
         display: flex;
-        justify-content: space-around;
-        gap: 1rem;
+        justify-content: center; /* Ajuste para centralizar */
+        align-items: center;
+        gap: 1rem; /* Ajuste conforme necessário */
 
         svg {
           font-size: $font_text;
           cursor: pointer;
+
+          &.red-heart {
+            color: red; /* Cor do coração vermelho */
+          }
+        }
+
+        span {
+          margin-left: 0.5rem; /* Ajuste conforme necessário */
+          font-size: $font_text;
         }
       }
     }

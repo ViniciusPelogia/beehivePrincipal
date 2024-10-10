@@ -60,6 +60,23 @@ class HiveController {
     }
   }
 
+  static async curtirPost(req, res) {
+    const { id } = req.params;
+    const { usuario_id, hive_id } = req.body;
+    console.log("CurtirPost - Params:", req.params);
+    console.log("CurtirPost - Body:", req.body);
+    try {
+      const curtirPost = await hiveService.curtirPost({ id, usuario_id, hive_id });
+      console.log("CurtirPost - Success:", curtirPost);
+      res.status(200).json(curtirPost);
+    } catch (error) {
+      console.error("CurtirPost - Error:", error.message);
+      res.status(400).json(error.message);
+    }
+  }
+  
+  
+
   //ROTAS GET ============================================
 
   static async buscarHivesIn(req, res) {
@@ -114,6 +131,30 @@ class HiveController {
       res.status(200).json(imagens)
     } catch (error) {
       res.status(400).json(error)
+    }
+  }
+
+  static async buscaCodigoAcesso(req,res){
+    const { id } = req.params;
+    try {
+      const codigo = await hiveService.buscaCodigoAcesso({ id })
+      console.log("codigo:",codigo)
+
+      res.status(200).json(codigo)
+    } catch (error) {
+      res.status(400).json(error.message)
+    }
+  }
+
+  static async pegaCurtidas (req,res){
+    const { id } = req.params;
+
+    try {
+      const curtidas = await hiveService.pegaCurtidas({ id })
+
+      res.status(200).json(curtidas)
+    } catch (error) {
+      res.status(400).json(error.message)
     }
   }
 // ROTAS PUT =======================================

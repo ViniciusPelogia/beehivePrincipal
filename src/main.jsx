@@ -34,8 +34,7 @@ function Main() {
       element: <SignUp />
     },
     {
-      path: '/',
-      element: <PrivateRoute />,
+      element: <PrivateRoute />,  // Uso direto do PrivateRoute para proteger rotas
       children: [
         {
           path: '/home',
@@ -68,6 +67,8 @@ function Main() {
       ]
     }
   ]);
+  
+  
 
   return <RouterProvider router={router} />;
 }

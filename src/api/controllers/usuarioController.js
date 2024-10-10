@@ -31,6 +31,21 @@ class UsuarioController {
     }
     
   }
+
+  static async entrarComCodigo(req,res){
+    try{
+      const { codigo } = req.params;
+      const { usuario_id} = req.body;
+      console.log("IDS:", codigo, usuario_id)
+      const entrar = await usuarioService.entrarComCodigo({usuario_id, codigo});
+
+      const codigoHive = entrar.hive_id
+      
+    res.status(200).json(codigoHive)
+    } catch(error){
+      res.status(400).send({ message: error.message })
+    }
+  }
   //ROTAS GET ============================================
 
 

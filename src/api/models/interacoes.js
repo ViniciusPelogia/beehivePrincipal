@@ -19,7 +19,11 @@ export default (sequelize, DataTypes) => {
   }
   interacoes.init({
     tipo: DataTypes.STRING,
-    hora: DataTypes.DATE
+    hora: DataTypes.DATE,
+    imagem_id: DataTypes.UUID,
+    arquivo_id: DataTypes.UUID,
+    usuario_id: DataTypes.UUID,
+    comentario_id: DataTypes.UUID,
   }, {
     sequelize,
     modelName: 'interacoes',

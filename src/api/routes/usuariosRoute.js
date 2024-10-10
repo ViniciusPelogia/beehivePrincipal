@@ -12,6 +12,7 @@ router
     .get('/usuarios', UsuarioController.buscarTodosUsuarios)
     .use(autenticado)
     .post('/usuarios/entrarEmHive', UsuarioController.entrarEmHive)
+    .post('/usuarios/entrarComCodigo/:codigo', UsuarioController.entrarComCodigo)
     .get('/usuarios/id/:id', UsuarioController.buscarUsuarioPorId)
     .get('/usuarios/imagem/:id', UsuarioController.pegaImagem)
     .put('/usuarios/:id', upload.single('imagem'), UsuarioController.editarUsuario)

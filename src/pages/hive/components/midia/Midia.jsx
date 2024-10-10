@@ -1,3 +1,4 @@
+// Midia.js
 import './Midia.scss';
 import PropTypes from 'prop-types';
 
@@ -26,8 +27,8 @@ Midia.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
+      caminho: PropTypes.string.isRequired, // Alterado para "caminho" conforme necessário
+      descricao: PropTypes.string.isRequired, // Alterado para "descricao" conforme necessário
     })
   ).isRequired,
   setSelectedImage: PropTypes.func.isRequired,

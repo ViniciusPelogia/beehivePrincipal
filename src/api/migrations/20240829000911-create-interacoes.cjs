@@ -25,24 +25,19 @@ module.exports = {
         references: { model: 'usuarios', key: 'id' }
       },
       imagem_id: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.UUID,
         references: { model: 'imagens', key: 'id' }
       },
       arquivo_id: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.UUID,
         references: { model: 'arquivos', key: 'id' }
       },
       comentario_id: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.UUID,
         references: { model: 'comentarios', key: 'id' }
-      },
-      hive_id: {
-        allowNull: false,
-        type: Sequelize.UUID,
-        references: { model: 'hives', key: 'id' }
       },
       createdAt: {
         allowNull: false,
@@ -55,6 +50,8 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
+    // await queryInterface.sequelize.query('PRAGMA foreign_keys = OFF;');
     await queryInterface.dropTable('interacoes');
+    await queryInterface.sequelize.query('PRAGMA foreign_keys = ON;');
   }
 };

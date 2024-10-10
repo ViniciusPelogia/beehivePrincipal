@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 import "./Login.scss";
 import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";

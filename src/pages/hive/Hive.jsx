@@ -61,22 +61,30 @@ function Hive() {
     fetchImages();
   }, [id]);
 
-  const handleShareClick = async () => {
-    if (hive && hive.codigo_acesso) {
-      try {
-        await navigator.clipboard.writeText(hive.codigo_acesso);
-        alert("Código copiado para a área de transferência!");
-      } catch (error) {
-        console.error("Erro ao copiar o código: ", error);
-        alert("Falha ao copiar. Tente novamente.");
-      }
-    } else {
-      alert("Código de acesso não encontrado.");
-    }
+  const handleShareClick = () => {
+    const token = localStorage.getItem('accessToken');
+    axios.get(`http://localhost:3000/hives/${id}/access-code`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(response => {
+      const codigoAcesso = response.data;
+      navigator.clipboard.writeText(codigoAcesso)
+        .then(() => {
+          alert("Código de Acesso copiado para a área de transferência!");
+        })
+        .catch(err => {
+          alert("Falha ao copiar para a área de transferência.");
+          console.error("Erro ao copiar código de acesso:", err);
+        });
+    })
+    .catch(error => {
+      alert("Erro ao buscar o código de acesso.");
+      console.error("Error fetching access code:", error);
+    })
   };
   
-  
-
   const renderComponent = () => {
     switch (options) {
       case "midia":

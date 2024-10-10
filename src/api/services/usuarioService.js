@@ -58,6 +58,45 @@ class UsuarioService {
     }
   }
 
+  async entrarComCodigo(dto){
+    try {
+      const existeHive = await database.hives.findOne({
+        where:{
+          codigo_acesso: dto.codigo
+        }
+      })
+      
+      if(!existeHive){
+        throw new Error("Não foi possível encontrar uma hive com esse código")
+      }
+
+      const presente = await database.usuariosXhives.findOne({
+        where: {
+          hive_id: existeHive.id,
+          usuario_id: dto.usuario_id,
+        },
+      });
+
+      console.log(presente);
+      if (presente) {
+        throw new Error("Usuario já esta cadastrado nessa Hive");
+      }
+
+
+      if(!presente){
+        const entrada = await database.usuariosXhives.create({
+          hive_id: existeHive.id,
+          usuario_id: dto.usuario_id,
+        });
+  
+        return entrada;
+      }
+
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+
   //ROTAS GET ==================================
 
   async buscarTodosUsuarios() {
