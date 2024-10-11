@@ -39,6 +39,11 @@ module.exports = {
         type: Sequelize.UUID,
         references: { model: 'comentarios', key: 'id' }
       },
+      curtida_id: {
+        allowNull: true,
+        type: Sequelize.UUID,
+        references: { model: 'curtidas', key: 'id' }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

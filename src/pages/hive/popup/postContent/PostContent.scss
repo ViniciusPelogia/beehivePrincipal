@@ -52,21 +52,21 @@
       .left_section__buttons_container {
         width: 100%;
         display: flex;
-        justify-content: center; /* Ajuste para centralizar */
+        justify-content: center;
         align-items: center;
-        gap: 1rem; /* Ajuste conforme necessário */
+        gap: 1rem;
 
         svg {
           font-size: $font_text;
           cursor: pointer;
 
           &.red-heart {
-            color: red; /* Cor do coração vermelho */
+            color: red;
           }
         }
 
         span {
-          margin-left: 0.5rem; /* Ajuste conforme necessário */
+          margin-left: 0.5rem;
           font-size: $font_text;
         }
       }

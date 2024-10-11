@@ -13,6 +13,7 @@ export default (sequelize, DataTypes) => {
     static associate(models) {
       interacoes.belongsTo(models.usuarios, {foreignKey: 'usuario_id'});
       interacoes.belongsTo(models.imagens, {foreignKey: 'imagem_id'});
+      interacoes.belongsTo(models.curtidas, {foreignKey: 'curtida_id'});
       interacoes.belongsTo(models.arquivos, {foreignKey: 'arquivo_id'});
       interacoes.belongsTo(models.comentarios, {foreignKey: 'comentario_id'});
     }
@@ -24,6 +25,7 @@ export default (sequelize, DataTypes) => {
     arquivo_id: DataTypes.UUID,
     usuario_id: DataTypes.UUID,
     comentario_id: DataTypes.UUID,
+    curtida_id: DataTypes.UUID,
   }, {
     sequelize,
     modelName: 'interacoes',

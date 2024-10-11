@@ -62,13 +62,28 @@ class HiveController {
 
   static async curtirPost(req, res) {
     const { id } = req.params;
-    const { usuario_id, hive_id } = req.body;
+    const { usuario_id} = req.body;
     console.log("CurtirPost - Params:", req.params);
     console.log("CurtirPost - Body:", req.body);
     try {
-      const curtirPost = await hiveService.curtirPost({ id, usuario_id, hive_id });
+      const curtirPost = await hiveService.curtirPost({ id, usuario_id});
       console.log("CurtirPost - Success:", curtirPost);
       res.status(200).json(curtirPost);
+    } catch (error) {
+      console.error("CurtirPost - Error:", error.message);
+      res.status(400).json(error.message);
+    }
+  }
+  
+  static async comentarPost(req, res) {
+    const { id } = req.params;
+    const { usuario_id, comentario} = req.body;
+    console.log("CurtirPost - Params:", req.params);
+    console.log("CurtirPost - Body:", req.body);
+    try {
+      const comentarPost = await hiveService.comentarPost({ id, usuario_id, comentario});
+      console.log("comentarPost - Success:", comentarPost);
+      res.status(200).json(comentarPost);
     } catch (error) {
       console.error("CurtirPost - Error:", error.message);
       res.status(400).json(error.message);
@@ -153,6 +168,18 @@ class HiveController {
       const curtidas = await hiveService.pegaCurtidas({ id })
 
       res.status(200).json(curtidas)
+    } catch (error) {
+      res.status(400).json(error.message)
+    }
+  }
+
+  static async pegaComentarios (req,res){
+    const { id } = req.params;
+
+    try {
+      const comentarios = await hiveService.pegaComentarios({ id })
+
+      res.status(200).json(comentarios)
     } catch (error) {
       res.status(400).json(error.message)
     }

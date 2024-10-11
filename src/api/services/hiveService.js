@@ -98,6 +98,7 @@ class HiveService {
       throw new Error(error.message);
     }
   }
+  
   async curtirPost(dto) {
     console.log("Service CurtirPost - DTO:", dto);
     try {
@@ -121,17 +122,56 @@ class HiveService {
         return { message: 'Descurtiu', likes: await this.pegaCurtidas(dto) };
       } else {
         console.log("Service CurtirPost - New Like");
+
+        const curtir = await database.curtidas.create({
+          id:uuidv4()
+        })
+
         const curtida = await database.interacoes.create({
           id: uuidv4(),
           tipo: "curtida",
           usuario_id: dto.usuario_id,
           imagem_id: dto.id,
+          curtida_id:curtir.id,
           hora: new Date()
         });
         return { curtida, likes: await this.pegaCurtidas(dto) };
       }
     } catch (error) {
       console.error("Service CurtirPost - Error:", error.message);
+      throw new Error(error.message);
+    }
+  }
+  
+  async comentarPost(dto) {
+    console.log("Service ComentarPost - DTO:", dto);
+    try {
+      // const jaComentou = await database.interacoes.findOne({
+      //   where: {
+      //     tipo: "comentario",
+      //     usuario_id: dto.usuario_id,
+      //     imagem_id: dto.id
+      //   }
+      // });
+  
+        console.log("Service ComentarPost - New Comment");
+
+        const comentar = await database.comentarios.create({
+          id:uuidv4(),
+          comentario: dto.comentario
+        })
+
+        const comentario = await database.interacoes.create({
+          id: uuidv4(),
+          tipo: "comentario",
+          usuario_id: dto.usuario_id,
+          imagem_id: dto.id,
+          comentario_id: comentar.id,
+          hora: new Date()
+        });
+        return comentario
+      
+    } catch (error) {
       throw new Error(error.message);
     }
   }
@@ -257,6 +297,29 @@ class HiveService {
 
       const contagem = curtidas.length
       return contagem;
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+  async pegaComentarios(dto){
+    try {
+
+      const comentarios = await database.interacoes.findAll({
+        where:{
+          tipo: "comentario",
+          imagem_id: dto.id
+        }
+      })
+
+      const comentarioIds = comentarios.map((comentario) => comentario.comentario_id);
+
+      const comentario = await database.comentarios.findAll({
+        where:{
+          id: comentarioIds
+        }
+      })
+
+      return { comentario: comentario, usuario: comentarios.usuario_id}
     } catch (error) {
       throw new Error(error.message)
     }

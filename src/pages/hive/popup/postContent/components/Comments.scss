@@ -1,0 +1,76 @@
+@import "../../../../../styles/variables.scss";
+@import "../../../../../styles/mixins.scss";
+
+.comments_section {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    overflow-y: auto; // Permite a rolagem vertical
+  
+    // Adicionando espaço no fundo para evitar sobreposição com a seção de input
+    padding-bottom: 3rem;
+  }
+  
+  .comments_section__input {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ddd;
+    padding: 10px;
+    position: sticky; // Fixar na parte inferior
+    bottom: 0;
+    background-color: $bg_dark;
+  
+    input {
+      flex: 1;
+      border: none;
+      padding: 10px;
+      font-size: 1rem;
+    }
+  
+    button {
+      background: none;
+      border: none;
+      font-size: 1rem; // Diminuir o tamanho do botão
+      cursor: pointer;
+      padding: 5px 10px; // Ajustar padding para reduzir tamanho
+    }
+  }
+  
+  .comment {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    border-radius: 10px; // Bordas arredondadas
+    background-color: lighten($bg_dark, 4%); // Cor de fundo mais clara
+    padding: 10px;
+  }
+  
+  .comment__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin-right: 10px;
+  
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%; // Imagem 100% redonda
+      object-fit: cover;
+    }
+  }
+  
+  .comment__content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .comment__username {
+    font-weight: bold;
+  }
+  
+  .comment__text {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
