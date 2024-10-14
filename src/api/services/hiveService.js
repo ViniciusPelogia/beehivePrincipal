@@ -5,7 +5,7 @@ import pkg from "bcryptjs";
 import { CgLogIn, CgSlack } from "react-icons/cg";
 import { where } from "sequelize";
 const { hash } = pkg;
-import {Op} from 'sequelize'
+import { Op } from "sequelize";
 import { v4 as uuidv4 } from "uuid";
 import crypto from "crypto";
 
@@ -17,11 +17,13 @@ class HiveService {
         usuario_id: dto.id,
       });
 
-      const salt = crypto.randomBytes(4).toString('hex'); // Salt de 8 bytes para manter o tamanho pequeno
-      const hashFull = crypto.createHash('sha256').update(dto.codigo_acesso + salt).digest('hex');
+      const salt = crypto.randomBytes(4).toString("hex"); // Salt de 8 bytes para manter o tamanho pequeno
+      const hashFull = crypto
+        .createHash("sha256")
+        .update(dto.codigo_acesso + salt)
+        .digest("hex");
       const senhaHash = salt + hashFull.slice(0, 3); // Combinar o salt com os primeiros 5 caracteres do hash
 
-      
       const novaHive = await database.hives.create({
         id: uuidv4(),
         nome: dto.nome,
@@ -90,15 +92,15 @@ class HiveService {
 
       await database.imagensXhives.create({
         hive_id: dto.id,
-        imagem_id: post.id
-      })
+        imagem_id: post.id,
+      });
 
       return post;
     } catch (error) {
       throw new Error(error.message);
     }
   }
-  
+
   async curtirPost(dto) {
     console.log("Service CurtirPost - DTO:", dto);
     try {
@@ -106,34 +108,34 @@ class HiveService {
         where: {
           tipo: "curtida",
           usuario_id: dto.usuario_id,
-          imagem_id: dto.id
-        }
+          imagem_id: dto.id,
+        },
       });
-  
+
       if (jaCurtiu) {
         console.log("Service CurtirPost - Already Liked, Removing Like");
         await database.interacoes.destroy({
           where: {
             tipo: "curtida",
             usuario_id: dto.usuario_id,
-            imagem_id: dto.id
-          }
+            imagem_id: dto.id,
+          },
         });
-        return { message: 'Descurtiu', likes: await this.pegaCurtidas(dto) };
+        return { message: "Descurtiu", likes: await this.pegaCurtidas(dto) };
       } else {
         console.log("Service CurtirPost - New Like");
 
         const curtir = await database.curtidas.create({
-          id:uuidv4()
-        })
+          id: uuidv4(),
+        });
 
         const curtida = await database.interacoes.create({
           id: uuidv4(),
           tipo: "curtida",
           usuario_id: dto.usuario_id,
           imagem_id: dto.id,
-          curtida_id:curtir.id,
-          hora: new Date()
+          curtida_id: curtir.id,
+          hora: new Date(),
         });
         return { curtida, likes: await this.pegaCurtidas(dto) };
       }
@@ -142,9 +144,8 @@ class HiveService {
       throw new Error(error.message);
     }
   }
-  
+
   async comentarPost(dto) {
-    console.log("Service ComentarPost - DTO:", dto);
     try {
       // const jaComentou = await database.interacoes.findOne({
       //   where: {
@@ -153,33 +154,25 @@ class HiveService {
       //     imagem_id: dto.id
       //   }
       // });
-  
-        console.log("Service ComentarPost - New Comment");
 
-        const comentar = await database.comentarios.create({
-          id:uuidv4(),
-          comentario: dto.comentario
-        })
+      const comentar = await database.comentarios.create({
+        id: uuidv4(),
+        comentario: dto.comentario,
+      });
 
-        const comentario = await database.interacoes.create({
-          id: uuidv4(),
-          tipo: "comentario",
-          usuario_id: dto.usuario_id,
-          imagem_id: dto.id,
-          comentario_id: comentar.id,
-          hora: new Date()
-        });
-        return comentario
-      
+      const comentario = await database.interacoes.create({
+        id: uuidv4(),
+        tipo: "comentario",
+        usuario_id: dto.usuario_id,
+        imagem_id: dto.id,
+        comentario_id: comentar.id,
+        hora: new Date(),
+      });
+      return comentario;
     } catch (error) {
       throw new Error(error.message);
     }
   }
-  
-  
-  
-  
-  
 
   // ROTAS GET ===========================================
 
@@ -248,13 +241,13 @@ class HiveService {
     return hive;
   }
 
-  async buscaImagensDaHive(dto){
+  async buscaImagensDaHive(dto) {
     try {
       const relacao = await database.imagensXhives.findAll({
-        where:{
-          hive_id:dto.id
-        }
-      })
+        where: {
+          hive_id: dto.id,
+        },
+      });
 
       const imagensId = relacao.map((e) => e.imagem_id);
 
@@ -264,68 +257,88 @@ class HiveService {
         },
       });
 
-
-      return imagensDaHive
+      return imagensDaHive;
     } catch (error) {
       throw new Error(error.message);
     }
   }
 
-  async buscaCodigoAcesso(dto){
+  async buscaCodigoAcesso(dto) {
     try {
-      const codigo = await database.hives.scope("defaultScope").findByPk(dto.id,{
-        attributes: ["codigo_acesso"]
-      });
+      const codigo = await database.hives
+        .scope("defaultScope")
+        .findByPk(dto.id, {
+          attributes: ["codigo_acesso"],
+        });
 
-      if(!codigo){
-        throw new Error
+      if (!codigo) {
+        throw new Error();
       }
-      return codigo.codigo_acesso
+      return codigo.codigo_acesso;
     } catch (error) {
-      throw new Error(error.message)      
+      throw new Error(error.message);
     }
   }
 
-  async pegaCurtidas(dto){
+  async pegaCurtidas(dto) {
     try {
       const curtidas = await database.interacoes.findAll({
-        where:{
+        where: {
           tipo: "curtida",
-          imagem_id: dto.id
-        }
-      })
+          imagem_id: dto.id,
+        },
+      });
 
-      const contagem = curtidas.length
+      const contagem = curtidas.length;
       return contagem;
     } catch (error) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
   }
-  async pegaComentarios(dto){
+  async pegaComentarios(dto) {
     try {
-
-      const comentarios = await database.interacoes.findAll({
-        where:{
+      const interacoes = await database.interacoes.findAll({
+        where: {
           tipo: "comentario",
-          imagem_id: dto.id
-        }
-      })
+          imagem_id: dto.id,
+        },
+        include: [
+          {
+            model: database.usuarios,
+            as: "usuario",
+            attributes: ["username", "imagem"],
+          },
+        ],
+      });
 
-      const comentarioIds = comentarios.map((comentario) => comentario.comentario_id);
+      const comentarioIds = interacoes.map(
+        (interacao) => interacao.comentario_id
+      );
 
-      const comentario = await database.comentarios.findAll({
-        where:{
-          id: comentarioIds
-        }
-      })
+      const comentarios = await database.comentarios.findAll({
+        where: {
+          id: comentarioIds,
+        },
+      });
 
-      return { comentario: comentario, usuario: comentarios.usuario_id}
+      const result = interacoes.map((interacao) => {
+        const comentario = comentarios.find(
+          (c) => c.id === interacao.comentario_id
+        );
+        return {
+          id: comentario.id, // Incluindo o ID do comentário
+          comentario: comentario.comentario,
+          usuario: interacao.usuario,
+        };
+      });
+
+      return result;
     } catch (error) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
   }
 
-  //ROTAS PUT ========================================================= 
+  //ROTAS PUT =========================================================
 
   async editarHive(dto) {
     const hive = await this.buscarHivePorId(dto.id);
@@ -385,6 +398,51 @@ class HiveService {
       }
     } catch (error) {
       throw new Error("Erro ao tentar deletar o usuario!");
+    }
+  }
+
+  async apagarComentario(dto) {
+    try {
+      const isAdm = await database.hives.findOne({
+        where: {
+          adm_id: dto.usuario,
+        },
+      });
+
+      const isPoster = await database.imagens.findOne({
+        where: {
+          usuario_id: dto.usuario,
+        },
+      });
+
+      const permissao = await database.interacoes.findOne({
+        where:{
+          comentario_id: dto.id,
+          usuario_id: dto.usuario
+        }
+      })
+
+      if ( isPoster || isAdm || permissao ) {
+        const relacao = await database.interacoes.destroy({
+          where: {
+            comentario_id: dto.id,
+          },
+        });
+
+        if (relacao) {
+          await database.comentarios.destroy({
+            where: {
+              id: dto.id,
+            },
+          });
+        }
+        return { message: "comentario excluido com sucesso" };
+      }else{
+        throw new Error('Você não tem permissão para excluir este comentário')
+      }
+
+    } catch (error) {
+      throw new Error(error.message);
     }
   }
 }

@@ -2,75 +2,111 @@
 @import "../../../../../styles/mixins.scss";
 
 .comments_section {
-    display: flex;
-    flex-direction: column;
-    margin-top: 1rem;
-    overflow-y: auto; // Permite a rolagem vertical
-  
-    // Adicionando espaço no fundo para evitar sobreposição com a seção de input
-    padding-bottom: 3rem;
-  }
-  
-  .comments_section__input {
-    display: flex;
-    align-items: center;
-    border-top: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; // Permitir rolagem vertical
+  max-height: 100%; // Garantir que a seção de comentários ocupe o espaço disponível
+}
+
+.comments_section__input {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  position: sticky; // Fixar na parte inferior
+  bottom: 0;
+  background-color: $bg_dark;
+
+  input {
+    flex: 1;
+    border: none;
     padding: 10px;
-    position: sticky; // Fixar na parte inferior
-    bottom: 0;
-    background-color: $bg_dark;
-  
-    input {
-      flex: 1;
-      border: none;
-      padding: 10px;
-      font-size: 1rem;
-    }
-  
-    button {
-      background: none;
-      border: none;
-      font-size: 1rem; // Diminuir o tamanho do botão
-      cursor: pointer;
-      padding: 5px 10px; // Ajustar padding para reduzir tamanho
-    }
+    font-size: 1rem;
   }
-  
-  .comment {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 10px;
-    border-radius: 10px; // Bordas arredondadas
-    background-color: lighten($bg_dark, 4%); // Cor de fundo mais clara
-    padding: 10px;
+
+  button {
+    background: none;
+    border: none;
+    font-size: 1rem; // Diminuir o tamanho do botão
+    cursor: pointer;
+    padding: 5px 10px; // Ajustar padding para reduzir tamanho
   }
-  
-  .comment__avatar {
-    width: 40px;
-    height: 40px;
+}
+
+.comment {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  border-radius: 10px; // Bordas arredondadas
+  background-color: lighten($bg_dark, 5%); // Cor de fundo mais clara
+  padding: 10px;
+  position: relative; // Adiciona isso para permitir o posicionamento absoluto dos botões
+}
+
+.comment__content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; // Faz o conteúdo crescer para ocupar o espaço disponível
+}
+
+p.error_message{
+  background-color: red;
+}
+
+.comment__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Centralizar verticalmente */
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.2rem; // Ajustar o tamanho do ícone se necessário
+}
+
+
+.read-more-button {
+  background: none;
+  border: none;
+  color: blue;
+  cursor: pointer;
+  font-size: 0.9rem;
+  position: relative; // Permite que o botão siga o fluxo do texto
+  margin-left: 5px; // Adiciona um pouco de espaçamento
+}
+
+
+.comment__avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  flex-shrink: 0; // Impede que a imagem diminua de tamanho
+  img {
+    width: 90%;
+    height: 90%;
     border-radius: 50%;
-    background-color: #ddd;
-    margin-right: 10px;
-  
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%; // Imagem 100% redonda
-      object-fit: cover;
-    }
+    object-fit: cover;
   }
-  
-  .comment__content {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .comment__username {
-    font-weight: bold;
-  }
-  
-  .comment__text {
-    font-size: 0.9rem;
-    color: #555;
-  }
-  
+}
+
+.comment__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment__username {
+  font-weight: bold;
+}
+
+.comment__text {
+  position: relative;
+  margin-right: 80px; 
+  padding-right: 90px;
+  display: inline; // Certifica-se de que o texto e o botão estejam em linha
+}
+

@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { GoComment, GoHeart } from 'react-icons/go';
 import { AiOutlineClose } from 'react-icons/ai';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 import Comments from './components/Comments';
 
@@ -79,12 +79,15 @@ function PostContent({ onCancel, selectedImage }) {
             <span></span>
             <span></span>
             <span></span>
-            <GoComment onClick={() => setShowComments(!showComments)} />
+            <GoComment onClick={() => {
+              console.log('Comment button clicked, postId:', selectedImage.id);
+              setShowComments(!showComments);
+            }} />
           </div>
         </div>
         <div className="popup__right_section">
           {showComments ? (
-            <Comments />
+            <Comments postId={selectedImage.id} />
           ) : (
             <>
               <h2 className="right_section__title">{selectedImage.descricao}</h2>

@@ -21,6 +21,7 @@ router
     .get('/post/comentar/:id', hiveController.pegaComentarios)
     .put('/hive/:id',)
     .delete('/hive/:id')
+    .delete('/post/comentar/:id', hiveController.apagarComentario)
     .delete('/hive/usuario/:id', hiveController.expulsarUsuario)
 
 export default router;

@@ -222,6 +222,18 @@ class HiveController {
       res.status(400).send({ message: error.message });
     }
   }
+
+  static async apagarComentario(req,res){
+    const { id } = req.params;
+    const { usuario } = req.body;
+    try {
+      const apagar = await hiveService.apagarComentario({ id, usuario })
+
+      res.status(200).json(apagar)
+    } catch (error) {
+      res.status(400).json({message: error.message})
+    }
+  }
 }
 
 export default HiveController;

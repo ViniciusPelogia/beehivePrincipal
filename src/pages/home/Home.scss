@@ -51,7 +51,7 @@
         max-width: 80%; // Ajuste a largura máxima
         width: 8rem; // Ajuste a largura
         padding: 1rem; // Adiciona padding para o fundo cinza escuro
-        background-color: #161616; // Cor de fundo cinza escuro
+        background-color: lighten($bg_dark, 5%);// Cor de fundo cinza escuro
         cursor: pointer;
         transition: $transition_one;
 
