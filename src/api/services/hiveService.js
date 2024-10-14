@@ -203,6 +203,28 @@ class HiveService {
     }
   }
 
+  async buscarUsuariosPresentes(dto){
+    try {
+      const relacao = await database.usuariosXhives.findAll({
+        where:{
+          hive_id: dto.id
+        }
+      })
+
+      const usuariosId = relacao.map((usuario) => usuario.usuario_id) 
+
+      const usuarios = await database.usuarios.findAll({
+        where:{
+          id: usuariosId
+        }
+      })
+
+      return usuarios
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+
   async buscarTodasHives() {
     const Hives = await database.hives.findAll();
     return Hives;
@@ -439,6 +461,42 @@ class HiveService {
         return { message: "comentario excluido com sucesso" };
       }else{
         throw new Error('Você não tem permissão para excluir este comentário')
+      }
+
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+  async apagarPost(dto) {
+    try {
+      const isAdm = await database.hives.findOne({
+        where: {
+          adm_id: dto.usuario,
+        },
+      });
+
+      const isPoster = await database.imagens.findOne({
+        where: {
+          usuario_id: dto.usuario,
+        },
+      });
+
+
+      if ( isPoster || isAdm  ) {
+        await database.imagensXhives.destroy({
+          where:{
+            imagem_id: dto.id
+          }
+        })
+
+        await database.imagens.destroy({
+          where: {
+            id: dto.id
+          }
+        })
+        return { message: "Post excluido com sucesso" };
+      }else{
+        throw new Error('Você não tem permissão para excluir este post')
       }
 
     } catch (error) {

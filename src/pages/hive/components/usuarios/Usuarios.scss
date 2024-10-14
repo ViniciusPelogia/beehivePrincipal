@@ -1,0 +1,41 @@
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/mixins.scss';
+
+.usuarios {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  gap: 1rem;
+
+  .usuario {
+    display: flex;
+    align-items: center; // Alinhar os itens ao centro verticalmente
+    width: 100%; // Ocupa toda a largura da tela
+    gap: 1rem;
+    padding: 0.5rem;
+    border-radius: $element_border_radious;
+    background-color: lighten($bg_dark, 5%);
+    transition: $transition_one;
+    justify-content: space-between;
+
+    &__imagem {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    &__nome {
+      font-size: 1.2rem;
+      color: white;
+      flex-grow: 1; // Permite que o nome ocupe o espaço restante
+      text-align: left; // Alinha o texto à esquerda
+    }
+
+    &__icon {
+      font-size: 1.5rem;
+      color: red;
+    }
+  }
+}

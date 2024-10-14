@@ -12,6 +12,7 @@ router
     .post('/post/comentar/:id', hiveController.comentarPost)
     .get('/hive', hiveController.buscarTodasHives)
     .get('/hive/usuario/:id', hiveController.buscarHivesIn)
+    .get('/hive/usuarios/:id', hiveController.buscarUsuariosPresentes)
     .get('/hive/nome/:nome', hiveController.buscarHivePorNome)
     .get('/hive/id/:id',hiveController.buscarHivePorId)
     .get('/tipo', hiveController.todosTipos)
@@ -22,6 +23,7 @@ router
     .put('/hive/:id',)
     .delete('/hive/:id')
     .delete('/post/comentar/:id', hiveController.apagarComentario)
+    .delete('/hive/imagens/:id', hiveController.apagarPost)
     .delete('/hive/usuario/:id', hiveController.expulsarUsuario)
 
 export default router;

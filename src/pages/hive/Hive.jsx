@@ -4,9 +4,8 @@ import axios from "axios";
 import "./Hive.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { IoMdShare } from "react-icons/io";
-import Docs from "./components/docs/Docs";
+import Usuarios from "./components/usuarios/Usuarios";
 import Midia from "./components/midia/Midia";
-import Saves from "./components/saves/Saves";
 import NewPost from "./popup/newPost/NewPost";
 import PostContent from "./popup/postContent/PostContent";
 
@@ -18,6 +17,7 @@ function Hive() {
   const [newPostPopup, setNewPostPopup] = useState(false);
   const [postContentPopup, setPostContentPopup] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [usuarios, setUsuarios] = useState([]); // Novo estado para armazenar os usuários
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -25,6 +25,7 @@ function Hive() {
       console.error("Access token não informado");
       return;
     }
+
     const fetchHive = async () => {
       try {
         const response = await axios.get(
@@ -57,8 +58,25 @@ function Hive() {
       }
     };
 
+    const fetchUsuarios = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/hive/usuarios/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setUsuarios(response.data); // Armazena os usuários no estado
+      } catch (error) {
+        console.error("Failed to fetch usuarios", error);
+      }
+    };
+
     fetchHive();
     fetchImages();
+    fetchUsuarios();
   }, [id]);
 
   const handleShareClick = () => {
@@ -84,15 +102,13 @@ function Hive() {
       console.error("Error fetching access code:", error);
     })
   };
-  
+
   const renderComponent = () => {
     switch (options) {
       case "midia":
         return <Midia setPostContentPopup={setPostContentPopup} images={images} setSelectedImage={setSelectedImage} />;
-      case "docs":
-        return <Docs />;
-      case "saves":
-        return <Saves />;
+      case "usuarios":
+        return <Usuarios usuarios={usuarios} />; // Passa os usuários como prop
       default:
         return <Midia />;
     }
@@ -130,19 +146,11 @@ function Hive() {
             </button>
             <button
               className={`hive_header_btn ${
-                options === "docs" ? "hive_header_btn--active" : ""
+                options === "usuarios" ? "hive_header_btn--active" : ""
               }`}
-              onClick={() => setOptions("docs")}
+              onClick={() => setOptions("usuarios")}
             >
-              Docs
-            </button>
-            <button
-              className={`hive_header_btn ${
-                options === "saves" ? "hive_header_btn--active" : ""
-              }`}
-              onClick={() => setOptions("saves")}
-            >
-              Saves
+              Usuarios
             </button>
           </div>
           <button id="new_post_btn" onClick={() => setNewPostPopup(true)}>

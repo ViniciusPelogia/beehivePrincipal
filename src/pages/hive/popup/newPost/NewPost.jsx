@@ -37,6 +37,9 @@ function NewPost({ onCancel, id }) {
     } catch (error) {
       console.error("Failed to create new post", error.message);
     }
+
+    window.alert("Post criado com sucesso");
+    window.location.reload(); // Recarregar a página inteira
   };
   const handleImageChange = (e) => {
     const file = e.target.files[0];

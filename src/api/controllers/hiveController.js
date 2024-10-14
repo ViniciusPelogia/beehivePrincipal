@@ -105,6 +105,18 @@ class HiveController {
     }
   }
 
+  static async buscarUsuariosPresentes(req,res){
+    try{
+      const { id } = req.params;
+
+      const usuarios = await hiveService.buscarUsuariosPresentes({ id})
+
+      res.status(200).json(usuarios)
+    } catch(error){
+      res.status(400).json(error.message)
+    }
+  }
+
   static async buscarTodasHives(req, res) {
     const hives = await hiveService.buscarTodasHives();
 
@@ -228,6 +240,17 @@ class HiveController {
     const { usuario } = req.body;
     try {
       const apagar = await hiveService.apagarComentario({ id, usuario })
+
+      res.status(200).json(apagar)
+    } catch (error) {
+      res.status(400).json({message: error.message})
+    }
+  }
+  static async apagarPost(req,res){
+    const { id } = req.params;
+    const { usuario } = req.body;
+    try {
+      const apagar = await hiveService.apagarPost({ id, usuario })
 
       res.status(200).json(apagar)
     } catch (error) {

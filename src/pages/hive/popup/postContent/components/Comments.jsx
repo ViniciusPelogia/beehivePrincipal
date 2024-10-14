@@ -1,7 +1,7 @@
 import "./Comments.scss";
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
-import { GoTrash, GoNoEntry } from "react-icons/go";
+import { GoTrash, GoStop } from "react-icons/go";
 import axios from "axios";
 
 function Comments({ postId }) {
@@ -120,7 +120,7 @@ function Comments({ postId }) {
 
   return (
     <div className="comments_section">
-      {errorMessage && <p className="error_message"> <GoNoEntry /> {errorMessage}</p>}
+      {errorMessage && <p className="error_message"> <GoStop /> {errorMessage}</p>}
       {comments.map((comment, index) => (
         <div key={index} className="comment">
           <div className="comment__avatar">
