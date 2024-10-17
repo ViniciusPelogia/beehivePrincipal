@@ -203,25 +203,44 @@ class HiveService {
     }
   }
 
-  async buscarUsuariosPresentes(dto){
+  async buscarUsuariosPresentes(dto) {
     try {
       const relacao = await database.usuariosXhives.findAll({
+        where: {
+          hive_id: dto.id,
+        },
+      });
+
+      const usuariosId = relacao.map((usuario) => usuario.usuario_id);
+
+      const hive = await database.hives.findOne({
+        where: {
+          id: dto.id
+        }
+      });
+      const admId = hive.adm_id;
+      console.log("ADM ID:"+admId)
+      console.log("==============================================")
+
+      const adm = await database.administradors.findOne({
         where:{
-          hive_id: dto.id
+          id: admId
         }
       })
-
-      const usuariosId = relacao.map((usuario) => usuario.usuario_id) 
 
       const usuarios = await database.usuarios.findAll({
-        where:{
-          id: usuariosId
-        }
-      })
+        where: {
+          id: usuariosId.filter(id => id !== admId & id !== adm.usuario_id), // Excluir o administrador da lista
+        },
+      });
 
-      return usuarios
+      console.log("==============================================")
+      console.log(usuarios)
+      console.log("==============================================")
+
+      return usuarios;
     } catch (error) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
   }
 
@@ -403,20 +422,33 @@ class HiveService {
   }
   async expulsarUsuario(dto) {
     try {
-      const verificarAdm = await database.hives.findOne({
+      const procuraAdm = await database.administradors.findAll({
         where: {
-          id: dto.idHive,
-          adm_id: dto.idUsuario,
+          usuario_id: dto.usuario
         },
       });
 
-      if (verificarAdm) {
+      const hive = await database.hives.findOne({
+        where:{
+          id: dto.hive
+        }
+      })
+
+      const isAdm = procuraAdm.map((adm) => adm.id == hive.adm_id)
+
+      if (isAdm) {
         await database.usuariosXhives.destroy({
           where: {
-            hive_id: dto.idHive,
             usuario_id: dto.id,
+            hive_id: dto.hive
           },
         });
+
+        return { message: "Usuário expulso com sucesso!" };
+      }else{
+        throw new Error(
+          "Você não tem permissão para expulsar usuários"
+        );
       }
     } catch (error) {
       throw new Error("Erro ao tentar deletar o usuario!");
@@ -425,11 +457,19 @@ class HiveService {
 
   async apagarComentario(dto) {
     try {
-      const isAdm = await database.hives.findOne({
+      const procuraAdm = await database.administradors.findAll({
         where: {
-          adm_id: dto.usuario,
+          usuario_id: dto.usuario
         },
       });
+
+      const hive = await database.hives.findOne({
+        where:{
+          id: dto.hive
+        }
+      })
+
+      const isAdm = procuraAdm.map((adm) => adm.id == hive.adm_id)
 
       const isPoster = await database.imagens.findOne({
         where: {
@@ -438,13 +478,13 @@ class HiveService {
       });
 
       const permissao = await database.interacoes.findOne({
-        where:{
+        where: {
           comentario_id: dto.id,
-          usuario_id: dto.usuario
-        }
-      })
+          usuario_id: dto.usuario,
+        },
+      });
 
-      if ( isPoster || isAdm || permissao ) {
+      if (isPoster || isAdm || permissao) {
         const relacao = await database.interacoes.destroy({
           where: {
             comentario_id: dto.id,
@@ -459,21 +499,28 @@ class HiveService {
           });
         }
         return { message: "comentario excluido com sucesso" };
-      }else{
-        throw new Error('Você não tem permissão para excluir este comentário')
+      } else {
+        throw new Error("Você não tem permissão para excluir este comentário");
       }
-
     } catch (error) {
       throw new Error(error.message);
     }
   }
   async apagarPost(dto) {
     try {
-      const isAdm = await database.hives.findOne({
+      const procuraAdm = await database.administradors.findAll({
         where: {
-          adm_id: dto.usuario,
+          usuario_id: dto.usuario
         },
       });
+
+      const hive = await database.hives.findOne({
+        where:{
+          id: dto.hive
+        }
+      })
+
+      const isAdm = procuraAdm.map((adm) => adm.id == hive.adm_id)
 
       const isPoster = await database.imagens.findOne({
         where: {
@@ -481,24 +528,22 @@ class HiveService {
         },
       });
 
-
-      if ( isPoster || isAdm  ) {
+      if (isPoster || isAdm) {
         await database.imagensXhives.destroy({
-          where:{
-            imagem_id: dto.id
-          }
-        })
+          where: {
+            imagem_id: dto.id,
+          },
+        });
 
         await database.imagens.destroy({
           where: {
-            id: dto.id
-          }
-        })
+            id: dto.id,
+          },
+        });
         return { message: "Post excluido com sucesso" };
-      }else{
-        throw new Error('Você não tem permissão para excluir este post')
+      } else {
+        throw new Error("Você não tem permissão para excluir este post");
       }
-
     } catch (error) {
       throw new Error(error.message);
     }

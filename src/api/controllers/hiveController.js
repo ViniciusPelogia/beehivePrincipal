@@ -226,9 +226,9 @@ class HiveController {
   }
   static async expulsarUsuario(req, res) {
     const { id } = req.params;
-    const { idUsuario, idHive } = req.body;
+    const { usuario, hive } = req.body;
     try {
-      await hiveService.expulsarUsuario({ id, idUsuario, idHive });
+      await hiveService.expulsarUsuario({ id, usuario, hive });
       res.status(200).send({ message: "Usuario expulso com sucesso!" });
     } catch (error) {
       res.status(400).send({ message: error.message });
