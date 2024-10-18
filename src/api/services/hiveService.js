@@ -219,8 +219,6 @@ class HiveService {
         }
       });
       const admId = hive.adm_id;
-      console.log("ADM ID:"+admId)
-      console.log("==============================================")
 
       const adm = await database.administradors.findOne({
         where:{
@@ -228,15 +226,14 @@ class HiveService {
         }
       })
 
+      
+
       const usuarios = await database.usuarios.findAll({
         where: {
-          id: usuariosId.filter(id => id !== admId & id !== adm.usuario_id), // Excluir o administrador da lista
+          id: usuariosId.filter(id => id !== admId && id !== adm.usuario_id) // Excluir o administrador da lista
         },
       });
 
-      console.log("==============================================")
-      console.log(usuarios)
-      console.log("==============================================")
 
       return usuarios;
     } catch (error) {

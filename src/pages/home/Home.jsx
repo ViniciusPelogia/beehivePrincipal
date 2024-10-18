@@ -8,7 +8,6 @@ import io from "socket.io-client";
 import axios from "axios";
 
 function Home({ userId }) {
-  // Recebe userId como prop do Main
   const [enterHiveCode, setEnterHiveCode] = useState(false);
   const [hives, setHives] = useState([]);
   const [userImage, setUserImage] = useState("");
@@ -28,21 +27,23 @@ function Home({ userId }) {
       console.error("Erro na conexão WebSocket:", error);
     });
 
-    socket.emit("teste", "isso é um teste");
+    socket.on("updateHives", (updatedHives) => {
+      setHives(updatedHives);
+    });
 
     const fetchHives = async () => {
       try {
-        const token = localStorage.getItem("accessToken"); // Obtém o token do localStorage
+        const token = localStorage.getItem("accessToken");
         const response = await axios.get(
-          `http://localhost:3000/hive/usuario/${userId}`, // Usa o userId da prop
+          `http://localhost:3000/hive/usuario/${userId}`,
           {
             headers: {
-              Authorization: `Bearer ${token}`, // Adiciona o token de autorização
+              Authorization: `Bearer ${token}`,
             },
           }
         );
         if (Array.isArray(response.data)) {
-          setHives(response.data); // Armazena as hives no estado
+          setHives(response.data);
         } else {
           console.error("A resposta da API não é um array:", response.data);
         }
@@ -50,25 +51,25 @@ function Home({ userId }) {
         console.error("Failed to fetch hives", error);
       }
     };
+
     const fetchUserImage = async () => {
       try {
-        const token = localStorage.getItem("accessToken"); // Obtém o token do localStorage
+        const token = localStorage.getItem("accessToken");
         const userResponse = await axios.get(
-          `http://localhost:3000/usuarios/id/${userId}`, // Usa o userId da prop
+          `http://localhost:3000/usuarios/id/${userId}`,
           {
             headers: {
-              Authorization: `Bearer ${token}`, // Adiciona o token de autorização
+              Authorization: `Bearer ${token}`,
             },
           }
         );
-        setUserImage(userResponse.data.imagem); // Armazena a URL da imagem no estado
+        setUserImage(userResponse.data.imagem);
       } catch (error) {
         console.error("Failed to fetch user image", error);
       }
     };
 
     if (userId) {
-      // Apenas busca as hives se o userId estiver disponível
       fetchHives();
       fetchUserImage();
     }
@@ -76,7 +77,7 @@ function Home({ userId }) {
     return () => {
       socket.disconnect();
     };
-  }, [userId]); // Atualiza a lista de hives sempre que o userId mudar
+  }, [userId]);
 
   return (
     <main id="home" className="page_layout">
@@ -95,7 +96,7 @@ function Home({ userId }) {
         </div>
         <div className="header_image_container">
           <img
-            src={userImage} // Usa a imagem do usuário ou uma imagem padrão
+            src={userImage}
             alt="Beehive user"
             className="header_image"
           />
@@ -107,7 +108,6 @@ function Home({ userId }) {
           {hives.map((hive) => (
             <Link to={`/hive/${hive.id}`} key={hive.id} className="hive">
               {" "}
-              {/* Corrigido para usar hive.id */}
               <img src={hive.imagem} alt={hive.nome} className="hive_image" />
               <p>{hive.nome}</p>
             </Link>

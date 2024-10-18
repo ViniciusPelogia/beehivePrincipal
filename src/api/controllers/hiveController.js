@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import {emitPublicHives} from "../../socket-back.js";
 import HiveService from "../services/hiveService.js";
 
 const hiveService = new HiveService();
@@ -9,6 +10,7 @@ class HiveController {
     const { id } = req.params;
     const { nome, tipo_id, codigo_acesso, descricao, privada } = req.body;
     const imagem = req.file ? req.file.path : null; // Verificar se a imagem foi enviada
+    const token = req.headers.authorization.split(' ')[1];
     console.log(req.body);
     try {
       const hive = await hiveService.cadastrar({
@@ -20,6 +22,8 @@ class HiveController {
         imagem,
         id,
       });
+
+      await emitPublicHives(token);
 
       res.status(201).send(hive);
     } catch (error) {
@@ -109,7 +113,7 @@ class HiveController {
     try{
       const { id } = req.params;
 
-      const usuarios = await hiveService.buscarUsuariosPresentes({ id})
+      const usuarios = await hiveService.buscarUsuariosPresentes({ id })
 
       res.status(200).json(usuarios)
     } catch(error){

@@ -32,7 +32,9 @@ function Home() {
       console.error("Erro na conexão WebSocket:", error);
     });
 
-    socket.emit("teste", "isso é um teste");
+    socket.on("updateHives", (updatedHives) => {
+      setHives(updatedHives);
+    });
 //=======================================================
 
 const fetchUserHives = async (userId) => {

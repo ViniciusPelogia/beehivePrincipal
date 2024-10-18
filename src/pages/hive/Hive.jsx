@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import io from "socket.io-client";
 import "./Hive.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { IoMdShare } from "react-icons/io";
@@ -17,9 +18,11 @@ function Hive() {
   const [newPostPopup, setNewPostPopup] = useState(false);
   const [postContentPopup, setPostContentPopup] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [usuarios, setUsuarios] = useState([]); // Novo estado para armazenar os usuários
-
+  const [usuarios, setUsuarios] = useState([]);
+  const [messages, setMessages] = useState([]);
+  
   useEffect(() => {
+    const socket = io.connect("http://localhost:3000");
     const token = localStorage.getItem('accessToken');
     if (!token) {
       console.error("Access token não informado");
@@ -68,7 +71,7 @@ function Hive() {
             },
           }
         );
-        setUsuarios(response.data); // Armazena os usuários no estado
+        setUsuarios(response.data);
       } catch (error) {
         console.error("Failed to fetch usuarios", error);
       }
@@ -77,6 +80,22 @@ function Hive() {
     fetchHive();
     fetchImages();
     fetchUsuarios();
+
+    // Entrar na sala da hive
+    socket.emit("joinHive", id);
+    console.log(`Emitiu joinHive para ${id}`);
+
+    // Escutar por mensagens
+    socket.on("message", (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    return () => {
+      // Sair da sala da hive ao desmontar o componente
+      socket.emit("leaveHive", id);
+      console.log(`Emitiu leaveHive para ${id}`);
+      socket.disconnect();
+    };
   }, [id]);
 
   const handleShareClick = () => {
@@ -108,7 +127,7 @@ function Hive() {
       case "midia":
         return <Midia setPostContentPopup={setPostContentPopup} images={images} setSelectedImage={setSelectedImage} />;
       case "usuarios":
-        return <Usuarios usuarios={usuarios} />; // Passa os usuários como prop
+        return <Usuarios usuarios={usuarios} />;
       default:
         return <Midia />;
     }
@@ -137,17 +156,13 @@ function Hive() {
         <article className="header_bottom">
           <div className="header_bottom__links">
             <button
-              className={`hive_header_btn ${
-                options === "midia" ? "hive_header_btn--active" : ""
-              }`}
+              className={`hive_header_btn ${options === "midia" ? "hive_header_btn--active" : ""}`}
               onClick={() => setOptions("midia")}
             >
               Midia
             </button>
             <button
-              className={`hive_header_btn ${
-                options === "usuarios" ? "hive_header_btn--active" : ""
-              }`}
+              className={`hive_header_btn ${options === "usuarios" ? "hive_header_btn--active" : ""}`}
               onClick={() => setOptions("usuarios")}
             >
               Usuarios
@@ -162,7 +177,14 @@ function Hive() {
           )}
         </article>
       </section>
-      <section className="hive_data_container">{renderComponent()}</section>
+      <section className="hive_data_container">
+        {renderComponent()}
+        <div className="message_container">
+          {messages.map((msg, index) => (
+            <div key={index} className="message">{msg}</div>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
