@@ -11,6 +11,11 @@ function Home({ userId }) {
   const [enterHiveCode, setEnterHiveCode] = useState(false);
   const [hives, setHives] = useState([]);
   const [userImage, setUserImage] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   useEffect(() => {
     const socket = io.connect("http://localhost:3000");
@@ -78,46 +83,53 @@ function Home({ userId }) {
       socket.disconnect();
     };
   }, [userId]);
-
   return (
-    <main id="home" className="page_layout">
-      <Sidebar />
-      <section className="header">
-        <div className="header_btn_container">
-          <Link to="/createhive" className="header_btn f_s">
-            Create Hive
-          </Link>
-          <button
-            className="header_btn f_s"
-            onClick={() => setEnterHiveCode(true)}
-          >
-            Enter code
-          </button>
-        </div>
-        <div className="header_image_container">
-          <img
-            src={userImage}
-            alt="Beehive user"
-            className="header_image"
-          />
-        </div>
-      </section>
-      <section className="your_hives">
-        <h2 className="title">Your Hives</h2>
-        <article className="hives_container">
-          {hives.map((hive) => (
-            <Link to={`/hive/${hive.id}`} key={hive.id} className="hive">
-              {" "}
-              <img src={hive.imagem} alt={hive.nome} className="hive_image" />
-              <p>{hive.nome}</p>
+    <div
+      className={`page_layout ${
+        isSidebarOpen ? "sidebar-open" : "sidebar-closed"
+      }`}
+    >
+      <Sidebar isOpen={isSidebarOpen} />
+
+      <button className="sidebar-toggle" onClick={toggleSidebar}>
+        {isSidebarOpen ? "Close" : "Open"}
+      </button>
+
+      <main id="home">
+        <header className="header">
+          <div className="header_btn_container">
+            <Link to="/createhive" className="header_btn f_s">
+              Create Hive
             </Link>
-          ))}
-        </article>
-      </section>
-      {enterHiveCode && (
-        <EnterHiveCode onCancel={() => setEnterHiveCode(false)} />
-      )}
-    </main>
+            <button
+              className="header_btn f_s"
+              onClick={() => setEnterHiveCode(true)}
+            >
+              Enter code
+            </button>
+          </div>
+          <div className="header_image_container">
+            <img src={userImage} alt="Beehive user" className="header_image" />
+          </div>
+        </header>
+
+        <section className="your_hives">
+          <h2>Suas Hives</h2>
+          <article className="hives_container">
+            {hives.map((hive) => (
+              <Link to={`/hive/${hive.id}`} key={hive.id} className="hive">
+                <img src={hive.imagem} alt={hive.nome} className="hive_image" />
+                <p>{hive.nome}</p>
+              </Link>
+            ))}
+          </article>
+        </section>
+
+        {enterHiveCode && (
+          <EnterHiveCode onCancel={() => setEnterHiveCode(false)} />
+        )}
+      </main>
+    </div>
   );
 }
 

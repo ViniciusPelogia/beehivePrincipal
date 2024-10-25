@@ -1,19 +1,21 @@
-import './NewPost.scss';
-import PropTypes from 'prop-types';
-import { useState } from 'react';
-import axios from 'axios';
+/* eslint-disable no-undef */
+import "./NewPost.scss";
+import PropTypes from "prop-types";
+import { useState } from "react";
+import axios from "axios";
+import { io } from "socket.io-client";
 
 function NewPost({ onCancel, id }) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [hiveImageUrl, setHiveImageUrl] = useState("");
   const [file, setFile] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const usuarioId = localStorage.getItem('userId');
-    const token = localStorage.getItem('accessToken');
+    const usuarioId = localStorage.getItem("userId");
+    const token = localStorage.getItem("accessToken");
 
     if (!token) {
       console.error("Access token não informado");
@@ -21,25 +23,33 @@ function NewPost({ onCancel, id }) {
     }
 
     const formData = new FormData();
-    formData.append('nome', title);
-    formData.append('descricao', description);
-    formData.append('file', file);
-    formData.append('usuario_id', usuarioId);
+    formData.append("nome", title);
+    formData.append("descricao", description);
+    formData.append("file", file);
+    formData.append("usuario_id", usuarioId);
 
     try {
-      await axios.post(`http://localhost:3000/hive/imagem/${id}`, formData, {
+      const response = await axios.post(`http://localhost:3000/hive/imagem/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
+
+      const newPost = response.data;
+
+      // Emitir evento de novo post
+      const socket = io("http://localhost:3000");
+      socket.emit("newPost", id, newPost);
+      console.log("Novo post enviado:", newPost);
+  
       onCancel(); // Fechar o popup após o envio bem-sucedido
     } catch (error) {
       console.error("Failed to create new post", error.message);
     }
-
+    
     window.alert("Post criado com sucesso");
-    window.location.reload(); // Recarregar a página inteira
+    // window.location.reload(); // Recarregar a página inteira
   };
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -78,7 +88,9 @@ function NewPost({ onCancel, id }) {
             </div>
             <div className="form__image_container">
               <label className="form__image_top_label">Image</label>
-              <div className="form__image">{hiveImageUrl && <img src={hiveImageUrl} alt="Hive" />}</div>
+              <div className="form__image">
+                {hiveImageUrl && <img src={hiveImageUrl} alt="Hive" />}
+              </div>
               <div className="form__image_button_container">
                 <input
                   type="file"
@@ -100,7 +112,9 @@ function NewPost({ onCancel, id }) {
             <button type="button" className="cancel_button" onClick={onCancel}>
               Cancel
             </button>
-            <button type="submit" className="enter_button">Create</button>
+            <button type="submit" className="enter_button">
+              Create
+            </button>
           </div>
         </form>
       </div>

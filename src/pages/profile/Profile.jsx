@@ -10,6 +10,12 @@ function Profile() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const [hives, setHives] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -49,6 +55,15 @@ function Profile() {
 
   return (
     <>
+      <div
+      className={`page_layout ${
+        isSidebarOpen ? "sidebar-open" : "sidebar-closed"
+      }`}
+      >
+      <Sidebar isOpen={isSidebarOpen} />
+      <button className="sidebar-toggle" onClick={toggleSidebar}>
+        {isSidebarOpen ? "Close" : "Open"}
+      </button>
       <Sidebar />
       <main id="profile" className="page_layout">
         <section className="profile_left_section">
@@ -99,6 +114,7 @@ function Profile() {
           </button>
         </div>
       </main>
+    </div>
     </>
   );
 }

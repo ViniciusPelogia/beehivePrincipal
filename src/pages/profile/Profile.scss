@@ -4,6 +4,9 @@
 #profile {
   display: flex;
 
+  margin-left: -400px; /* Certifique-se de que a margem inicial seja 0 */
+  transition: margin-left 0.3s ease-in-out;
+  
   .profile_left_section {
     .profile_image_container {
       width: 100%;

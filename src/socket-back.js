@@ -57,6 +57,12 @@ io.on("connection", (socket) => {
   socket.on("updateHives", () => {
     emitPublicHives();
   });
+
+  socket.on("newPost", (hiveId, post) => {
+    io.to(hiveId).emit("newPost1", post);
+    console.log(`Novo post na hive ${hiveId}:`, post);
+  });
+
 });
 
 export { emitPublicHives };

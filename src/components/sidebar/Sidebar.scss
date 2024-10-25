@@ -1,6 +1,19 @@
 @import '../../styles/variables.scss';
 @import '../../styles/mixins.scss';
 
+.sidebar-toggle {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  background-color: $bg_dark;
+  color: $color_two;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  display: block; /* Certifique-se que ele esteja sendo exibido */
+}
+
 #sidebar {
   background-color: $bg_dark;
   position: fixed;
@@ -8,21 +21,24 @@
   left: 0;
   padding: 2rem 1rem;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-right: 1px solid $color_two--transparent;
+  width: 300px; /* Padrão de largura */
+  transition: transform 0.3s ease-in-out, width 0.3s ease-in-out; 
+  transform: translateX(-100%); /* Fechada inicialmente */
+  z-index: 999;
+  border-right: 2px solid $color_two; /* Divisão amarela mais fina */
+
+  &.open {
+    transform: translateX(0);
+  }
 
   .logo_container {
     display: flex;
     align-items: center;
     gap: 1rem;
     margin-bottom: 2rem;
-
     .logo {
       width: 3rem;
     }
-
     h1 {
       font-family: $font_family--logo;
     }
@@ -30,7 +46,6 @@
 
   ul {
     list-style: none;
-
     .list_item,
     li {
       width: 100%;
@@ -40,25 +55,41 @@
       margin-bottom: 1rem;
       border-radius: 5px;
       padding: 0.2rem;
-      padding-right: 10rem;
       transition: $transition_one;
       cursor: pointer;
-
       &:hover {
         background-color: #1a1a1a;
       }
-
       svg {
         font-size: 2.8rem;
-
         * {
           color: $color_two;
         }
       }
-
       p {
         color: $color_two;
       }
     }
+  }
+
+  .account-section {
+    margin-top: auto; /* Move para baixo */
+  }
+}
+
+.list_item.active, li.active {
+  background-color: #333;
+}
+
+.page_layout {
+  display: flex;
+  transition: margin-left 0.3s ease-in-out;
+
+  &.sidebar-open {
+    margin-left: 00px; /* Largura da barra lateral */
+  }
+
+  &.sidebar-closed {
+    margin-left: -150px;
   }
 }

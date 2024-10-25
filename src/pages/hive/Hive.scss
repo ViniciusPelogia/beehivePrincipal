@@ -2,29 +2,31 @@
 @import '../../styles/mixins.scss';
 
 #hive {
+  margin-left: 0; /* Removendo deslocamento lateral */
+  transition: margin-left 0.3s ease-in-out;
+  width: 100%; /* Certifique-se de que #hive ocupe toda a largura */
+  height: 100vh; /* Certifique-se de que #hive ocupe toda a altura */
+
+  * {
+    box-sizing: border-box; /* Para garantir que padding e bordas sejam incluídos no tamanho total do elemento */
+  }
+
   .header_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Empilhar headers um sobre o outro */
+    padding: 1rem 2rem;
+    margin-bottom: 2rem; /* Adiciona espaçamento entre o header e o conteúdo */
+    
     .header_top {
-      margin-bottom: 4rem;
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-
-      .header_btn {
-        @include btn_one;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-
-        svg {
-          font-size: 1.2rem;
-        }
-      }
-
+      align-items: center;
+      margin-bottom: 1rem; /* Controlando o espaçamento entre os headers */
       .header_image_container {
         display: flex;
         gap: 2rem;
         align-items: center;
-
         .header_image {
           width: 4rem;
           border-radius: 5px;
@@ -33,22 +35,20 @@
     }
 
     .header_bottom {
-      margin-bottom: 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-
+      margin-bottom: 1rem;
       .header_bottom__links {
+        display: flex;
         .hive_header_btn {
           @include btn_two;
           margin-right: 1rem;
         }
-
         .hive_header_btn--active {
           @include btn_two--secondary;
         }
       }
-
       #new_post_btn {
         @include btn_one;
       }
@@ -57,23 +57,23 @@
 
   .hive_data_container {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    flex-direction: column; /* Garante que os elementos estejam em colunas */
     gap: 1rem;
-
+    width: 100%; /* Certificando que ocupa toda a largura */
+    margin-top: 1rem; /* Espaçamento entre header e o conteúdo */
+    padding: 0 2rem; /* Para dar um respiro nas laterais */
+    max-height: none; // Remove o limite de altura
+    
     .hive_content_container {
-      width: calc(32.8% - 0.5rem);
       cursor: pointer;
-
       &:hover .image {
         scale: 1.01;
       }
-
       .image {
         width: 100%;
         aspect-ratio: 10 / 6;
         object-fit: cover;
-        object-position: center center;
+        object-position: center;
         margin-bottom: 0.5rem;
         border-radius: $element_border_radious;
         transition: $transition_one;

@@ -20,10 +20,29 @@ function Hive() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [usuarios, setUsuarios] = useState([]);
   const [messages, setMessages] = useState([]);
-  
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   useEffect(() => {
     const socket = io.connect("http://localhost:3000");
-    const token = localStorage.getItem('accessToken');
+    // Entrar na sala da hive
+    socket.emit("joinHive", id);
+    console.log(`Emitiu joinHive para ${id}`);
+
+    // Escutar por mensagens
+    socket.on("message", (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    // Escutar por novos posts
+    socket.on("newPost1", (post) => {
+      console.log(`Recebeu novo post: ${post}`);
+      setImages((prevImages) => [...prevImages, post]);
+    });
+    const token = localStorage.getItem("accessToken");
     if (!token) {
       console.error("Access token não informado");
       return;
@@ -81,15 +100,6 @@ function Hive() {
     fetchImages();
     fetchUsuarios();
 
-    // Entrar na sala da hive
-    socket.emit("joinHive", id);
-    console.log(`Emitiu joinHive para ${id}`);
-
-    // Escutar por mensagens
-    socket.on("message", (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    });
-
     return () => {
       // Sair da sala da hive ao desmontar o componente
       socket.emit("leaveHive", id);
@@ -99,33 +109,41 @@ function Hive() {
   }, [id]);
 
   const handleShareClick = () => {
-    const token = localStorage.getItem('accessToken');
-    axios.get(`http://localhost:3000/hives/${id}/access-code`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then(response => {
-      const codigoAcesso = response.data;
-      navigator.clipboard.writeText(codigoAcesso)
-        .then(() => {
-          alert("Código de Acesso copiado para a área de transferência!");
-        })
-        .catch(err => {
-          alert("Falha ao copiar para a área de transferência.");
-          console.error("Erro ao copiar código de acesso:", err);
-        });
-    })
-    .catch(error => {
-      alert("Erro ao buscar o código de acesso.");
-      console.error("Error fetching access code:", error);
-    })
+    const token = localStorage.getItem("accessToken");
+    axios
+      .get(`http://localhost:3000/hives/${id}/access-code`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        const codigoAcesso = response.data;
+        navigator.clipboard
+          .writeText(codigoAcesso)
+          .then(() => {
+            alert("Código de Acesso copiado para a área de transferência!");
+          })
+          .catch((err) => {
+            alert("Falha ao copiar para a área de transferência.");
+            console.error("Erro ao copiar código de acesso:", err);
+          });
+      })
+      .catch((error) => {
+        alert("Erro ao buscar o código de acesso.");
+        console.error("Error fetching access code:", error);
+      });
   };
 
   const renderComponent = () => {
     switch (options) {
       case "midia":
-        return <Midia setPostContentPopup={setPostContentPopup} images={images} setSelectedImage={setSelectedImage} />;
+        return (
+          <Midia
+            setPostContentPopup={setPostContentPopup}
+            images={images}
+            setSelectedImage={setSelectedImage}
+          />
+        );
       case "usuarios":
         return <Usuarios usuarios={usuarios} />;
       default:
@@ -138,55 +156,69 @@ function Hive() {
   }
 
   return (
-    <main id="hive" className="page_layout">
-      <Sidebar />
-      <section className="header_container">
-        <article className="header_top">
-          <div className="header_btn_container">
-            <button className="header_btn" onClick={handleShareClick}>
-              Share
-              <IoMdShare />
+    <div className={`page_layout ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+      <Sidebar isOpen={isSidebarOpen} />
+      <button className="sidebar-toggle" onClick={toggleSidebar}>
+        {isSidebarOpen ? "Close" : "Open"}
+      </button>
+      <main id="hive" className="page_layout">
+        <section className="header_container">
+          <article className="header_top">
+            <div className="header_btn_container">
+              <button className="header_btn" onClick={handleShareClick}>
+                Share
+                <IoMdShare />
+              </button>
+            </div>
+            <div className="header_image_container">
+              <h1>{hive.nome}</h1>
+              <img src={"../" + hive.imagem} className="header_image" />
+            </div>
+          </article>
+          <article className="header_bottom">
+            <div className="header_bottom__links">
+              <button
+                className={`hive_header_btn ${options === "midia" ? "hive_header_btn--active" : ""}`}
+                onClick={() => setOptions("midia")}
+              >
+                Midia
+              </button>
+              <button
+                className={`hive_header_btn ${options === "usuarios" ? "hive_header_btn--active" : ""}`}
+                onClick={() => setOptions("usuarios")}
+              >
+                Usuarios
+              </button>
+            </div>
+            <button id="new_post_btn" onClick={() => setNewPostPopup(true)}>
+              New post
             </button>
+            {newPostPopup && (
+              <NewPost onCancel={() => setNewPostPopup(false)} id={id} />
+            )}
+            {postContentPopup && (
+              <PostContent
+                onCancel={() => setPostContentPopup(false)}
+                selectedImage={selectedImage}
+              />
+            )}
+          </article>
+        </section>
+        <section className="hive_data_container">
+          {renderComponent()}
+          <div className="message_container">
+            {messages.map((msg, index) => (
+              <div key={index} className="message">
+                {msg}
+              </div>
+            ))}
           </div>
-          <div className="header_image_container">
-            <h1>{hive.nome}</h1>
-            <img src={'../'+hive.imagem} className="header_image" />
-          </div>
-        </article>
-        <article className="header_bottom">
-          <div className="header_bottom__links">
-            <button
-              className={`hive_header_btn ${options === "midia" ? "hive_header_btn--active" : ""}`}
-              onClick={() => setOptions("midia")}
-            >
-              Midia
-            </button>
-            <button
-              className={`hive_header_btn ${options === "usuarios" ? "hive_header_btn--active" : ""}`}
-              onClick={() => setOptions("usuarios")}
-            >
-              Usuarios
-            </button>
-          </div>
-          <button id="new_post_btn" onClick={() => setNewPostPopup(true)}>
-            New post
-          </button>
-          {newPostPopup && <NewPost onCancel={() => setNewPostPopup(false)} id={id} />}
-          {postContentPopup && (
-            <PostContent onCancel={() => setPostContentPopup(false)} selectedImage={selectedImage} />
-          )}
-        </article>
-      </section>
-      <section className="hive_data_container">
-        {renderComponent()}
-        <div className="message_container">
-          {messages.map((msg, index) => (
-            <div key={index} className="message">{msg}</div>
-          ))}
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </div>
   );
+  
+  
 }
 
 export default Hive;
