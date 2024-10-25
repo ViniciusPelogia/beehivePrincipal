@@ -16,7 +16,7 @@
   .post_content__popup {
     width: 100%;
     max-width: 600px;
-    max-height: 80vh; // Tamanho máximo fixo para o pop-up
+    max-height: 100%; // Tamanho máximo fixo para o pop-up
     background-color: $bg_dark;
     padding: 2rem;
     border-radius: 10px;

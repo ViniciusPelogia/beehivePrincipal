@@ -161,7 +161,7 @@ function Hive() {
       <button className="sidebar-toggle" onClick={toggleSidebar}>
         {isSidebarOpen ? "Close" : "Open"}
       </button>
-      <main id="hive" className="page_layout">
+      <main id="hive"  className={`main_content ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
         <section className="header_container">
           <article className="header_top">
             <div className="header_btn_container">

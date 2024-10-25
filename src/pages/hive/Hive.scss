@@ -2,17 +2,12 @@
 @import '../../styles/mixins.scss';
 
 #hive {
-  margin-left: 0; /* Removendo deslocamento lateral */
-  transition: margin-left 0.3s ease-in-out;
-  width: 100%; /* Certifique-se de que #hive ocupe toda a largura */
-  height: 100vh; /* Certifique-se de que #hive ocupe toda a altura */
 
   * {
     box-sizing: border-box; /* Para garantir que padding e bordas sejam incluídos no tamanho total do elemento */
   }
 
   .header_container {
-    width: 100%;
     display: flex;
     flex-direction: column; /* Empilhar headers um sobre o outro */
     padding: 1rem 2rem;
@@ -23,6 +18,10 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1rem; /* Controlando o espaçamento entre os headers */
+      .header_btn {
+        @include btn_one; // Supondo que btn_two é o mixin que você quer usar
+      }
+      
       .header_image_container {
         display: flex;
         gap: 2rem;
@@ -33,7 +32,7 @@
         }
       }
     }
-
+  
     .header_bottom {
       display: flex;
       justify-content: space-between;
@@ -54,16 +53,13 @@
       }
     }
   }
-
+  
   .hive_data_container {
-    display: flex;
-    flex-direction: column; /* Garante que os elementos estejam em colunas */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas de largura igual */
     gap: 1rem;
-    width: 100%; /* Certificando que ocupa toda a largura */
-    margin-top: 1rem; /* Espaçamento entre header e o conteúdo */
-    padding: 0 2rem; /* Para dar um respiro nas laterais */
-    max-height: none; // Remove o limite de altura
-    
+    max-height: max-content; // Remove o limite de altura
+  
     .hive_content_container {
       cursor: pointer;
       &:hover .image {
@@ -80,4 +76,24 @@
       }
     }
   }
+  
+  /* Responsividade */
+  @media (max-width: 1200px) {
+    .hive_data_container {
+      grid-template-columns: repeat(2, 1fr); /* 2 colunas para telas menores */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .hive_data_container {
+      grid-template-columns: 1fr; /* 1 coluna para telas pequenas */
+    }
+  }
+  
+  .hive_content_container {
+    .image {
+      width: 80%; /* Reduz o tamanho dos elementos */
+    }
+  }
+  
 }
