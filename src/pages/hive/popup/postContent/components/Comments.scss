@@ -30,6 +30,7 @@
   left: 0; // Alinhar à esquerda da tela
   width: 100%; // Garante que a barra de input ocupe toda a largura do contêiner
   background-color: $bg_dark;
+  z-index: 10; // Garantir que a barra de input fique acima da lista de comentários
 
   input {
     flex: 1;
@@ -50,22 +51,22 @@
 .comment {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 10px;
-  border-radius: 10px; // Bordas arredondadas
+  margin-bottom: 5px; // Reduzir a margem inferior
+  border-radius: 8px; // Bordas arredondadas menores
   background-color: lighten($bg_dark, 5%); // Cor de fundo mais clara
-  padding: 10px;
+  padding: 5px; // Reduzir padding
   position: relative; // Adiciona isso para permitir o posicionamento absoluto dos botões
 }
 
 .comment__avatar {
-  width: 45px;
-  height: 45px;
+  width: 40px; // Diminuir o tamanho do avatar
+  height: 40px; // Diminuir o tamanho do avatar
   border-radius: 50%;
   flex-shrink: 0; // Impede que a imagem diminua de tamanho
   
   img {
-    width: 90%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     object-fit: cover;
   }
@@ -75,6 +76,7 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1; // Faz o conteúdo crescer para ocupar o espaço disponível
+  margin-left: 10px; // Adiciona margem à esquerda do conteúdo
 }
 
 p.error_message {
@@ -93,9 +95,9 @@ p.error_message {
   color: red;
   cursor: pointer;
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 1.2rem; // Ajustar o tamanho do ícone se necessário
+  top: 5px; // Ajustar posição superior
+  right: 5px; // Ajustar posição direita
+  font-size: 1rem; // Ajustar o tamanho do ícone
 }
 
 .read-more-button {
@@ -103,18 +105,20 @@ p.error_message {
   border: none;
   color: blue;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.8rem; // Diminuir o tamanho do botão
   position: relative; // Permite que o botão siga o fluxo do texto
   margin-left: 5px; // Adiciona um pouco de espaçamento
 }
 
 .comment__username {
   font-weight: bold;
+  font-size: 0.9rem; // Diminuir o tamanho da fonte do nome de usuário
 }
 
 .comment__text {
   position: relative;
-  margin-right: 80px;
-  padding-right: 90px;
+  margin-right: 60px; // Ajustar margem direita
+  padding-right: 60px; // Ajustar padding direito
   display: inline; // Certifica-se de que o texto e o botão estejam em linha
+  font-size: 0.8rem; // Diminuir o tamanho da fonte do texto
 }

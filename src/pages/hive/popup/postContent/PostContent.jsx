@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 import Comments from "./components/Comments";
+import { io } from "socket.io-client";
 
 function PostContent({ onCancel, selectedImage }) {
   const { id: hiveId } = useParams(); // Obter hive_id da URL
@@ -39,14 +40,33 @@ function PostContent({ onCancel, selectedImage }) {
       );
       console.log("Fetch Likes Response:", response.data); // Log para verificar a resposta
       setLikes(response.data); // Supondo que o endpoint retorna o número de curtidas
-      setLiked(response.data); // Supondo que o endpoint informa se o usuário já curtiu
+
     } catch (error) {
       console.error("Failed to fetch likes", error);
     }
   };
 
+  // PostContent.jsx
+
   useEffect(() => {
     fetchLikes(); // Fazer a requisição GET ao montar o componente
+
+    const socket = io("http://localhost:3000");
+
+    // Entrar na sala do post
+    socket.emit("joinPost", selectedImage.id);
+
+    // Escutar atualização de likes
+    socket.on("updateLikes", (newLikes) => {
+      console.log(`Atualização de likes recebida: ${newLikes}`);
+      setLikes(newLikes);
+    });
+
+    return () => {
+      // Sair da sala do post ao desmontar o componente
+      socket.emit("leavePost", selectedImage.id);
+      socket.disconnect();
+    };
   }, [selectedImage.id]);
 
   const likePost = async () => {
@@ -69,8 +89,19 @@ function PostContent({ onCancel, selectedImage }) {
           },
         }
       );
+      const newLikes = response.data.likes; // Supondo que a resposta retorna o número total de curtidas
+      console.log('=====================================')
+      console.log('=====================================')
+      console.log('LIKES:', newLikes);
+      console.log('=====================================')
+      console.log('=====================================')
+      // Emitir evento de novo like com o número total de curtidas
+      const socket = io("http://localhost:3000");
+      socket.emit("likePost", selectedImage.id, newLikes);
+      console.log(
+        `Novo estado de likes no post ${selectedImage.id}: ${newLikes}`
+      );
       setLiked(!liked); // Alterna o estado do coração
-      fetchLikes(); // Atualizar a contagem de curtidas após a requisição POST
     } catch (error) {
       console.error("Failed to like the post", error);
     }
@@ -113,9 +144,7 @@ function PostContent({ onCancel, selectedImage }) {
   return (
     <div id="post_content">
       {" "}
-      <div
-        className={`post_content__popup ${isImageExpanded ? "expanded" : ""}`}
-      >
+      <div className={`post_content__popup ${showComments ? "expanded" : ""}`}>
         {" "}
         <h2 className="right_section__title">{selectedImage.nome}</h2>{" "}
         {errorMessage && <p className="error_message"> {errorMessage}</p>}{" "}

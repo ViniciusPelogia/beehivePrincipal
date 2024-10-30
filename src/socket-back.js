@@ -61,7 +61,7 @@ io.on("connection", (socket) => {
     io.to(hiveId).emit("newPost1", post);
     console.log(`Novo post na hive ${hiveId}:`, post);
   });
-  
+
   socket.on("joinPost", (postId) => {
     socket.join(postId);
     console.log(`Cliente ${socket.id} entrou no post ${postId}`);
@@ -71,6 +71,14 @@ io.on("connection", (socket) => {
     console.log(`Cliente ${socket.id} saiu do post ${postId}`);
   });
 
+  socket.on("likePost", (postId, likes) => {
+    io.to(postId).emit("updateLikes", likes);
+    console.log(`Novo like no post ${postId}: total de likes: ${likes}`);
+  });
+  socket.on("unlikePost", (postId, likes) => {
+    io.to(postId).emit("updateLikes", likes);
+    console.log(`Deslike no post ${postId}: total de likes: ${likes}`);
+  });
   socket.on("newComment", (postId, comment) => {
     console.log("Recebido evento newComment:", comment); // Log do evento recebido
     io.to(postId).emit("newComment", comment);

@@ -16,7 +16,7 @@
   .post_content__popup {
     width: 100%;
     max-width: 600px;
-    max-height: 80vh; // Limitar a altura do pop-up
+    max-height: 90vh; // Limitar a altura do pop-up
     background-color: $bg_dark;
     padding: 2rem;
     border-radius: 10px;
@@ -28,7 +28,7 @@
     overflow: hidden; // Esconder o overflow para que o conteúdo excedente não aumente a altura
 
     &.expanded {
-      overflow-y: auto; // Permitir rolagem vertical quando expandido
+      overflow-y: 90vh; // Permitir rolagem vertical quando expandido
     }
 
     .popup__close_btn {
