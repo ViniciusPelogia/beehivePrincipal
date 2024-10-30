@@ -1,19 +1,34 @@
 @import "../../../../../styles/variables.scss";
 @import "../../../../../styles/mixins.scss";
 
+// Comments.scss
 .comments_section {
   display: flex;
   flex-direction: column;
-  overflow-y: auto; // Permitir rolagem vertical
-  max-height: 100%; // Garantir que a seção de comentários ocupe o espaço disponível
+  height: 100%;
+  position: relative;
+}
+
+.comments_list {
+  flex-grow: 1;
+  overflow-y: auto; // Permitir rolagem vertical na lista de comentários
+}
+
+.no_comments {
+  text-align: center;
+  color: $color_two;
+  font-size: 1.2rem;
+  margin-top: 20px;
 }
 
 .comments_section__input {
   display: flex;
   align-items: center;
   padding: 10px;
-  position: sticky; // Fixar na parte inferior
+  position: fixed; // Garantir que a barra fique sempre visível
   bottom: 0;
+  left: 0; // Alinhar à esquerda da tela
+  width: 100%; // Garante que a barra de input ocupe toda a largura do contêiner
   background-color: $bg_dark;
 
   input {
@@ -42,20 +57,34 @@
   position: relative; // Adiciona isso para permitir o posicionamento absoluto dos botões
 }
 
+.comment__avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  flex-shrink: 0; // Impede que a imagem diminua de tamanho
+  
+  img {
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
 .comment__content {
   display: flex;
   flex-direction: column;
   flex-grow: 1; // Faz o conteúdo crescer para ocupar o espaço disponível
 }
 
-p.error_message{
+p.error_message {
   background-color: red;
 }
 
 .comment__header {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Centralizar verticalmente */
+  align-items: center; // Centralizar verticalmente
 }
 
 .delete-button {
@@ -69,7 +98,6 @@ p.error_message{
   font-size: 1.2rem; // Ajustar o tamanho do ícone se necessário
 }
 
-
 .read-more-button {
   background: none;
   border: none;
@@ -80,33 +108,13 @@ p.error_message{
   margin-left: 5px; // Adiciona um pouco de espaçamento
 }
 
-
-.comment__avatar {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  flex-shrink: 0; // Impede que a imagem diminua de tamanho
-  img {
-    width: 90%;
-    height: 90%;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-}
-
-.comment__content {
-  display: flex;
-  flex-direction: column;
-}
-
 .comment__username {
   font-weight: bold;
 }
 
 .comment__text {
   position: relative;
-  margin-right: 80px; 
+  margin-right: 80px;
   padding-right: 90px;
   display: inline; // Certifica-se de que o texto e o botão estejam em linha
 }
-

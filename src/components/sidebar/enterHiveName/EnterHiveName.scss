@@ -21,24 +21,30 @@
     margin: 0;
     list-style: none;
 
-    a {
+    li { // Mudar "a" para "li" pois não estamos mais usando "Link" como "a"
       display: flex;
       align-items: center;
       gap: 1rem;
       margin-bottom: 1rem;
       background-color: rgb(22, 22, 22);
       border-radius: 10px;
+      padding: 1rem; // Adiciona padding para que não fique tão apertado
+      cursor: pointer; // Adiciona um cursor de ponteiro para indicar que é clicável
 
       img {
         width: 5rem;
         aspect-ratio: 1 / 1;
         border-radius: 10px;
       }
-    }
-    p {
-      margin: 0;
+
+      p {
+        margin: 0;
+        font-size: 16px; // Ajusta o tamanho da fonte do texto
+        color: #fff; // Ajusta a cor do texto
+      }
     }
   }
+
   .enter_name_popup {
     width: 100%;
     max-width: 600px;
@@ -49,6 +55,8 @@
 
     .name_input {
       margin-bottom: 2rem;
+      width: 100%; // Adiciona largura total ao input
+      padding: 0.5rem; // Adiciona padding ao input
     }
 
     .buttons_container {
@@ -65,9 +73,6 @@
       .cancel_button {
         @include btn_two--secondary;
         min-width: 8rem;
-      }
-
-      .cancel_button {
         border-radius: $element_border_radious;
       }
     }

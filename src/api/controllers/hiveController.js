@@ -109,6 +109,17 @@ class HiveController {
     }
   }
 
+  static async verificaUsuarioPresente(req,res){
+    try {
+      const { userId, hiveId} = req.body;
+
+      const usuarioExiste = await hiveService.verificaUsuarioPresente({ userId, hiveId})
+      res.status(200).json(usuarioExiste)
+    } catch (error) {
+      res.status(400).json(error.message)
+    }
+  }
+
   static async buscarUsuariosPresentes(req,res){
     try{
       const { id } = req.params;
@@ -241,9 +252,11 @@ class HiveController {
 
   static async apagarComentario(req,res){
     const { id } = req.params;
-    const { usuario } = req.body;
+    const { usuario, hive } = req.body;
+
+    console.log('ID DO COMENTARIO: ',id);
     try {
-      const apagar = await hiveService.apagarComentario({ id, usuario })
+      const apagar = await hiveService.apagarComentario({ id, usuario, hive })
 
       res.status(200).json(apagar)
     } catch (error) {
@@ -252,13 +265,13 @@ class HiveController {
   }
   static async apagarPost(req,res){
     const { id } = req.params;
-    const { usuario } = req.body;
+    const { usuario, hive } = req.body;
     try {
-      const apagar = await hiveService.apagarPost({ id, usuario })
+      const apagar = await hiveService.apagarPost({ id, usuario , hive})
 
       res.status(200).json(apagar)
     } catch (error) {
-      res.status(400).json({message: error.message})
+      res.status(400).json({message: error})
     }
   }
 }

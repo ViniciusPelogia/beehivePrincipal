@@ -16,22 +16,26 @@
   .post_content__popup {
     width: 100%;
     max-width: 600px;
-    max-height: 100%; // Tamanho máximo fixo para o pop-up
+    max-height: 80vh; // Limitar a altura do pop-up
     background-color: $bg_dark;
     padding: 2rem;
     border-radius: 10px;
     border: 2px solid $color_two;
     display: flex;
-    gap: 1rem;
     flex-direction: column;
+    gap: 1rem;
     position: relative;
+    overflow: hidden; // Esconder o overflow para que o conteúdo excedente não aumente a altura
+
+    &.expanded {
+      overflow-y: auto; // Permitir rolagem vertical quando expandido
+    }
 
     .popup__close_btn {
       position: absolute;
       top: 1rem;
       right: 1rem;
       background-color: transparent;
-
       &:hover {
         color: $color_two;
       }
@@ -39,12 +43,35 @@
 
     .popup__left_section {
       width: 100%;
+      flex-shrink: 0; // Evitar que a seção de imagem diminua de tamanho
+      display: flex;
+      flex-direction: column;
+      align-items: center; // Centralizar o botão de alternância
+
       .left_section__image {
         width: 100%;
-        max-height: 500px; // Limitar a altura da imagem para permitir mais espaço para comentários
+        max-height: 30vh; // Limitar a altura da imagem para permitir mais espaço para comentários
         margin-bottom: 0.5rem;
         object-fit: cover;
         object-position: center center;
+        transition: max-height 0.3s ease-in-out;
+      }
+
+      .left_section__image.expanded {
+        max-height: none; // Expandir a imagem para o tamanho original
+      }
+
+      .toggle_image_btn {
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+        background-color: $color_two;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px;
+        &:hover {
+          background-color: darken($color_two, 10%);
+        }
       }
 
       .left_section__buttons_container {
@@ -57,14 +84,13 @@
         svg {
           font-size: $font_text;
           cursor: pointer;
-
           &.red-heart {
             color: red;
           }
+        }
 
-          .trash{
-            color: red;
-          }
+        .trash {
+          color: red;
         }
 
         span {
@@ -78,11 +104,41 @@
       width: 100%;
       display: flex;
       flex-direction: column;
+      position: relative; // Permite que a barra de input fique fixa dentro do pop-up
       overflow-y: auto; // Permitir rolagem vertical na seção de comentários
+      flex-grow: 1;
 
       .comments_section {
-        flex: 1; // Permitir que a seção de comentários ocupe o espaço disponível
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1; // Permitir que a seção de comentários ocupe o espaço disponível
         overflow-y: auto; // Permitir rolagem vertical
+      }
+
+      .comments_section__input {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        position: sticky; // Fixa a posição da barra de entrada de comentários
+        bottom: 0;
+        width: 100%; // Garante que a barra de input ocupe toda a largura do contêiner
+        background-color: $bg_dark;
+        z-index: 10;
+
+        input {
+          flex: 1;
+          border: none;
+          padding: 10px;
+          font-size: 1rem;
+        }
+
+        button {
+          background: none;
+          border: none;
+          font-size: 1rem; // Diminuir o tamanho do botão
+          cursor: pointer;
+          padding: 5px 10px; // Ajustar padding para reduzir tamanho
+        }
       }
 
       .right_section__title {

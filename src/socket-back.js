@@ -35,17 +35,16 @@ io.on("connection", (socket) => {
 
   socket.on("joinHive", (hiveId) => {
     socket.join(hiveId);
-    console.log("==================================================")
+    console.log("==================================================");
     console.log(`Cliente ${socket.id} entrou na hive ${hiveId}`);
-    console.log("==================================================")
+    console.log("==================================================");
   });
 
   socket.on("leaveHive", (hiveId) => {
     socket.leave(hiveId);
-    console.log("==================================================")
+    console.log("==================================================");
     console.log(`Cliente ${socket.id} saiu da hive ${hiveId}`);
-    console.log("==================================================")
-
+    console.log("==================================================");
   });
 
   socket.on("message", (data) => {
@@ -62,7 +61,26 @@ io.on("connection", (socket) => {
     io.to(hiveId).emit("newPost1", post);
     console.log(`Novo post na hive ${hiveId}:`, post);
   });
+  
+  socket.on("joinPost", (postId) => {
+    socket.join(postId);
+    console.log(`Cliente ${socket.id} entrou no post ${postId}`);
+  });
+  socket.on("leavePost", (postId) => {
+    socket.leave(postId);
+    console.log(`Cliente ${socket.id} saiu do post ${postId}`);
+  });
 
+  socket.on("newComment", (postId, comment) => {
+    console.log("Recebido evento newComment:", comment); // Log do evento recebido
+    io.to(postId).emit("newComment", comment);
+    console.log(`Novo comentário no post ${postId}:`, comment);
+  });
+  socket.on("deleteComment", (postId, commentId) => {
+    console.log("Recebido evento deleteComment:", commentId); // Log do evento recebido
+    io.to(postId).emit("deleteComment", commentId);
+    console.log(`Comentário ${commentId} excluído no post ${postId}`);
+  });
 });
 
 export { emitPublicHives };

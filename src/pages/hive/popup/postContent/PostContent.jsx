@@ -16,6 +16,11 @@ function PostContent({ onCancel, selectedImage }) {
   const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isImageExpanded, setImageExpanded] = useState(false);
+
+  const toggleImageSize = () => {
+    setImageExpanded(!isImageExpanded);
+  };
 
   const fetchLikes = async () => {
     const token = localStorage.getItem("accessToken");
@@ -83,6 +88,7 @@ function PostContent({ onCancel, selectedImage }) {
           },
           data: {
             usuario: userId,
+            hive: hiveId,
           },
         }
       );
@@ -106,51 +112,60 @@ function PostContent({ onCancel, selectedImage }) {
 
   return (
     <div id="post_content">
-      <div className="post_content__popup">
-        <h2 className="right_section__title">{selectedImage.nome}</h2>
-        {errorMessage && <p className="error_message"> {errorMessage}</p>}
+      {" "}
+      <div
+        className={`post_content__popup ${isImageExpanded ? "expanded" : ""}`}
+      >
+        {" "}
+        <h2 className="right_section__title">{selectedImage.nome}</h2>{" "}
+        {errorMessage && <p className="error_message"> {errorMessage}</p>}{" "}
         <button onClick={onCancel} className="popup__close_btn">
-          <AiOutlineClose />
-        </button>
+          {" "}
+          <AiOutlineClose />{" "}
+        </button>{" "}
         <div className="popup__left_section">
+          {" "}
           <img
             src={"../" + selectedImage.caminho}
             alt={selectedImage.descricao}
-            className="left_section__image"
-          />
+            className={`left_section__image ${
+              isImageExpanded ? "expanded" : ""
+            }`}
+          />{" "}
+          <button onClick={toggleImageSize} className="toggle_image_btn">
+            {" "}
+            {isImageExpanded ? "Reduzir Imagem" : "Expandir Imagem"}{" "}
+          </button>{" "}
           <div className="left_section__buttons_container">
-            <GoHeart onClick={likePost} className={liked ? "red-heart" : ""} />
-            <span>{likes}</span>
-            <span></span>
-            <span></span>
-            <span></span>
+            {" "}
+            <GoHeart
+              onClick={likePost}
+              className={liked ? "red-heart" : ""}
+            />{" "}
+            <span>{likes}</span>{" "}
             <GoComment
               onClick={() => {
-                console.log(
-                  "Comment button clicked, postId:",
-                  selectedImage.id
-                );
                 setShowComments(!showComments);
               }}
-            />
-            <span></span>
-            <span></span>
-            <span></span>
-            <GoTrash onClick={() => handleDeletPost(selectedImage)} className="trash"/>
-          </div>
-        </div>
+            />{" "}
+            <GoTrash
+              onClick={() => handleDeletPost(selectedImage)}
+              className="trash"
+            />{" "}
+          </div>{" "}
+        </div>{" "}
         <div className="popup__right_section">
+          {" "}
           {showComments ? (
             <Comments postId={selectedImage.id} />
           ) : (
-            <>
-              <p className="right_section__description">
-                {selectedImage.descricao}
-              </p>
-            </>
-          )}
-        </div>
-      </div>
+            <p className="right_section__description">
+              {" "}
+              {selectedImage.descricao}{" "}
+            </p>
+          )}{" "}
+        </div>{" "}
+      </div>{" "}
     </div>
   );
 }

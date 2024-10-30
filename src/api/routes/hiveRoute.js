@@ -12,6 +12,7 @@ router
     .post('/post/comentar/:id', hiveController.comentarPost)
     .get('/hive', hiveController.buscarTodasHives)
     .get('/hive/usuario/:id', hiveController.buscarHivesIn)
+    .get('/hive/usuario/', hiveController.verificaUsuarioPresente)
     .get('/hive/usuarios/:id', hiveController.buscarUsuariosPresentes)
     .get('/hive/nome/:nome', hiveController.buscarHivePorNome)
     .get('/hive/id/:id',hiveController.buscarHivePorId)

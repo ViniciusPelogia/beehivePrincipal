@@ -203,6 +203,25 @@ class HiveService {
     }
   }
 
+  async verificaUsuarioPresente(dto){
+    try {
+      const verifica = await database.usuariosXhives.findOne({
+        where:{
+          usuario_id: dto.userId,
+          hive_id: dto.hiveId
+        }
+      })
+
+      if(!verifica){
+        throw new Error('Usuario não está na hive')
+      }
+
+      return verifica
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+
   async buscarUsuariosPresentes(dto) {
     try {
       const relacao = await database.usuariosXhives.findAll({
@@ -260,6 +279,7 @@ class HiveService {
         nome: {
           [Op.like]: `%${regex.source}%`,
         },
+        privada: false
       },
     });
     if (!hive) {
@@ -466,6 +486,8 @@ class HiveService {
         }
       })
 
+      console.log('TESTE 2:', hive)
+
       const isAdm = procuraAdm.map((adm) => adm.id == hive.adm_id)
 
       const isPoster = await database.imagens.findOne({
@@ -474,12 +496,16 @@ class HiveService {
         },
       });
 
+      console.log('TESTE 3:', isPoster)
+
       const permissao = await database.interacoes.findOne({
         where: {
           comentario_id: dto.id,
           usuario_id: dto.usuario,
         },
       });
+
+      console.log('TESTE 4:', permissao)
 
       if (isPoster || isAdm || permissao) {
         const relacao = await database.interacoes.destroy({
@@ -526,6 +552,49 @@ class HiveService {
       });
 
       if (isPoster || isAdm) {
+
+        const comentarios = await database.interacoes.findAll({
+          where:{
+            imagem_id: dto.id,
+            tipo: 'comentario'
+          }
+        })
+
+        const comentariosIds = comentarios.map((comentario) => comentario.comentario_id)
+        console.log("TESTE 1",comentariosIds)
+        await database.interacoes.destroy({
+          where:{
+            comentario_id: comentariosIds
+          }
+        })
+        await database.comentarios.destroy({
+          where:{
+            id:comentariosIds
+          },
+        })
+
+        const curtidas = await database.interacoes.findAll({
+          where:{
+            imagem_id: dto.id,
+            tipo:'curtida'
+          }
+        })
+
+
+        const curitdasIds = curtidas.map((curtida) => curtida.curtida_id)
+        console.log("TESTE2",curitdasIds)
+        await database.interacoes.destroy({
+          where:{
+            curtida_id: curitdasIds
+          }
+        })
+        await database.curtidas.destroy({
+          where:{
+            id: curitdasIds
+          }
+        })
+
+
         await database.imagensXhives.destroy({
           where: {
             imagem_id: dto.id,
