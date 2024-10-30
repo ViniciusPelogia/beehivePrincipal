@@ -70,12 +70,17 @@ io.on("connection", (socket) => {
     socket.leave(postId);
     console.log(`Cliente ${socket.id} saiu do post ${postId}`);
   });
-
   socket.on("likePost", (postId, likes) => {
+    console.log(
+      `Recebido likePost: postId: ${postId}, likes: ${JSON.stringify(likes)}`
+    );
     io.to(postId).emit("updateLikes", likes);
     console.log(`Novo like no post ${postId}: total de likes: ${likes}`);
   });
   socket.on("unlikePost", (postId, likes) => {
+    console.log(
+      `Recebido unlikePost: postId: ${postId}, likes: ${JSON.stringify(likes)}`
+    );
     io.to(postId).emit("updateLikes", likes);
     console.log(`Deslike no post ${postId}: total de likes: ${likes}`);
   });

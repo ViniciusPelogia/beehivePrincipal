@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import "./PostContent.scss";
@@ -23,6 +24,8 @@ function PostContent({ onCancel, selectedImage }) {
     setImageExpanded(!isImageExpanded);
   };
 
+  // PostContent.jsx
+
   const fetchLikes = async () => {
     const token = localStorage.getItem("accessToken");
     if (!token) {
@@ -38,15 +41,18 @@ function PostContent({ onCancel, selectedImage }) {
           },
         }
       );
-      console.log("Fetch Likes Response:", response.data); // Log para verificar a resposta
-      setLikes(response.data); // Supondo que o endpoint retorna o número de curtidas
+      const likesCount = response.data; // Supondo que a resposta retorna apenas o número de curtidas
 
+      console.log("Fetch Likes Response:", likesCount); // Log para verificar a resposta
+
+      setLikes(likesCount); // Atualiza o número de curtidas
+      const userId = localStorage.getItem("userId");
+      // Você pode verificar se o usuário atual deu like, se precisar dessa lógica
+      // Aqui apenas usamos o número total de curtidas
     } catch (error) {
       console.error("Failed to fetch likes", error);
     }
   };
-
-  // PostContent.jsx
 
   useEffect(() => {
     fetchLikes(); // Fazer a requisição GET ao montar o componente
@@ -57,9 +63,15 @@ function PostContent({ onCancel, selectedImage }) {
     socket.emit("joinPost", selectedImage.id);
 
     // Escutar atualização de likes
-    socket.on("updateLikes", (newLikes) => {
-      console.log(`Atualização de likes recebida: ${newLikes}`);
-      setLikes(newLikes);
+    socket.on("updateLikes", (newLikesCount) => {
+      console.log(`Atualização de likes recebida: ${newLikesCount}`);
+      // Verificar se newLikesCount é um número
+      if (typeof newLikesCount === "number") {
+        setLikes(newLikesCount);
+        // Aqui não precisamos verificar quem deu like, apenas atualizamos a contagem
+      } else {
+        console.error("Erro: newLikesCount não é um número");
+      }
     });
 
     return () => {
@@ -69,6 +81,8 @@ function PostContent({ onCancel, selectedImage }) {
     };
   }, [selectedImage.id]);
 
+
+
   const likePost = async () => {
     const token = localStorage.getItem("accessToken");
     const userId = localStorage.getItem("userId");
@@ -77,7 +91,7 @@ function PostContent({ onCancel, selectedImage }) {
       return;
     }
     try {
-      await axios.post(
+      const response = await axios.post(
         `http://localhost:3000/post/curtir/${selectedImage.id}`,
         {
           usuario_id: userId,
@@ -89,18 +103,16 @@ function PostContent({ onCancel, selectedImage }) {
           },
         }
       );
-      const newLikes = response.data.likes; // Supondo que a resposta retorna o número total de curtidas
-      console.log('=====================================')
-      console.log('=====================================')
-      console.log('LIKES:', newLikes);
-      console.log('=====================================')
-      console.log('=====================================')
-      // Emitir evento de novo like com o número total de curtidas
+
+      const newLikesCount = response.data.likes; // Supondo que a resposta retorna a contagem de curtidas
+
       const socket = io("http://localhost:3000");
-      socket.emit("likePost", selectedImage.id, newLikes);
+      socket.emit("likePost", selectedImage.id, newLikesCount);
       console.log(
-        `Novo estado de likes no post ${selectedImage.id}: ${newLikes}`
+        `Novo estado de likes no post ${selectedImage.id}: ${newLikesCount}`
       );
+
+      setLikes(newLikesCount); // Atualiza o número de curtidas localmente
       setLiked(!liked); // Alterna o estado do coração
     } catch (error) {
       console.error("Failed to like the post", error);
