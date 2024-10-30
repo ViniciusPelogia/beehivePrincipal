@@ -20,7 +20,7 @@ function EnterHiveCode({ onCancel }) {
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
 
-      const hiveId = response.data.hiveId;
+      const hiveId = response.data;
       navigate(`/hive/${hiveId}`);
     } catch (error) {
       setErrorMessage(error.response.data.message || "Erro ao entrar na hive");

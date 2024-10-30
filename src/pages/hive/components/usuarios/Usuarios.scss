@@ -1,20 +1,59 @@
 @import '../../../../styles/variables.scss';
 @import '../../../../styles/mixins.scss';
 
+
 .usuarios {
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 100%;
   gap: 1rem;
+
+  .accordion {
+    width: 100%;
+
+    .accordion-item {
+      margin-bottom: 1rem;
+
+      .accordion-button {
+        width: 100%;
+        padding: 1rem;
+        background-color: lighten($bg_dark, 10%);
+        color: white;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+        border-radius: $element_border_radious;
+        transition: $transition_one;
+
+        &:hover {
+          background-color: lighten($bg_dark, 15%);
+        }
+
+        svg {
+          float: right;
+        }
+      }
+
+      .accordion-content {
+        padding: 1rem;
+        background-color: lighten($bg_dark, 5%);
+      }
+
+      .accordion-content--usuarios {
+        max-height: 300px; // Altura máxima antes de aparecer a barra de rolagem
+        overflow-y: auto;  // Adiciona barra de rolagem vertical
+      }
+    }
+  }
 
   .usuario {
     display: flex;
-    align-items: center; // Alinhar os itens ao centro verticalmente
-    width: 100%; // Ocupa toda a largura da tela
+    align-items: center;
+    width: 100%;
     gap: 1rem;
     padding: 0.5rem;
-    border-radius: $element_border_radious;
-    background-color: lighten($bg_dark, 5%);
+    border-radius: 0; // Remove bordas arredondadas
+    background-color: lighten($bg_dark, 2%); // Fundo mais escuro que o menu
     transition: $transition_one;
     justify-content: space-between;
 
@@ -27,15 +66,16 @@
     }
 
     &__nome {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       color: white;
-      flex-grow: 1; // Permite que o nome ocupe o espaço restante
-      text-align: left; // Alinha o texto à esquerda
+      flex-grow: 1;
+      text-align: left;
     }
 
     &__icon {
-      font-size: 1.5rem;
+      font-size: 2rem;
       color: red;
+      cursor: pointer; // Adiciona o cursor de ponteiro para indicar que é clicável
     }
   }
 }
