@@ -3,7 +3,6 @@ import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import ForgotPassword from '../../forgotPassword'; // Importação do componente ForgotPassword
 
 function Login({ setUserId }) {
   const [email, setEmail] = useState("");
@@ -57,6 +56,7 @@ function Login({ setUserId }) {
                 id="email"
                 placeholder="Email"
                 value={email}
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
@@ -76,11 +76,10 @@ function Login({ setUserId }) {
               />
             </div>
             <div className="assets_texts">
-              <div className="remember_container">
+              {/* <div className="remember_container">
                 <input id="remember" type="checkbox" name="remember"></input>
                 <label htmlFor="remember">Lembrar-me</label>
-              </div>
-              <a href="#" className="forgot">Esqueceu a senha?</a>
+              </div> */}
             </div>
             {error && <p className="error">{error}</p>}
             <button type="submit" className="button">
@@ -92,7 +91,6 @@ function Login({ setUserId }) {
               </span>
             </button>
           </form>
-          <ForgotPassword /> {/* Aqui é onde o componente ForgotPassword será chamado */}
         </article>
       </section>
     </main>

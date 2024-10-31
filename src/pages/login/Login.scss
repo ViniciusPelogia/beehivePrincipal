@@ -227,14 +227,13 @@
           padding: 1rem;
           cursor: pointer;
           border: none;
-          background: $light_text;
+          background: $color_two; // Ajuste a cor de fundo padrão aqui
           transition: $transition_two;
 
           &:hover {
-            background: $color_two;
-
+            background: $light_text;
             em {
-              color: $light_text !important;
+              color: $dark_text !important; // Ajuste a cor do texto ao passar o mouse
             }
           }
 
@@ -264,7 +263,7 @@
             font-style: normal;
             display: inline-block;
             font-size: 1.125rem;
-            color: black;
+            color: $light_text;
             font-weight: 600;
             will-change: transform, opacity, transition;
             transition: $transition_two;

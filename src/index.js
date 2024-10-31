@@ -1,11 +1,9 @@
-/* eslint-disable no-unused-vars */
-import express from "express";
-import { Server } from "socket.io";
-import http from "http";
-import routes from "./api/routes/index.js";
-import database from "../src/api/models/index.js";
-import bodyParser from "body-parser";
-import multer from 'multer'
+import express from 'express';
+import { Server } from 'socket.io';
+import http from 'http';
+import routes from './api/routes/index.js';
+import database from '../src/api/models/index.js';
+import bodyParser from 'body-parser';
 import cors from 'cors';
 
 const app = express();
@@ -17,23 +15,21 @@ const io = new Server(server, {
   },
 });
 
-// Adicione o middleware CORS antes das rotas
 app.use(cors({
-  origin: 'http://localhost:5173', // Permita requisições apenas desta origem
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-  allowedHeaders: ['Content-Type', 'Authorization'] // Cabeçalhos permitidos
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-app.use(express.json()); // Para analisar JSON no corpo das requisições
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json()); // Middleware para JSON
+app.use(bodyParser.urlencoded({ extended: true })); // Middleware para URL encoded
 
-routes(app);
+routes(app); // Use as rotas definidas no arquivo routes
 
-server.listen(port, () =>
-  console.log(`servidor está rodando na porta ${port}`)
-);
+server.listen(port, () => {
+  console.log(`servidor está rodando na porta ${port}`);
+});
 
-// RESPOSTA DO BANCO:
 database.sequelize
   .authenticate()
   .then(() => {

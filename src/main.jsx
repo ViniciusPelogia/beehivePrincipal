@@ -27,18 +27,18 @@ function Main() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Login setUserId={setUserId} />  // Passa setUserId para o Login
+      element: <Login setUserId={setUserId} /> // Passa setUserId para o Login
     },
     {
       path: '/signup',
       element: <SignUp />
     },
     {
-      element: <PrivateRoute />,  // Uso direto do PrivateRoute para proteger rotas
+      element: <PrivateRoute />, // Uso direto do PrivateRoute para proteger rotas
       children: [
         {
           path: '/home',
-          element: <Home userId={userId} />  // Passa userId para Home
+          element: <Home userId={userId} /> // Passa userId para Home
         },
         {
           path: '/hives',
@@ -67,8 +67,6 @@ function Main() {
       ]
     }
   ]);
-  
-  
 
   return <RouterProvider router={router} />;
 }

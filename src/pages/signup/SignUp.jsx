@@ -14,7 +14,7 @@ function SignUp() {
     nome: "",
     senha: "",
   });
-
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = async (e) => {
@@ -25,8 +25,17 @@ function SignUp() {
     });
   };
 
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isValidEmail(formData.email)) {
+      setError("Por favor, insira um email válido.");
+      return;
+    }
     for (const key in formData) {
       if (formData[key].trim() === "") {
         alert("Todos os campos devem ser preenchidos corretamente.");
@@ -87,6 +96,7 @@ function SignUp() {
                 id="email"
                 placeholder="Email"
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="input_container">
@@ -99,6 +109,7 @@ function SignUp() {
                 id="username"
                 placeholder="Username"
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="input_container">
@@ -106,11 +117,12 @@ function SignUp() {
                 <LiaBirthdayCakeSolid />
               </label>
               <input
-                type="text"
+                type="number"
                 name="idade"
                 id="idade"
                 placeholder="Idade"
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="input_container">
@@ -123,6 +135,7 @@ function SignUp() {
                 id="nome"
                 placeholder="Nome"
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="input_container">
@@ -135,8 +148,10 @@ function SignUp() {
                 id="senha"
                 placeholder="Senha"
                 onChange={handleChange}
+                required
               />
             </div>
+            {error && <p className="error">{error}</p>}
             <button type="submit" className="button">
               <span>
                 <em>Register</em>
