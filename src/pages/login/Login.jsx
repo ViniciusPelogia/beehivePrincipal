@@ -1,10 +1,9 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-undef */
 import "./Login.scss";
 import { AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import ForgotPassword from '../../forgotPassword'; // Importação do componente ForgotPassword
 
 function Login({ setUserId }) {
   const [email, setEmail] = useState("");
@@ -22,8 +21,8 @@ function Login({ setUserId }) {
       const { id, accessToken } = response.data;
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("userId", id);
-      setUserId(id); // Define o userId para gerenciar a navegação
-      navigate("/home"); // Redireciona para a página Home após o login
+      setUserId(id);
+      navigate("/home");
     } catch (error) {
       setError("Erro ao fazer login. Verifique suas credenciais.");
     }
@@ -33,11 +32,7 @@ function Login({ setUserId }) {
     <main id="login">
       <section className="container">
         <article className="article article--cadastro">
-          <img
-            className="logo"
-            src="/icons/CADASTRO/logo_trasparente.png"
-            alt="Beehive"
-          />
+          <img className="logo" src="/icons/CADASTRO/logo_trasparente.png" alt="Beehive" />
           <h2 className="title">Welcome!</h2>
           <p className="text">New Login</p>
           <Link className="button" to="/signup">
@@ -85,9 +80,7 @@ function Login({ setUserId }) {
                 <input id="remember" type="checkbox" name="remember"></input>
                 <label htmlFor="remember">Lembrar-me</label>
               </div>
-              <a href="#" className="forgot">
-                Esqueceu a senha?
-              </a>
+              <a href="#" className="forgot">Esqueceu a senha?</a>
             </div>
             {error && <p className="error">{error}</p>}
             <button type="submit" className="button">
@@ -99,6 +92,7 @@ function Login({ setUserId }) {
               </span>
             </button>
           </form>
+          <ForgotPassword /> {/* Aqui é onde o componente ForgotPassword será chamado */}
         </article>
       </section>
     </main>
