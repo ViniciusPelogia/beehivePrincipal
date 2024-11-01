@@ -30,7 +30,7 @@ function Sidebar({ isOpen }) {
             title="Pesquisar na colmeia"
           >
             <IoIosSearch />
-            <p>Search</p>
+            <p>Pesquisar</p>
           </li>
           <Link
             to="/home"
@@ -60,7 +60,7 @@ function Sidebar({ isOpen }) {
           title="Perfil da conta"
         >
           <FiUser />
-          <p>Account</p>
+          <p>Conta</p>
         </Link>
       </ul>
       {enterHiveName && (

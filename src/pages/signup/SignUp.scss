@@ -41,7 +41,7 @@
 
     .article--cadastro {
       border-radius: 30px 0px 0px 30px;
-      width: 33%;
+      width: 100%;
 
       .logo {
         max-width: 180px;
@@ -120,7 +120,7 @@
     .article--signup {
       border-left: none;
       border-radius: 0px 30px 30px 0px;
-      width: 66%;
+      width: 100%;
 
       .form {
         display: flex;
@@ -282,5 +282,49 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: 768px) {
+  #signup {
+    padding: 1rem; /* Reduzir o padding */
+  }
+
+  .container {
+    flex-direction: column; /* Alterar para coluna */
+    align-items: stretch; /* Alinhar itens ao longo da largura */
+    border-radius: 0; /* Remover bordas arredondadas */
+  }
+
+  .article--cadastro,
+  .article--signup {
+    width: 100%; /* Definir a largura para 100% */
+    border: none; /* Remover bordas */
+    padding: 1rem; /* Ajustar o padding */
+  }
+
+  .article {
+    height: auto; /* Altura automática */
+  }
+
+  .title {
+    font-size: 1.5rem; /* Ajustar tamanho da fonte */
+  }
+
+  .button {
+    padding: 0.8rem; /* Ajustar o padding dos botões */
+    font-size: 1rem; /* Ajustar o tamanho da fonte */
+  }
+
+  .input_container {
+    flex-direction: column; /* Alterar para coluna se necessário */
+  }
+
+  .assets_texts {
+    flex-direction: column; /* Alterar para coluna */
+  }
+
+  .forgot {
+    font-size: 0.9rem; /* Ajustar tamanho da fonte */
   }
 }

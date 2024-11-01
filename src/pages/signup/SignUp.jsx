@@ -72,19 +72,19 @@ function SignUp() {
             src="/icons/CADASTRO/logo_trasparente.png"
             alt="Beehive"
           />
-          <h2 className="title">Welcome!</h2>
-          <p className="text">Sign up</p>
+          <h2 className="title">Bem-Vindo</h2>
+          <p className="text">Logar</p>
           <Link className="button" to="/">
             <span>
-              <em>Make login</em>
+              <em>Realizar Login</em>
             </span>
             <span>
-              <em>Make login</em>
+              <em>Realizar Login</em>
             </span>
           </Link>
         </article>
         <article className="article article--signup">
-          <h2 className="title">Register</h2>
+          <h2 className="title">Cadastrar</h2>
           <form className="form" onSubmit={handleSubmit}>
             <div className="input_container">
               <label htmlFor="email">
@@ -154,10 +154,10 @@ function SignUp() {
             {error && <p className="error">{error}</p>}
             <button type="submit" className="button">
               <span>
-                <em>Register</em>
+                <em>Cadastrar</em>
               </span>
               <span>
-                <em>Register</em>
+                <em>Cadastrar</em>
               </span>
             </button>
           </form>

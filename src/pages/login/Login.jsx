@@ -32,14 +32,14 @@ function Login({ setUserId }) {
       <section className="container">
         <article className="article article--cadastro">
           <img className="logo" src="/icons/CADASTRO/logo_trasparente.png" alt="Beehive" />
-          <h2 className="title">Welcome!</h2>
-          <p className="text">New Login</p>
+          <h2 className="title">Bem-Vindo!</h2>
+          <p className="text">Novo Cadastro</p>
           <Link className="button" to="/signup">
             <span>
-              <em>Create Account</em>
+              <em>Criar Conta</em>
             </span>
             <span>
-              <em>Create Account</em>
+              <em>Criar Conta</em>
             </span>
           </Link>
         </article>

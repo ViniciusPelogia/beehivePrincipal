@@ -41,7 +41,7 @@
 
     .article--cadastro {
       border-radius: 30px 0px 0px 30px;
-      width: 33%;
+      width: 100%;
 
       .logo {
         max-width: 180px;
@@ -120,7 +120,7 @@
     .article--login {
       border-left: none;
       border-radius: 0px 30px 30px 0px;
-      width: 66%;
+      width: 100%;
 
       .form {
         display: flex;
@@ -133,6 +133,7 @@
           padding: 0.4rem 0.9rem;
           display: flex;
           align-items: center;
+          flex-wrap: wrap; /* Adiciona wrap para evitar que os ícones se sobreponham */
 
           label {
             margin-right: 1rem;
@@ -180,7 +181,7 @@
               cursor: pointer;
 
               &:checked {
-                background-color: $color_two; /* cor de fundo que vai ser aplicada quando o checkbox tiver uma alteração para checked */
+                background-color: $color_two;
               }
 
               &:before {
@@ -227,13 +228,14 @@
           padding: 1rem;
           cursor: pointer;
           border: none;
-          background: $color_two; // Ajuste a cor de fundo padrão aqui
+          background: $color_two;
           transition: $transition_two;
 
           &:hover {
             background: $light_text;
+
             em {
-              color: $dark_text !important; // Ajuste a cor do texto ao passar o mouse
+              color: $dark_text !important;
             }
           }
 
@@ -281,5 +283,49 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: 768px) {
+  #login {
+    padding: 1rem; // Reduzir o padding
+  }
+
+  .container {
+    flex-direction: column; // Alterar para coluna
+    align-items: stretch; // Alinhar itens ao longo da largura
+    border-radius: 0; // Remover bordas arredondadas
+  }
+
+  .article--cadastro,
+  .article--login {
+    width: 100%; // Definir a largura para 100%
+    border: none; // Remover bordas
+    padding: 1rem; // Ajustar o padding
+  }
+
+  .article {
+    height: auto; // Altura automática
+  }
+
+  .title {
+    font-size: 1.5rem; // Ajustar tamanho da fonte
+  }
+
+  .button {
+    padding: 0.8rem; // Ajustar o padding dos botões
+    font-size: 1rem; // Ajustar o tamanho da fonte
+  }
+
+  .input_container {
+    flex-direction: column; // Alterar para coluna se necessário
+  }
+
+  .assets_texts {
+    flex-direction: column; // Alterar para coluna
+  }
+
+  .forgot {
+    font-size: 0.9rem; // Ajustar tamanho da fonte
   }
 }
