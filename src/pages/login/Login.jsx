@@ -84,10 +84,10 @@ function Login({ setUserId }) {
             {error && <p className="error">{error}</p>}
             <button type="submit" className="button">
               <span>
-                <em>Login</em>
+                <em>Logar</em>
               </span>
               <span>
-                <em>Login</em>
+                <em>Logar</em>
               </span>
             </button>
           </form>

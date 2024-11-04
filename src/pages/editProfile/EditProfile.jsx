@@ -57,14 +57,14 @@ function EditProfile() {
       <Sidebar />
       <main id="edit_profile" className="page_layout">
         <section>
-          <h2 className="title">Edit Profile</h2>
+          <h2 className="title">Editar Perfil</h2>
           <form className="hive_form" onSubmit={handleSubmit}>
             <div className="hive_image_container">
               <div className="hive_image">{hiveImageUrl && <img src={hiveImageUrl} alt="Hive" />}</div>
               <div className="Hive_image_button_container">
                 <input type="file" id="hive_input_image" accept="image/*" onChange={handleImageChange} />
                 <label htmlFor="hive_input_image" className="hive_input_label">
-                  Upload Image
+                  Subir Imagem
                 </label>
               </div>
             </div>
@@ -92,7 +92,7 @@ function EditProfile() {
               />
             </div>
             <button type="submit" className="create_hive_buton">
-              Update
+              Atualiza
             </button>
           </form>
         </section>

@@ -40,10 +40,10 @@ function EnterHiveCode({ onCancel }) {
         />
         <div className="buttons_container">
           <button className="cancel_button" onClick={onCancel}>
-            Cancel
+            Cancelar
           </button>
           <button className="enter_button" onClick={handleEnter}>
-            Enter
+            Entrar
           </button>
         </div>
       </article>

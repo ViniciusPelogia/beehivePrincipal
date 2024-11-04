@@ -152,7 +152,7 @@ function Hive() {
   };
 
   if (!hive) {
-    return <div>Loading...</div>;
+    return <div>Carregando...</div>;
   }
 
   return (
@@ -166,7 +166,7 @@ function Hive() {
           <article className="header_top">
             <div className="header_btn_container">
               <button className="header_btn" onClick={handleShareClick}>
-                Share
+                Compartilhar
                 <IoMdShare />
               </button>
             </div>
@@ -191,7 +191,7 @@ function Hive() {
               </button>
             </div>
             <button id="new_post_btn" onClick={() => setNewPostPopup(true)}>
-              New post
+              Nova postagem
             </button>
             {newPostPopup && (
               <NewPost onCancel={() => setNewPostPopup(false)} id={id} />

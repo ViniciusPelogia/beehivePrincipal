@@ -5,31 +5,33 @@
   * {
     color: $light_text;
   }
-  width: 100%; /* Garante que o elemento ocupe toda a largura */
-  height: 100vh; /* Garante que o elemento ocupe toda a altura da viewport */
-  margin-left: 0; /* Certifique-se de que a margem inicial seja 0 */
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  margin-left: 0;
   transition: margin-left 0.3s ease-in-out;
-  
 
   .header {
-    width: 100%; /* Garante que o header ocupe toda a largura */
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    margin-bottom: 2rem; /* Adiciona espaçamento abaixo do header */
-    
+  
+
     .header_btn {
       @include btn_one;
       margin-right: 1rem;
     }
+
     .header_btn_container {
       display: flex;
-      gap: 1rem; /* Espaçamento entre os botões */
+      gap: 1rem;
     }
+
     .header_image_container {
       display: flex;
       align-items: center;
+
       .header_image {
         width: 6rem;
         height: 6rem;
@@ -42,32 +44,30 @@
       }
     }
   }
-  
+
   h2 {
+    align-items: center;
     margin-bottom: 2rem;
   }
-  
+
   .your_hives {
     margin-bottom: 4rem;
     margin-top: 2rem;
-    max-height: none; // Remove o limite de altura
-    
+
     .hives_container {
       display: flex;
-      gap: 1rem;
       flex-wrap: wrap;
-      flex-direction: row; // Altera a direção do flex para linha
-      overflow-y: auto; // Adiciona rolagem vertical se necessário
-      
+      gap: 1rem;
+      overflow-y: auto;
+
       .hive {
-        min-width: 28%; // Ajuste a largura mínima
-        max-width: 80%; // Ajuste a largura máxima
-        width: 8rem; // Ajuste a largura
-        padding: 1rem; // Adiciona padding para o fundo cinza escuro
-        background-color: lighten($bg_dark, 5%); // Cor de fundo cinza escuro
+        flex: 1 1 calc(33.33% - 1rem); /* Ajuste para 3 colunas */
+        max-width: calc(33.33% - 1rem); /* Garantir que o tamanho máximo não ultrapasse */
+        padding: 1rem;
+        background-color: lighten($bg_dark, 5%);
         cursor: pointer;
         transition: $transition_one;
-        
+
         .hive_image {
           width: 100%;
           aspect-ratio: 1 / 1;
@@ -75,11 +75,90 @@
           object-position: center center;
           border-radius: 10px;
           margin-bottom: 0.5rem;
+          height: 12rem; /* Tamanho da imagem ajustado */
         }
+
         &:hover {
           scale: 1.01;
         }
       }
+    }
+
+    .below_hives {
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      max-height: calc(100vh - 25rem);
+
+      .item {
+        margin: 1rem 0;
+        padding: 1.5rem; /* Aumentei o padding dos itens */
+        background-color: lighten($bg_dark, 10%);
+        border-radius: 5px;
+        transition: $transition_one;
+
+        &:hover {
+          scale: 1.01;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .hives_container {
+    .hive {
+      flex: 1 1 calc(50% - 1rem); /* Ajusta para 2 colunas em telas menores */
+      max-width: calc(50% - 1rem);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .hives_container {
+    .hive {
+      flex: 1 1 calc(100% - 1rem); /* Ajusta para 1 coluna em telas pequenas */
+      max-width: calc(100% - 1rem);
+    }
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .header_btn_container {
+    margin-top: 1rem;
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  .hive_content_container {
+    .image {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .your_hives {
+    margin-bottom: 2rem;
+  }
+
+  .hives_container {
+    .hive {
+      padding: 1rem;
     }
   }
 }

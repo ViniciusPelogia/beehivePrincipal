@@ -2,7 +2,7 @@ import './Saves.scss';
 
 function Saves() {
   return (
-    <div>Saves</div>
+    <div>Salvos</div>
   )
 }
 

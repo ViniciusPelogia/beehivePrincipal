@@ -50,7 +50,7 @@ function Profile() {
   };
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <div>Carregando...</div>;
   }
 
   return (
@@ -77,7 +77,7 @@ function Profile() {
               <img src="/icons/instagram-logo.png" alt="Instagram" />
             </a>
           </div>
-          <p>Join date: {new Date(userData.createdAt).toLocaleDateString()}</p>
+          <p>Data de adesão: {new Date(userData.createdAt).toLocaleDateString()}</p>
         </section>
 
         <section className="profile_right_section">
@@ -99,7 +99,7 @@ function Profile() {
             </ul>
             <div className="hives_buttons_container">
               <Link to="/createhive" className="button">
-                Create Hive
+                Criar Hive
               </Link>
             </div>
           </article>

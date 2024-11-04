@@ -157,13 +157,13 @@ function AllHivesPage() {
         <header className="header">
           <div className="header_btn_container">
             <Link to="/createhive" className="header_btn f_s">
-              Create Hive
+              Criar Hive
             </Link>
             <button
               className="header_btn f_s"
               onClick={() => setEnterHiveCode(true)}
             >
-              Enter code
+              Entrar com código
             </button>
           </div>
           <div className="header_image_container">

@@ -15,10 +15,10 @@ function EnterHive({ hive, onCancel, onEnter }) {
         <p className="hive_name">{hive.nome}</p>
         <div className="buttons_container">
           <button className="cancel_button" onClick={onCancel}>
-            Cancel
+            Cancelar
           </button>
           <button className="enter_button" onClick={() => onEnter(hive)}>
-            Enter
+            Entrar
           </button>
         </div>
       </article>

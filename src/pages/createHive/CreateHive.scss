@@ -5,6 +5,7 @@
   .title {
     margin-bottom: 4rem;
   }
+  
   .error_message {
     color: red;
     font-size: 0.875em;
@@ -116,6 +117,26 @@
 
     .create_hive_buton {
       @include btn_one;
+    }
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  #create_hive {
+    .hive_form {
+      padding: 1rem; /* Ajusta o padding para melhor uso do espaço */
+    }
+    
+    .hive_image_container {
+      .hive_image {
+        width: 8rem; /* Ajusta o tamanho da imagem para telas menores */
+        height: 8rem;
+      }
+    }
+    
+    .hive_inputs_container {
+      max-width: 100%; /* Garante que os inputs ocupem toda a largura disponível */
     }
   }
 }

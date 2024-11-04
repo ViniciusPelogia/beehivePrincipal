@@ -109,7 +109,7 @@ function CreateHive() {
       <Sidebar />
       <main id="create_hive" className="page_layout">
         <section>
-          <h2 className="title">Create Hive</h2>
+          <h2 className="title">Criar Hive</h2>
           <form className="hive_form" onSubmit={handleSubmit}>
             <div className="hive_image_container">
               <div className="hive_image">
@@ -123,7 +123,7 @@ function CreateHive() {
                   onChange={handleImageChange}
                 />
                 <label htmlFor="hive_input_image" className="hive_input_label">
-                  Add Image
+                  Adicionar imagem
                 </label>
               </div>
             </div>
@@ -149,7 +149,7 @@ function CreateHive() {
                   checked={isPrivate}
                   onChange={handleCheckboxChange}
                 />
-                <label htmlFor="private_input">Private Hive</label>
+                <label htmlFor="private_input">Hive Privada</label>
               </div>
               <input
                 type="text"
@@ -159,7 +159,7 @@ function CreateHive() {
                 onChange={(e) => setHivePassword(e.target.value)}
                 disabled={!isPrivate}
               />
-              <label htmlFor="hive_type">Choose a type for the hive:</label>
+              <label htmlFor="hive_type">Selecione o tipo da sua Hive:</label>
               <select
                 name="hive_type"
                 id="hive_type"
@@ -167,7 +167,7 @@ function CreateHive() {
                 value={hiveType}
                 onChange={(e) => setHiveType(e.target.value)}
               >
-                <option value="">Select a type</option>
+                <option value="">Escolha o tipo</option>
                 {Array.isArray(types) &&
                   types.map((type) => (
                     <option key={type.id} value={type.id}>
@@ -177,7 +177,7 @@ function CreateHive() {
               </select>
             </div>
             <button type="submit" className="create_hive_button">
-              Create
+              Criar
             </button>
           </form>
         </section>
