@@ -187,7 +187,7 @@ function Hive() {
                 className={`hive_header_btn ${options === "usuarios" ? "hive_header_btn--active" : ""}`}
                 onClick={() => setOptions("usuarios")}
               >
-                Usuarios
+                Info
               </button>
             </div>
             <button id="new_post_btn" onClick={() => setNewPostPopup(true)}>
