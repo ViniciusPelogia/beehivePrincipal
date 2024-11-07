@@ -8,9 +8,9 @@
 
   .header {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: ruby-base-container;
+    justify-content: initial;
+    align-items: last baseline;
     padding: 1rem 2rem;
     margin-bottom: 2rem;
 
@@ -86,16 +86,16 @@
 
 @media (max-width: 768px) {
   #home {
-    padding: 1rem;
+    padding: 6rem;
   }
 
   .header {
     flex-direction: initial;
     align-items: stretch;
-    padding: 1rem;
+    padding: 10rem;
 
     .header_btn_container {
-      gap: 0.5rem;
+      gap: 1.5rem;
       justify-content: center; /* Centralizar os botões */
     }
 
@@ -103,7 +103,7 @@
       justify-content: center;
       .header_image {
         width: 4rem;
-        height: 4rem;
+        height: 1rem;
       }
     }
   }
@@ -119,9 +119,9 @@
       align-items: center;
 
       .hive {
-        min-width: 90%;
+        min-width: 100%;
         max-width: 100%;
-        width: 90%;
+        width: 100%;
       }
     }
   }

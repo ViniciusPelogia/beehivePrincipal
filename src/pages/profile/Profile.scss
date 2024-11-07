@@ -2,17 +2,24 @@
 @import "../../styles/mixins.scss";
 
 #profile {
-  display: ruby;
-  margin-left: 0; /* Certifique-se de que a margem inicial seja 0 */
+  display: grid; /* Alterado para flex para garantir que as seções se alinhem de maneira fluída */
+  margin-left: 0;
   transition: margin-left 0.3s ease-in-out;
+  flex-wrap: wrap; /* Permite que os itens se movam para uma nova linha quando necessário */
 
   .profile_left_section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Garante que a seção ocupe toda a largura disponível */
+
     .profile_image_container {
       width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       margin-bottom: 2rem;
+      align-items: center; /* Centraliza a imagem */
 
       .profile_image {
         width: 10rem;
@@ -27,6 +34,7 @@
 
       .profile_username {
         margin-bottom: 0.5rem;
+        text-align: center; /* Centraliza o nome de usuário */
       }
     }
 
@@ -34,6 +42,7 @@
       display: flex;
       gap: 1rem;
       margin-bottom: 2rem;
+      justify-content: center; /* Centraliza os ícones sociais */
 
       img {
         width: 3rem;
@@ -43,8 +52,9 @@
   }
 
   .profile_right_section {
-    padding: 0 4rem;
     width: 100%;
+    padding: 0 4rem;
+    box-sizing: border-box; /* Garante que o padding não ultrapasse os limites da tela */
 
     h2 {
       font-size: 2rem;
@@ -55,10 +65,10 @@
       margin-bottom: 4rem;
 
       .profile_about_text {
-        max-width: 600px; // Defina o limite de largura desejado
-        overflow: auto; // Permite rolar o conteúdo se for muito extenso
-        white-space: pre-wrap; // Mantém os espaços em branco e quebra de linha
-        word-wrap: break-word; // Quebra as palavras longas para a próxima linha
+        max-width: 600px;
+        overflow: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
       }
     }
 
@@ -72,8 +82,8 @@
       .profile_hives_list {
         margin-bottom: 2rem;
         max-width: 350px;
-        max-height: 250px; // Defina a altura máxima desejada
-        overflow-y: auto; // Adiciona uma barra de rolagem vertical se necessário
+        max-height: 250px;
+        overflow-y: auto;
         padding: 0;
         margin: 0;
         list-style: none;
@@ -107,7 +117,7 @@
 
   .profile_icons_container {
     .button {
-      display: block;
+      display: table;
       background-color: $color_two;
       margin-bottom: 0.8rem;
       padding: 0.2rem;
@@ -127,31 +137,49 @@
 /* Responsividade */
 @media (max-width: 768px) {
   #profile {
-    flex-direction: column; /* Muda a direção para coluna em telas menores */
-    align-items: center; /* Centraliza os itens */
+    flex-direction: column; /* Alinha as seções em coluna */
+    align-items: center;
+    padding: 1rem; /* Adiciona padding no container principal */
+  }
 
-    .profile_right_section {
-      padding: 1rem; /* Ajusta o padding para melhor uso do espaço */
-    }
+  .profile_left_section,
+  .profile_right_section {
+    width: 100%; /* Garante que ambas as seções ocupem 100% da largura */
+    padding: 0; /* Remove o padding das seções */
+  }
 
-    .profile_about_container {
-      .profile_about_text {
-        max-width: 100%; // Garante que o texto ocupe toda a largura disponível
-      }
-    }
+  .profile_right_section {
+    padding: 0; /* Ajusta o padding da seção direita */
   }
 
   .profile_image_container {
     .profile_image {
-      width: 8rem; /* Reduz o tamanho da imagem para telas menores */
+      width: 8rem; /* Reduz o tamanho da imagem */
       height: 8rem;
+    }
+  }
+
+  .profile_social_container {
+    justify-content: center; /* Centraliza os ícones sociais */
+  }
+
+  .profile_about_container {
+    .profile_about_text {
+      max-width: 100%; /* Aumenta a largura para 100% */
     }
   }
 
   .profile_hives_container {
     .profile_hives_list {
-      max-width: 100%; /* Garante que a lista ocupe toda a largura disponível */
+      max-width: 100%; /* Aumenta a largura para 100% */
       max-height: 200px; /* Ajusta a altura máxima para telas menores */
     }
+  }
+
+  .profile_icons_container {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Centraliza os ícones */
+    gap: 1rem;
   }
 }

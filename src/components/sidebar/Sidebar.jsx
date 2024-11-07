@@ -48,7 +48,7 @@ function Sidebar({ isOpen }) {
             title="Veja a colmeia"
           >
             <GiTreeBeehive />
-            <p>Beehive</p>
+            <p>Explorar</p>
           </Link>
         </ul>
       </div>
